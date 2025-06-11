@@ -27,7 +27,13 @@ public class CameraManager : MonoBehaviour {
         }
 
         if(param.targetObj != null) {
-            param.position = param.targetObj.transform.position;
+            param.position = Vector3.Lerp(
+            a: param.position,
+            b: param.targetObj.transform.position,
+            t: Time.deltaTime * 10f
+        );
+
+            //param.position = param.targetObj.transform.position;
         }
 
         // パラメータを各種オブジェクトに反映
