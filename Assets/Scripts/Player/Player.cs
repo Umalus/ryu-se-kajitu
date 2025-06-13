@@ -17,15 +17,15 @@ public class Player : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
         if(other.gameObject.CompareTag("Fruit")) {
             BaseScoreObject addScoreObj = other.gameObject.GetComponent<BaseScoreObject>();
-            ScoreManager.Score += addScoreObj.score;
             combo++;
+            ScoreManager.AddScore(addScoreObj,combo);
+            
             Destroy(other.gameObject);
-            ScoreManager.CountScore(combo);
         }
         else if (other.gameObject.CompareTag("Insect")) {
             BaseScoreObject addScoreObj = other.gameObject.GetComponent<BaseScoreObject>();
-            ScoreManager.Score += addScoreObj.score;
             combo = 0;
+            ScoreManager.AddScore(addScoreObj, combo);
             Destroy(other.gameObject);
         }
     }

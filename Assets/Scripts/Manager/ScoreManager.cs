@@ -7,9 +7,16 @@ using static CommonModul;
 public class ScoreManager {
     public static int Score = 0;
 
-    public static void CountScore(int _combo) {
-        if (Score <= 0)
+    public static void UpdateScore() {
+        if (Score < 0)
             Score = 0;
+    }
+    public static void AddScore(BaseScoreObject _scoreObject,int _combo) {
+        Score += _scoreObject.score;
+        CountScore(_combo);
+    }
+
+    public static void CountScore(int _combo) {
         if (InRange(_combo, 5, 15)) {
             Score += 100;
         }

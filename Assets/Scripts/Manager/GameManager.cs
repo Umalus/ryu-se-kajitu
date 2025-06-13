@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ScoreManager.UpdateScore();
         //ŽžŠÔ‚ðŒ¸‚ç‚·
         currentTime -= Time.deltaTime;
 
