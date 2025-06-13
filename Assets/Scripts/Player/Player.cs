@@ -10,8 +10,6 @@ public class Player : MonoBehaviour {
     [SerializeField]
     private float playerVelocity = 5.0f;
     public int Score = 0;
-    [SerializeField]
-    private float maxSpeed = 5.0f;
     Rigidbody rb;
     // Start is called before the first frame update
     private void OnTriggerEnter(Collider other) {
