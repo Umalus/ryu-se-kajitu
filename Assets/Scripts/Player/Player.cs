@@ -10,7 +10,7 @@ public class Player : MonoBehaviour {
     [SerializeField]
     private float playerVelocity = 5.0f;
     [SerializeField]
-    public int combo { get; private set; } = 0;
+    private static int combo = 0;
     public int Score = 0;
     Rigidbody rb;
     // Start is called before the first frame update
@@ -20,6 +20,7 @@ public class Player : MonoBehaviour {
             ScoreManager.Score += addScoreObj.score;
             combo++;
             Destroy(other.gameObject);
+            ScoreManager.CountScore(combo);
         }
         else if (other.gameObject.CompareTag("Insect")) {
             BaseScoreObject addScoreObj = other.gameObject.GetComponent<BaseScoreObject>();
@@ -39,5 +40,9 @@ public class Player : MonoBehaviour {
         transform.position += Vector3.Normalize(direction) * playerVelocity;
 
         transform.eulerAngles = direction;
+    }
+
+    public static int GetCombo() {
+        return combo;
     }
 }
