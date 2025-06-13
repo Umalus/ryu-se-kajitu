@@ -14,6 +14,13 @@ public class Player : MonoBehaviour {
     private float maxSpeed = 5.0f;
     Rigidbody rb;
     // Start is called before the first frame update
+    private void OnTriggerEnter(Collider other) {
+        if(other.gameObject.CompareTag("Fruit") || other.gameObject.CompareTag("Insect")) {
+            BaseScoreObject addScoreObj = other.gameObject.GetComponent<BaseScoreObject>();
+            ScoreManager.Score += addScoreObj.score;
+            Destroy(other.gameObject);
+        }
+    }
     void Start() {
         rb = GetComponent<Rigidbody>();
     }
@@ -22,7 +29,7 @@ public class Player : MonoBehaviour {
     private void Update() {
 
         Vector3 direction = useJoyStick.Vertical * Vector3.forward + useJoyStick.Horizontal * Vector3.right;
-        transform.position += direction.normalized * playerVelocity;
+        transform.position += Vector3.Normalize(direction) * playerVelocity;
 
         transform.eulerAngles = direction;
     }

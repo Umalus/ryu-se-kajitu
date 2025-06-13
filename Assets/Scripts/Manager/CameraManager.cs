@@ -14,6 +14,8 @@ public class CameraManager : MonoBehaviour {
 
     [SerializeField, Header("メインのカメラ")]
     private Camera mainCamera = null;
+    [SerializeField]
+    private float lerpTime = 4.0f;
     [SerializeField, Header("各種パラメーター")]
     private Paramater param;
     [SerializeField]
@@ -26,14 +28,11 @@ public class CameraManager : MonoBehaviour {
             return;
         }
 
-        if(param.targetObj != null) {
+        if (param.targetObj != null) {
             param.position = Vector3.Lerp(
             a: param.position,
             b: param.targetObj.transform.position,
-            t: Time.deltaTime * 10f
-        );
-
-            //param.position = param.targetObj.transform.position;
+            t: Time.deltaTime * lerpTime);
         }
 
         // パラメータを各種オブジェクトに反映
