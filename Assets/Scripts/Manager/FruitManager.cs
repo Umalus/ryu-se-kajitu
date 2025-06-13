@@ -8,6 +8,8 @@ using UnityEngine;
 public class FruitManager : MonoBehaviour {
     [SerializeField, Header("生成されるフルーツのリスト")]
     private List<GameObject> originPrefabs = null;
+    [SerializeField, Header("生成範囲")]
+    private float InstanceRange = 0;
     [SerializeField]
     private Vector3 InstancePos = Vector3.zero;
     [SerializeField]
@@ -15,6 +17,12 @@ public class FruitManager : MonoBehaviour {
     [SerializeField]
     private float instanceTime = 0.0f;
     public bool OnlyFruit = false;
+    private enum FallObjectType {
+        Invalid = -1,
+        Fruit,
+        Insect,
+    }
+
     // Start is called before the first frame update
     void Start() {
 
@@ -25,16 +33,23 @@ public class FruitManager : MonoBehaviour {
         InstancePos = DecideInstancePosition();
         instanceValue = Random.Range(0, 11);
 
-        if (instanceValue < 3 && instanceTime >= 1.0f) {
-            Instantiate(originPrefabs[0], InstancePos, Quaternion.identity);
-            instanceTime = 0.0f;
+        if (instanceTime >= 2.0f) {
+            if(instanceValue < 3) {
+                Instantiate(originPrefabs[(int)FallObjectType.Fruit], InstancePos, Quaternion.identity);
+                instanceTime = 0.0f;
+            }
+            else if(instanceValue > 7) {
+                Instantiate(originPrefabs[(int)FallObjectType.Insect], InstancePos, Quaternion.identity);
+                instanceTime = 0.0f;
+            }
+            
         }
     }
 
     private Vector3 DecideInstancePosition() {
         Vector3 decidePos = InstancePos;
-        decidePos.x = Random.Range(-10.0f, 10.0f);
-        decidePos.z = Random.Range(-10.0f, 10.0f);
+        decidePos.x = Random.Range(-InstanceRange, InstanceRange);
+        decidePos.z = Random.Range(-InstanceRange, InstanceRange);
         return decidePos;
     }
 }

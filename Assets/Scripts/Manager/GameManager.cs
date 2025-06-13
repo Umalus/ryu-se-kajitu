@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     {
         //ŠÔ‚ğŒ¸‚ç‚·
         currentTime -= Time.deltaTime;
-
+        ScoreManager.CountScore();
 
     }
 }

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20604ac8fe205a047b7bb4d40c60d907, type: 3}
-  m_Name: New Base Score Object
+  m_Name: InsectData
   m_EditorClassIdentifier: 
-  score: 100
-  fallSpeed: 0.1
+  score: 0
+  fallSpeed: 0

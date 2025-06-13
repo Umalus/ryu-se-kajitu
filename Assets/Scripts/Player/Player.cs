@@ -9,13 +9,22 @@ public class Player : MonoBehaviour {
     private Joystick useJoyStick = null;
     [SerializeField]
     private float playerVelocity = 5.0f;
+    [SerializeField]
+    public int combo { get; private set; } = 0;
     public int Score = 0;
     Rigidbody rb;
     // Start is called before the first frame update
     private void OnTriggerEnter(Collider other) {
-        if(other.gameObject.CompareTag("Fruit") || other.gameObject.CompareTag("Insect")) {
+        if(other.gameObject.CompareTag("Fruit")) {
             BaseScoreObject addScoreObj = other.gameObject.GetComponent<BaseScoreObject>();
             ScoreManager.Score += addScoreObj.score;
+            combo++;
+            Destroy(other.gameObject);
+        }
+        else if (other.gameObject.CompareTag("Insect")) {
+            BaseScoreObject addScoreObj = other.gameObject.GetComponent<BaseScoreObject>();
+            ScoreManager.Score += addScoreObj.score;
+            combo = 0;
             Destroy(other.gameObject);
         }
     }
