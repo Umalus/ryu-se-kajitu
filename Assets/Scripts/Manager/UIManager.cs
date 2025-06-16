@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using System.Text;
 
 public class UIManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private List<TextMeshProUGUI> textList = null;
+    private StringBuilder stringBuilder = new StringBuilder();
     // Start is called before the first frame update
     void Start()
     {
@@ -23,8 +25,13 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        stringBuilder.Append(GameManager.instance.minute.ToString("00"));
+        stringBuilder.Append(":");
+        stringBuilder.Append(((int)GameManager.instance.currentTime).ToString("00"));
         textList[(int)textType.Timer].text =
-            "Time : " + GameManager.instance.currentTime.ToString("0f");
+            stringBuilder.ToString();
+        stringBuilder.Clear();
+
         textList[(int)textType.Score].text =
             "Score : " + ScoreManager.Score;
     }

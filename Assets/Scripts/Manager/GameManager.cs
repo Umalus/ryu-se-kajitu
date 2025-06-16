@@ -20,11 +20,15 @@ public class GameManager : MonoBehaviour
     /// Œ»İ‚ÌŠÔ
     /// </summary>
     public float currentTime { get; private set; } = PLAY_TIME;
+
+    public int minute;
+    public float prevTime;
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start(){
         instance = this;
         Application.targetFrameRate = 60;
+        minute = 0;
+        prevTime = currentTime;
     }
 
     // Update is called once per frame
@@ -33,6 +37,10 @@ public class GameManager : MonoBehaviour
         ScoreManager.UpdateScore();
         //ŠÔ‚ğŒ¸‚ç‚·
         currentTime -= Time.deltaTime;
-
+        if(currentTime >= 60) {
+            minute++;
+            currentTime -= 60.0f;
+        }
+        prevTime = currentTime;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using static CommonModul;
+using static GameEnum;
 
 public class ScoreManager {
     public static int Score = 0;
@@ -17,13 +18,13 @@ public class ScoreManager {
     }
 
     public static void CountScore(int _combo) {
-        if (InRange(_combo, 5, 15)) {
+        if (InRange(_combo, FRUIT_FIRST_MIN, FRUIT_FIRST_MAX)) {
             Score += 100;
         }
-        else if (InRange(_combo, 15, 20)) {
+        else if (InRange(_combo, FRUIT_FIRST_MAX, FRUIT_SECOND_MAX)) {
             Score += 200;
         }
-        else if (InRange(_combo, 20, 1024)) {
+        else if (InRange(_combo, FRUIT_SECOND_MAX, FRUIT_THIRD_MAX)) {
             Score += 300;
         }
     }
