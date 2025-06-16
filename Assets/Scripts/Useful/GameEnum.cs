@@ -15,5 +15,6 @@ public static class GameEnum {
         opening,
         middle,
         ending,
+        PhaseEnd,
     }
 }

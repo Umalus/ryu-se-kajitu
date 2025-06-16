@@ -2,6 +2,8 @@ using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+using static GameEnum;
 /// <summary>
 /// フルーツを降らせるマネージャー
 /// </summary>
@@ -33,14 +35,16 @@ public class FruitManager : MonoBehaviour {
         InstancePos = DecideInstancePosition();
         instanceValue = Random.Range(0, 11);
         switch (GameManager.instance.phase) {
-            case GameEnum.GamePhase.opening:
+            case GamePhase.opening:
                 InstanceObject(2, 3, 7);
                 break;
-            case GameEnum.GamePhase.middle:
+            case GamePhase.middle:
                 InstanceObject(1, 4, 5);
                 break;
-            case GameEnum.GamePhase.ending:
+            case GamePhase.ending:
                 InstanceObject(0.5f,2,2);
+                break;
+            case GamePhase.PhaseEnd:
                 break;
         }
 

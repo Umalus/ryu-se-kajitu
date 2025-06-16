@@ -39,6 +39,7 @@ public class Player : MonoBehaviour {
 
         inputActions.Player.Move.performed += OnMovePreformed;
         inputActions.Player.Move.canceled += OnMoveCanceled;
+        inputActions.Player.End.performed += OnEndPreformed;
         inputActions.Enable();
     }
 
@@ -59,7 +60,16 @@ public class Player : MonoBehaviour {
         playerDir = new Vector3(inputDir.x,0,inputDir.y);
     }
 
-    void OnMoveCanceled(InputAction.CallbackContext context) {
+    private void OnMoveCanceled(InputAction.CallbackContext _context) {
         playerDir = Vector3.zero;
+    }
+
+    private void OnEndPreformed(InputAction.CallbackContext _context) {
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+
+#else
+         Application.Quit();
+#endif
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using static GameEnum;
+using static CommonModul;
 /// <summary>
 /// ゲーム内諸々管理クラス
 /// </summary>
@@ -45,6 +46,7 @@ public class GameManager : MonoBehaviour {
 
     private void Timer() {
         if (second <= 0) {
+            second = 0;
             return;
         }
 
@@ -59,11 +61,13 @@ public class GameManager : MonoBehaviour {
     }
 
     private void Phase() {
-        if (totalTime < 30)
+        if (InRange((int)totalTime,1,30))
             phase = GamePhase.ending;
-        else if (30 <= totalTime && totalTime < 60)
+        else if (InRange((int)totalTime, 30, 60))
             phase = GamePhase.middle;
-        else
+        else if (InRange((int)totalTime, 60, 90))
             phase = GamePhase.opening;
+        else
+            phase = GamePhase.PhaseEnd;
     }
 }
