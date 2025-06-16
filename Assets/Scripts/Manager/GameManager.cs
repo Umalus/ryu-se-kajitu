@@ -6,8 +6,7 @@ using static GameEnum;
 /// <summary>
 /// ゲーム内諸々管理クラス
 /// </summary>
-public class GameManager : MonoBehaviour
-{
+public class GameManager : MonoBehaviour {
     /// <summary>
     /// インスタンス
     /// </summary>
@@ -30,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     public GamePhase phase { get; private set; } = 0;
     // Start is called before the first frame update
-    void Start(){
+    void Start() {
         instance = this;
         Application.targetFrameRate = 60;
         second = playTime;
@@ -38,15 +37,14 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         ScoreManager.UpdateScore();
         Timer();
         Phase();
     }
 
     private void Timer() {
-        if(second <= 0) {
+        if (second <= 0) {
             return;
         }
 

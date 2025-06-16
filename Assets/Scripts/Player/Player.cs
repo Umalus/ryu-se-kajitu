@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 public class Player : MonoBehaviour {
-    [SerializeField]
-    private Joystick useJoyStick = null;
+    //[SerializeField]
+    //private Joystick useJoyStick = null;
+    private Bozu inputActions = null;
+
     [SerializeField]
     private float playerVelocity = 5.0f;
     [SerializeField]
     private static int combo = 0;
     public int Score = 0;
+    private Vector3 playerDir;
     Rigidbody rb;
     // Start is called before the first frame update
     private void OnTriggerEnter(Collider other) {
@@ -31,25 +35,31 @@ public class Player : MonoBehaviour {
     }
     void Start() {
         rb = GetComponent<Rigidbody>();
+        inputActions = InputSystemManager.instance.InputSystem;
+
+        inputActions.Player.Move.performed += OnMovePreformed;
+        inputActions.Player.Move.canceled += OnMoveCanceled;
+        inputActions.Enable();
     }
 
     // Update is called once per frame
     private void Update() {
-        Vector3 direction = useJoyStick.Vertical * Vector3.forward + useJoyStick.Horizontal * Vector3.right;
-        transform.position += Vector3.Normalize(direction) * playerVelocity;
-
-        transform.eulerAngles = direction;
+        if(playerDir.sqrMagnitude >= Mathf.Epsilon) {
+            transform.LookAt(transform.position + playerDir);
+            transform.position += playerDir * playerVelocity * Time.deltaTime;
+        }
 
     }
-
-    public void OnMove() {
-        Vector3 direction = useJoyStick.Vertical * Vector3.forward + useJoyStick.Horizontal * Vector3.right;
-        transform.position += Vector3.Normalize(direction) * playerVelocity;
-
-        transform.eulerAngles = direction;
-    }
-
     public static int GetCombo() {
         return combo;
+    }
+
+    private void OnMovePreformed(InputAction.CallbackContext _context) {
+        Vector2 inputDir = _context.ReadValue<Vector2>();
+        playerDir = new Vector3(inputDir.x,0,inputDir.y);
+    }
+
+    void OnMoveCanceled(InputAction.CallbackContext context) {
+        playerDir = Vector3.zero;
     }
 }
