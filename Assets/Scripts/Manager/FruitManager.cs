@@ -32,18 +32,18 @@ public class FruitManager : MonoBehaviour {
         instanceTime += Time.deltaTime;
         InstancePos = DecideInstancePosition();
         instanceValue = Random.Range(0, 11);
-
-        if (instanceTime >= 2.0f) {
-            if(instanceValue < 3) {
-                Instantiate(originPrefabs[(int)FallObjectType.Fruit], InstancePos, Quaternion.identity);
-                instanceTime = 0.0f;
-            }
-            else if(instanceValue > 7) {
-                Instantiate(originPrefabs[(int)FallObjectType.Insect], InstancePos, Quaternion.identity);
-                instanceTime = 0.0f;
-            }
-            
+        switch (GameManager.instance.phase) {
+            case GameEnum.GamePhase.opening:
+                InstanceObject(2, 3, 7);
+                break;
+            case GameEnum.GamePhase.middle:
+                InstanceObject(1, 4, 5);
+                break;
+            case GameEnum.GamePhase.ending:
+                InstanceObject(0.5f,2,2);
+                break;
         }
+
     }
 
     private Vector3 DecideInstancePosition() {
@@ -51,5 +51,19 @@ public class FruitManager : MonoBehaviour {
         decidePos.x = Random.Range(-InstanceRange, InstanceRange);
         decidePos.z = Random.Range(-InstanceRange, InstanceRange);
         return decidePos;
+    }
+
+    private void InstanceObject(float _interval,int _fruitRatio,int _insectRatio) {
+        if (instanceTime >= _interval) {
+            if (instanceValue <= _fruitRatio) {
+                Instantiate(originPrefabs[(int)FallObjectType.Fruit], InstancePos, Quaternion.identity);
+                instanceTime = 0.0f;
+            }
+            else if (instanceValue > _insectRatio) {
+                Instantiate(originPrefabs[(int)FallObjectType.Insect], InstancePos, Quaternion.identity);
+                instanceTime = 0.0f;
+            }
+
+        }
     }
 }

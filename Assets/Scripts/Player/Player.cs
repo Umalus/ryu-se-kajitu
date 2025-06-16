@@ -35,7 +35,14 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     private void Update() {
+        Vector3 direction = useJoyStick.Vertical * Vector3.forward + useJoyStick.Horizontal * Vector3.right;
+        transform.position += Vector3.Normalize(direction) * playerVelocity;
 
+        transform.eulerAngles = direction;
+
+    }
+
+    public void OnMove() {
         Vector3 direction = useJoyStick.Vertical * Vector3.forward + useJoyStick.Horizontal * Vector3.right;
         transform.position += Vector3.Normalize(direction) * playerVelocity;
 

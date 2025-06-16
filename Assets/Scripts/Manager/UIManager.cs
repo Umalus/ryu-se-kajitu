@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour
     {
         stringBuilder.Append(GameManager.instance.minute.ToString("00"));
         stringBuilder.Append(":");
-        stringBuilder.Append(((int)GameManager.instance.currentTime).ToString("00"));
+        stringBuilder.Append(((int)GameManager.instance.second).ToString("00"));
         textList[(int)textType.Timer].text =
             stringBuilder.ToString();
         stringBuilder.Clear();
