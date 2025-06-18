@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using static CommonModul;
-using static GameEnum;
+using static GameConst;
 
 public class ScoreManager {
     public static int Score = 0;

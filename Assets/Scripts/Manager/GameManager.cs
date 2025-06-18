@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using static GameEnum;
+using static GameConst;
 using static CommonModul;
+using UnityEngine.InputSystem;
+using UnityEditor;
 /// <summary>
 /// ゲーム内諸々管理クラス
 /// </summary>
@@ -13,6 +15,8 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     public static GameManager instance = null;
 
+    private Bozu inputAction = null;
+
     /// <summary>
     /// 開始時間
     /// </summary>
@@ -20,6 +24,8 @@ public class GameManager : MonoBehaviour {
     private int playTime = 90;
 
     public float totalTime;
+
+    public bool IsPlay = false;
     /// <summary>
     /// 現在の時間
     /// </summary>
@@ -35,10 +41,17 @@ public class GameManager : MonoBehaviour {
         Application.targetFrameRate = 60;
         second = playTime;
         totalTime = minute * MINUTE + second;
+        inputAction = InputSystemManager.instance.InputSystem;
+
+        inputAction.GameManager.Start.performed += OnStartPreformed;
+        inputAction.GameManager.End.performed += OnEndPreformed;
+
     }
 
     // Update is called once per frame
     void Update() {
+        if (!IsPlay) return;
+
         ScoreManager.UpdateScore();
         Timer();
         Phase();
@@ -69,5 +82,18 @@ public class GameManager : MonoBehaviour {
             phase = GamePhase.opening;
         else
             phase = GamePhase.PhaseEnd;
+    }
+
+    private void OnStartPreformed(InputAction.CallbackContext _context) {
+        IsPlay = true;
+    }
+
+    private void OnEndPreformed(InputAction.CallbackContext _context) {
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+
+#else
+         Application.Quit();
+#endif
     }
 }

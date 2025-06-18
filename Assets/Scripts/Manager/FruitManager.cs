@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using static GameEnum;
+using static GameConst;
 /// <summary>
 /// フルーツを降らせるマネージャー
 /// </summary>
@@ -31,6 +31,8 @@ public class FruitManager : MonoBehaviour {
     }
 
     private void Update() {
+        if (!GameManager.instance.IsPlay) return;
+
         instanceTime += Time.deltaTime;
         InstancePos = DecideInstancePosition();
         instanceValue = Random.Range(0, 11);

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class GameEnum {
+public static class GameConst {
     #region フルーツ獲得個数判断用定数
     public const int FRUIT_FIRST_MIN = 5;
     public const int FRUIT_FIRST_MAX = 15;

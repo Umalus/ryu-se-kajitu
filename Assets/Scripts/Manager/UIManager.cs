@@ -10,7 +10,9 @@ public class UIManager : MonoBehaviour
         Invalid = -1,
         Timer,
         Score,
+        Start,
 
+        Max,
     }
 
     [SerializeField]
@@ -34,5 +36,7 @@ public class UIManager : MonoBehaviour
 
         textList[(int)textType.Score].text =
             "Score : " + ScoreManager.Score;
+        if(GameManager.instance.IsPlay)
+        textList[(int)textType.Start].enabled = false;
     }
 }
