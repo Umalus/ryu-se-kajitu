@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using static GameConst;
+using static GameEnum;
 /// <summary>
 /// フルーツを降らせるマネージャー
 /// </summary>
@@ -42,10 +42,10 @@ public class FruitManager : MonoBehaviour {
         instanceValue = Random.Range(0, 11);
         switch (GameManager.instance.phase) {
             case GamePhase.opening:
-                    InstanceObject(2, 3);
+                    InstanceObject(2, 6);
                 break;
             case GamePhase.middle:
-                InstanceObject(1, 4);
+                InstanceObject(1, 5);
                 break;
             case GamePhase.ending:
                 InstanceObject(0.1f, 2);

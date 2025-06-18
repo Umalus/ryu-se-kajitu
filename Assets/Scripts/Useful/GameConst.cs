@@ -10,11 +10,5 @@ public static class GameConst {
     public const int FRUIT_THIRD_MAX = 4096;
     #endregion
     public const int MINUTE = 60;
-    public enum GamePhase {
-        Invalid = -1,
-        opening,
-        middle,
-        ending,
-        PhaseEnd,
-    }
+    
 }

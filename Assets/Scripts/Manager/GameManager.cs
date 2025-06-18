@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using static GameEnum;
 using static GameConst;
 using static CommonModul;
 using UnityEngine.InputSystem;

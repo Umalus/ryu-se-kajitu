@@ -783,7 +783,7 @@ GameObject:
   - component: {fileID: 533941206}
   - component: {fileID: 533941210}
   m_Layer: 0
-  m_Name: speedDownItem (1)
+  m_Name: onlyFruitItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
