@@ -51,8 +51,6 @@ public class GameManager : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (!IsPlay) return;
-
-        ScoreManager.UpdateScore();
         Timer();
         Phase();
     }
@@ -80,8 +78,11 @@ public class GameManager : MonoBehaviour {
             phase = GamePhase.middle;
         else if (InRange((int)totalTime, 60, 90))
             phase = GamePhase.opening;
-        else
+        else {
             phase = GamePhase.PhaseEnd;
+            IsPlay = false;
+        }
+           
     }
 
     private void OnStartPreformed(InputAction.CallbackContext _context) {

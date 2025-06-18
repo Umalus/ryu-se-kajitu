@@ -36,7 +36,12 @@ public class UIManager : MonoBehaviour
 
         textList[(int)textType.Score].text =
             "Score : " + ScoreManager.Score;
-        if(GameManager.instance.IsPlay)
-        textList[(int)textType.Start].enabled = false;
+        if (GameManager.instance.IsPlay) {
+            textList[(int)textType.Start].enabled = false;
+            textList[(int)textType.Start].text =
+                "Game over!!\nEnd to EscapeKey";
+        }
+        else
+            textList[(int)textType.Start].enabled = true;
     }
 }
