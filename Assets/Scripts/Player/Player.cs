@@ -24,7 +24,7 @@ public class Player : MonoBehaviour {
             BaseScoreObject addScoreObj = other.gameObject.GetComponent<BaseScoreObject>();
             combo++;
             ScoreManager.AddScore(addScoreObj,combo);
-            
+            Debug.Log(combo + "combo!");
             Destroy(other.gameObject);
         }
         else if (other.gameObject.CompareTag("Insect")) {
