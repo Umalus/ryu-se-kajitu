@@ -5,7 +5,9 @@ using UnityEngine;
 public class Fruit : BaseScoreObject
 {
     [SerializeField]
-    private BaseScoreData scoreData;
+    public BaseScoreData scoreData = null;
+    [SerializeField]
+    private static float fallSpeed;
     private void Start() {
         Initialize();
     }
@@ -21,6 +23,7 @@ public class Fruit : BaseScoreObject
     }
     private void Initialize() {
         SetScore(scoreData.score);
+        fallSpeed = scoreData.fallSpeed;
     }
 
     private void FallFruit() {
@@ -28,5 +31,12 @@ public class Fruit : BaseScoreObject
         fallPos.y -= scoreData.fallSpeed;
         transform.position = fallPos;
     }
+
+    public void SetScoreData(BaseScoreData _scoreData) {
+        scoreData = _scoreData;
+    }
     
+    public static void SetFallSpeed(float _speed) {
+        fallSpeed = _speed;
+    }
 }

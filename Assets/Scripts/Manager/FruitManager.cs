@@ -8,6 +8,9 @@ using static GameConst;
 /// フルーツを降らせるマネージャー
 /// </summary>
 public class FruitManager : MonoBehaviour {
+    public static FruitManager instance = null;
+
+
     [SerializeField, Header("生成されるフルーツのリスト")]
     private List<GameObject> originPrefabs = null;
     [SerializeField, Header("生成範囲")]
@@ -27,10 +30,11 @@ public class FruitManager : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-
+        instance = this;
     }
 
     private void Update() {
+        //ゲームプレイ状態でなければ処理しない
         if (!GameManager.instance.IsPlay) return;
 
         instanceTime += Time.deltaTime;
@@ -38,13 +42,13 @@ public class FruitManager : MonoBehaviour {
         instanceValue = Random.Range(0, 11);
         switch (GameManager.instance.phase) {
             case GamePhase.opening:
-                InstanceObject(2, 3, 7);
+                    InstanceObject(2, 3);
                 break;
             case GamePhase.middle:
-                InstanceObject(1, 4, 5);
+                InstanceObject(1, 4);
                 break;
             case GamePhase.ending:
-                InstanceObject(0.5f,2,2);
+                InstanceObject(0.1f, 2);
                 break;
             case GamePhase.PhaseEnd:
                 break;
@@ -53,22 +57,33 @@ public class FruitManager : MonoBehaviour {
     }
 
     private Vector3 DecideInstancePosition() {
+        //生成位置決定用一時変数
         Vector3 decidePos = InstancePos;
         decidePos.x = Random.Range(-InstanceRange, InstanceRange);
         decidePos.z = Random.Range(-InstanceRange, InstanceRange);
         return decidePos;
     }
 
-    private void InstanceObject(float _interval,int _fruitRatio,int _insectRatio) {
+    private void InstanceObject(float _interval, int _fruitRatio) {
         if (instanceTime >= _interval) {
-            if (instanceValue <= _fruitRatio) {
+            if (OnlyFruit) {
+                //フルーツのみ生成
                 Instantiate(originPrefabs[(int)FallObjectType.Fruit], InstancePos, Quaternion.identity);
                 instanceTime = 0.0f;
+
             }
-            else if (instanceValue > _insectRatio) {
-                Instantiate(originPrefabs[(int)FallObjectType.Insect], InstancePos, Quaternion.identity);
-                instanceTime = 0.0f;
+            //フルーツと虫両方生成
+            else {
+                if (instanceValue <= _fruitRatio) {
+                    Instantiate(originPrefabs[(int)FallObjectType.Fruit], InstancePos, Quaternion.identity);
+                    instanceTime = 0.0f;
+                }
+                else if (instanceValue > _fruitRatio) {
+                    Instantiate(originPrefabs[(int)FallObjectType.Insect], InstancePos, Quaternion.identity);
+                    instanceTime = 0.0f;
+                }
             }
+
 
         }
     }

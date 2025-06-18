@@ -23,6 +23,8 @@ public class CameraManager : MonoBehaviour {
     [SerializeField]
     private Transform child;
 
+    private Vector2 OnClickPos = Vector2.zero;
+
     private void LateUpdate() {
         if (parent == null || child == null || mainCamera == null) {
             return;
