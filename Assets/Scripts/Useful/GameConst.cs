@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ゲーム内部で使用する定数クラス
+/// </summary>
 public static class GameConst {
     #region フルーツ獲得個数判断用定数
     public const int FRUIT_FIRST_MIN = 5;

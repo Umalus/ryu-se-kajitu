@@ -2,7 +2,9 @@ using Cysharp.Threading.Tasks.Triggers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 落ちてくるスピードを半分にする
+/// </summary>
 public class FallSpeedDown : BaseItem
 {
     [SerializeField]
@@ -15,13 +17,9 @@ public class FallSpeedDown : BaseItem
     {
         setSpeed = scoreData.fallSpeed * 0.5f;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    /// <summary>
+    /// 取ったら与える影響
+    /// </summary>
     public override void AddEffect() {
         Fruit.SetFallSpeed(setSpeed);
     }

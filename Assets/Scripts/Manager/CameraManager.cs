@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
 public class CameraManager : MonoBehaviour {
@@ -23,22 +24,24 @@ public class CameraManager : MonoBehaviour {
     private Transform parent;
     [SerializeField]
     private Transform child;
-    private Bozu inputAction = null;
-
+    //カメラ回転用メンバ変数
     private Vector3 startClickPos = Vector3.zero;
     private Vector3 currentClickPos = Vector3.zero;
+    private float distanceX = 0.0f;
+    private float distanceY = 0.0f;
+    [SerializeField]
+    private float rotateSpeed = 1.0f;
 
-    void Start() {
-        inputAction = InputSystemManager.instance.InputSystem;
-
-        
+    private void Update() {
+        //カメラを回転
+        param.angles += RotateCamera();
     }
+
     private void LateUpdate() {
+        //いずれかの要素が入っていなかったら
         if (parent == null || child == null || mainCamera == null) {
             return;
         }
-        RotateCamera();
-
         //自然に追跡
         if (param.targetObj != null) {
             param.position = Vector3.Lerp(
@@ -47,7 +50,7 @@ public class CameraManager : MonoBehaviour {
             t: Time.deltaTime * lerpTime);
         }
 
-        parent.eulerAngles += RotateCamera();
+        
 
         // パラメータを各種オブジェクトに反映
         parent.position = param.position;
@@ -60,9 +63,9 @@ public class CameraManager : MonoBehaviour {
         mainCamera.transform.localPosition = param.offset;
     }
     private Vector3 RotateCamera() {
-        Vector3 resultRotation;
-        float distanceX;
-        float distanceY;
+        //最終的に値を返す用のベクトル
+        Vector3 resultRotation = Vector3.zero;
+        
 
         #region TouchScreen
         #endregion
@@ -74,10 +77,11 @@ public class CameraManager : MonoBehaviour {
         var clickPos = click.position.ReadValue();
         var leftClick = click.leftButton;
 
+        //クリック時
         if (leftClick.wasPressedThisFrame) {
             startClickPos = clickPos;
         }
-
+        //押している間
         if (leftClick.isPressed) {
             currentClickPos = clickPos;
             distanceX = currentClickPos.x - startClickPos.x;
@@ -85,26 +89,18 @@ public class CameraManager : MonoBehaviour {
             Debug.Log($"X{distanceX}");
             Debug.Log($"Y{distanceY}");
         }
-
-
-        #endregion
-
-        resultRotation = Vector3.zero;
-
+        //離されたとき
+        if (leftClick.wasReleasedThisFrame) {
+            distanceX = distanceY = 0.0f;
+        }
+        resultRotation = new Vector3(
+            x: -distanceY * rotateSpeed,
+            y: distanceX * rotateSpeed
+        );
 
         return resultRotation;
-        //// マウスの右クリックを押している間
-        //if (_context.phase == InputActionPhase.Performed) {
-        //    // マウスの移動量
-        //    float mouseInputX = _context.ReadValue<Vector2>().x;
-        //    float mouseInputY = _context.ReadValue<Vector2>().y;
-        //    // targetの位置のY軸を中心に、回転（公転）する
-        //    transform.RotateAround(param.targetObj.transform.position, Vector3.up, mouseInputX * Time.deltaTime * 200f);
-        //    // カメラの垂直移動（※角度制限なし、必要が無ければコメントアウト）
-        //    transform.RotateAround(param.targetObj.transform.position, transform.right, mouseInputY * Time.deltaTime * 200f);
-        //}
-
-
-        //Debug.Log(inputPos);
+        #endregion
     }
+
+   
 }

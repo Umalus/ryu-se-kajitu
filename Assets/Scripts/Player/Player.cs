@@ -54,18 +54,27 @@ public class Player : MonoBehaviour {
 
     }
 
-
+    /// <summary>
+    /// コンボ値取得
+    /// </summary>
+    /// <returns></returns>
     public static int GetCombo() {
         return combo;
     }
-
+    /// <summary>
+    /// プレイヤーインプット用移動関数
+    /// </summary>
+    /// <param name="_context"></param>
     private void OnMovePreformed(InputAction.CallbackContext _context) {
         Vector2 inputDir = _context.ReadValue<Vector2>();
         playerDir = new Vector3(inputDir.x,0,inputDir.y);
 
         anim.SetBool("IsMove", true);
     }
-
+    /// <summary>
+    /// プレイヤーインプット用移動関数
+    /// </summary>
+    /// <param name="_context"></param>
     private void OnMoveCanceled(InputAction.CallbackContext _context) {
         playerDir = Vector3.zero;
         anim.SetBool("IsMove", false);

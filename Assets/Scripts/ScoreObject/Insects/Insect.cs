@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// “¾“_‚ğˆø‚¢‚Ä‚­‚éƒNƒ‰ƒX
+/// </summary>
 public class Insect : BaseScoreObject
 {
     [SerializeField]
@@ -16,13 +19,18 @@ public class Insect : BaseScoreObject
             Destroy(gameObject);
         }
 
-        FallFruit();
+        FallInsect();
     }
+    /// <summary>
+    /// ‰Šú‰»ŠÖ”
+    /// </summary>
     private void Initialize() {
         SetScore(scoreData.score);
     }
-
-    private void FallFruit() {
+    /// <summary>
+    /// ’‚ğ—‰º‚³‚¹‚é
+    /// </summary>
+    private void FallInsect() {
         Vector3 fallPos = transform.position;
         fallPos.y -= scoreData.fallSpeed;
         transform.position = fallPos;

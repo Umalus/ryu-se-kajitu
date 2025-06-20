@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// アイテムの基底クラス
+/// </summary>
 public abstract class BaseItem : MonoBehaviour
 {
     private void OnCollisionEnter(Collision collision) {
@@ -21,6 +24,8 @@ public abstract class BaseItem : MonoBehaviour
     {
         
     }
-
+    /// <summary>
+    /// 与える影響関数の抽象メソッド
+    /// </summary>
     public abstract void AddEffect();
 }
