@@ -93,10 +93,9 @@ public class CameraManager : MonoBehaviour {
         if (leftClick.wasReleasedThisFrame) {
             distanceX = distanceY = 0.0f;
         }
-        resultRotation = new Vector3(
-            x: -distanceY * rotateSpeed,
-            y: distanceX * rotateSpeed
-        );
+        
+        resultRotation.x = -distanceY * rotateSpeed;
+        resultRotation.y = distanceX * rotateSpeed;
 
         return resultRotation;
         #endregion

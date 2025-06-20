@@ -17,19 +17,20 @@ public class MiniMapCamera : MonoBehaviour
     /// 追尾する座標
     /// </summary>
     [SerializeField]
-    private Transform player = null;
+    private Transform targetPos = null;
     // Start is called before the first frame update
     void Start()
     {
         transform.position += offset;
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
+        //一度キャッシュして代入しなおすことでnewを回避
         Vector3 followPos = transform.position;
-        followPos.x = player.position.x;
-        followPos.z = player.position.z;
+        followPos.x = targetPos.position.x;
+        followPos.z = targetPos.position.z;
         transform.position = followPos;
     }
 }

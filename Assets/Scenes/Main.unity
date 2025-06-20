@@ -2110,7 +2110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: {x: 0, y: 10, z: 0}
-  player: {fileID: 2090994336}
+  targetPos: {fileID: 2090994336}
 --- !u!114 &1179599032
 MonoBehaviour:
   m_ObjectHideFlags: 0
