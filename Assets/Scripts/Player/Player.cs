@@ -48,8 +48,7 @@ public class Player : MonoBehaviour {
     private void Update() {
         if (!GameManager.instance.IsPlay) return;
         if(playerDir.sqrMagnitude >= Mathf.Epsilon) {
-            transform.LookAt(transform.position + playerDir);
-            transform.position += playerDir * playerVelocity * Time.deltaTime;
+            Move();
         }
 
     }
@@ -61,6 +60,11 @@ public class Player : MonoBehaviour {
     public static int GetCombo() {
         return combo;
     }
+    private void Move() {
+        transform.LookAt(transform.position + playerDir);
+        transform.position += playerDir * playerVelocity * Time.deltaTime;
+    }
+
     /// <summary>
     /// プレイヤーインプット用移動関数
     /// </summary>
