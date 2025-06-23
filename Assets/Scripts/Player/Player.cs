@@ -61,8 +61,10 @@ public class Player : MonoBehaviour {
         return combo;
     }
     private void Move() {
-        transform.LookAt(transform.position + playerDir);
-        transform.position += playerDir * playerVelocity * Time.deltaTime;
+        var cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1));
+        var moveDirection = cameraForward * playerDir.z + Camera.main.transform.right * playerDir.x;
+        transform.LookAt(transform.position + moveDirection);
+        transform.position += moveDirection * playerVelocity * Time.deltaTime;
     }
 
     /// <summary>

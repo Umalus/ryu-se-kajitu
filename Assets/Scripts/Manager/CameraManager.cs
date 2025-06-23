@@ -64,7 +64,8 @@ public class CameraManager : MonoBehaviour {
         mainCamera.transform.localPosition = param.offset;
     }
     private Vector3 RotateCamera() {
-        //最終的に値を返す用のベクトル
+        
+        
 
 
 #if true
@@ -123,12 +124,13 @@ public class CameraManager : MonoBehaviour {
         #endregion
 
 #endif
-        //もし指定範囲内なら現在の角度の値を返す
+        //もし指定範囲内(おおよそスティックの位置)なら現在の角度の値を返す
         if ((startClickPos.x < 460 && startClickPos.y < 200))
             return param.angles;
         cameraPos.x = -distanceY * rotateSpeed;
         cameraPos.y = distanceX * rotateSpeed;
 
+        
         return cameraPos;
         
     }
