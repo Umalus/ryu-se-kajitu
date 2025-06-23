@@ -25,6 +25,7 @@ public class CameraManager : MonoBehaviour {
     [SerializeField]
     private Transform child;
     //カメラ回転用メンバ変数
+    private Vector3 cameraPos;
     private Vector3 startClickPos = Vector3.zero;
     private Vector3 currentClickPos = Vector3.zero;
     private float distanceX = 0.0f;
@@ -34,7 +35,7 @@ public class CameraManager : MonoBehaviour {
 
     private void Update() {
         //カメラを回転
-        param.angles += RotateCamera();
+        //param.angles += RotateCamera();
     }
 
     private void LateUpdate() {
@@ -49,7 +50,7 @@ public class CameraManager : MonoBehaviour {
             b: param.targetObj.transform.position,
             t: Time.deltaTime * lerpTime);
         }
-
+        param.angles = RotateCamera();
         
 
         // パラメータを各種オブジェクトに反映
@@ -64,12 +65,35 @@ public class CameraManager : MonoBehaviour {
     }
     private Vector3 RotateCamera() {
         //最終的に値を返す用のベクトル
-        Vector3 resultRotation = Vector3.zero;
-        
 
+
+#if true
         #region TouchScreen
-        #endregion
+        var touch = Touchscreen.current;
 
+        Vector2 touchPos = touch.position.ReadValue();
+        var press = touch.press;
+
+        //クリック時
+        if (press.wasPressedThisFrame) {
+            startClickPos = touchPos;
+
+            Debug.Log(startClickPos.x);
+            Debug.Log(startClickPos.y);
+            if (startClickPos.x < 960 && startClickPos.y < 540)
+                return Vector3.zero;
+        }
+        //押している間
+        if (press.isPressed) {
+            currentClickPos = touchPos;
+            distanceX = currentClickPos.x - startClickPos.x;
+            distanceY = currentClickPos.y - startClickPos.y;
+            //Debug.Log($"X{distanceX}");
+            //Debug.Log($"Y{distanceY}");
+        }
+        #endregion
+#endif
+#if false
         #region Mouse
 
         var click = Mouse.current;
@@ -89,16 +113,18 @@ public class CameraManager : MonoBehaviour {
             Debug.Log($"X{distanceX}");
             Debug.Log($"Y{distanceY}");
         }
-        //離されたとき
-        if (leftClick.wasReleasedThisFrame) {
-            distanceX = distanceY = 0.0f;
-        }
-        
-        resultRotation.x = -distanceY * rotateSpeed;
-        resultRotation.y = distanceX * rotateSpeed;
-
-        return resultRotation;
+        ////離されたとき
+        //if (leftClick.wasReleasedThisFrame) {
+        //    distanceX = distanceY = 0.0f;
+        //}
         #endregion
+
+#endif
+        cameraPos.x = -distanceY * rotateSpeed;
+        cameraPos.y = distanceX * rotateSpeed;
+
+        return cameraPos;
+        
     }
 
    
