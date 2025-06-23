@@ -73,16 +73,15 @@ public class CameraManager : MonoBehaviour {
 
         Vector2 touchPos = touch.position.ReadValue();
         var press = touch.press;
-
         //クリック時
         if (press.wasPressedThisFrame) {
             startClickPos = touchPos;
 
             Debug.Log(startClickPos.x);
             Debug.Log(startClickPos.y);
-            if (startClickPos.x < 960 && startClickPos.y < 540)
-                return Vector3.zero;
+
         }
+
         //押している間
         if (press.isPressed) {
             currentClickPos = touchPos;
@@ -90,7 +89,10 @@ public class CameraManager : MonoBehaviour {
             distanceY = currentClickPos.y - startClickPos.y;
             //Debug.Log($"X{distanceX}");
             //Debug.Log($"Y{distanceY}");
+            
         }
+
+        
         #endregion
 #endif
 #if false
@@ -108,6 +110,7 @@ public class CameraManager : MonoBehaviour {
         //押している間
         if (leftClick.isPressed) {
             currentClickPos = clickPos;
+            //触った地点と現在の地点の距離を計算
             distanceX = currentClickPos.x - startClickPos.x;
             distanceY = currentClickPos.y - startClickPos.y;
             Debug.Log($"X{distanceX}");
@@ -120,6 +123,9 @@ public class CameraManager : MonoBehaviour {
         #endregion
 
 #endif
+        //もし指定範囲内なら現在の角度の値を返す
+        if ((startClickPos.x < 460 && startClickPos.y < 200))
+            return param.angles;
         cameraPos.x = -distanceY * rotateSpeed;
         cameraPos.y = distanceX * rotateSpeed;
 
