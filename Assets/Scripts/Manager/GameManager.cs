@@ -42,7 +42,8 @@ public class GameManager : MonoBehaviour {
         Application.targetFrameRate = 60;
         second = playTime;
         totalTime = minute * MINUTE + second;
-        
+
+        AudioManager.instance.PlayBGM(0);
 
         inputAction = InputSystemManager.instance.InputSystem;
 

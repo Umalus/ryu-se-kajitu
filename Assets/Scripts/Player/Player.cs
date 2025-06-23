@@ -61,9 +61,13 @@ public class Player : MonoBehaviour {
         return combo;
     }
     private void Move() {
+        //カメラの方向からXZ平面を取得
         var cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1));
+        //カメラの方向と入力から進む方向を決定
         var moveDirection = cameraForward * playerDir.z + Camera.main.transform.right * playerDir.x;
+        //進行方向に向かせる
         transform.LookAt(transform.position + moveDirection);
+        //実際に移動させる
         transform.position += moveDirection * playerVelocity * Time.deltaTime;
     }
 
@@ -72,9 +76,12 @@ public class Player : MonoBehaviour {
     /// </summary>
     /// <param name="_context"></param>
     private void OnMovePreformed(InputAction.CallbackContext _context) {
+        //コールバックの入力ベクトルを取得
         Vector2 inputDir = _context.ReadValue<Vector2>();
+        //進行方向に変換
         playerDir = new Vector3(inputDir.x,0,inputDir.y);
 
+        //アニメーション変更
         anim.SetBool("IsMove", true);
     }
     /// <summary>
@@ -82,7 +89,9 @@ public class Player : MonoBehaviour {
     /// </summary>
     /// <param name="_context"></param>
     private void OnMoveCanceled(InputAction.CallbackContext _context) {
+        //進行方向リセット
         playerDir = Vector3.zero;
+        //アニメーション変更
         anim.SetBool("IsMove", false);
     }
 }

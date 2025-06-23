@@ -35,7 +35,7 @@ public class CameraManager : MonoBehaviour {
 
     private void Update() {
         //カメラを回転
-        //param.angles += RotateCamera();
+        param.angles = RotateCamera();
     }
 
     private void LateUpdate() {
@@ -50,8 +50,9 @@ public class CameraManager : MonoBehaviour {
             b: param.targetObj.transform.position,
             t: Time.deltaTime * lerpTime);
         }
-        param.angles = RotateCamera();
-        
+        //カメラを回転
+        //param.angles = RotateCamera();
+
 
         // パラメータを各種オブジェクトに反映
         parent.position = param.position;
@@ -63,11 +64,16 @@ public class CameraManager : MonoBehaviour {
 
         mainCamera.transform.localPosition = param.offset;
     }
+
+    /// <summary>
+    /// カメラ回転
+    /// </summary>
+    /// <returns></returns>
     private Vector3 RotateCamera() {
-        
-        
 
 
+
+        //スマホ用タッチ検出
 #if true
         #region TouchScreen
         var touch = Touchscreen.current;
@@ -90,12 +96,18 @@ public class CameraManager : MonoBehaviour {
             distanceY = currentClickPos.y - startClickPos.y;
             //Debug.Log($"X{distanceX}");
             //Debug.Log($"Y{distanceY}");
-            
+
         }
 
-        
+        if (press.wasReleasedThisFrame) {
+            cameraPos.x = distanceX;
+            cameraPos.y = distanceY;
+        }
+
+
         #endregion
 #endif
+        //PC用クリック検出
 #if false
         #region Mouse
 
@@ -127,13 +139,13 @@ public class CameraManager : MonoBehaviour {
         //もし指定範囲内(おおよそスティックの位置)なら現在の角度の値を返す
         if ((startClickPos.x < 460 && startClickPos.y < 200))
             return param.angles;
-        cameraPos.x = -distanceY * rotateSpeed;
-        cameraPos.y = distanceX * rotateSpeed;
+        cameraPos = param.angles;
 
-        
+        cameraPos.x = -distanceY* rotateSpeed;
+        cameraPos.y = distanceX * rotateSpeed;
         return cameraPos;
-        
+
     }
 
-   
+
 }
