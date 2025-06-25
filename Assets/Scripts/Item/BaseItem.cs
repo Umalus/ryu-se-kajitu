@@ -28,4 +28,6 @@ public abstract class BaseItem : MonoBehaviour
     /// —^‚¦‚é‰e‹¿ŠÖ”‚Ì’ŠÛƒƒ\ƒbƒh
     /// </summary>
     public abstract void AddEffect();
+
+    public abstract void DeleteEffect();
 }

@@ -22,5 +22,10 @@ public class FallSpeedDown : BaseItem
     /// </summary>
     public override void AddEffect() {
         Fruit.SetFallSpeed(setSpeed);
+        Fruit.IsHalf = true;
+    }
+
+    public override void DeleteEffect() {
+        Fruit.IsHalf = false;
     }
 }

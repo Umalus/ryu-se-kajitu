@@ -8,6 +8,8 @@ public class Fruit : BaseScoreObject
     public BaseScoreData scoreData = null;
     [SerializeField]
     private static float fallSpeed;
+
+    public static bool IsHalf = false;
     private void Start() {
         Initialize();
     }
@@ -23,12 +25,13 @@ public class Fruit : BaseScoreObject
     }
     private void Initialize() {
         SetScore(scoreData.score);
+        if(!IsHalf)
         fallSpeed = scoreData.fallSpeed;
     }
 
     private void FallFruit() {
         Vector3 fallPos = transform.position;
-        fallPos.y -= scoreData.fallSpeed;
+        fallPos.y -= fallSpeed;
         transform.position = fallPos;
     }
 
