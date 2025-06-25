@@ -74,7 +74,7 @@ public class CameraManager : MonoBehaviour {
 
 
         //スマホ用タッチ検出
-#if false
+#if true
         #region TouchScreen
         var touch = Touchscreen.current;
 
@@ -98,7 +98,7 @@ public class CameraManager : MonoBehaviour {
             //Debug.Log($"Y{distanceY}");
 
         }
-
+        //離した時
         if (press.wasReleasedThisFrame) {
             cameraPos.x = distanceX;
             cameraPos.y = distanceY;
@@ -108,7 +108,7 @@ public class CameraManager : MonoBehaviour {
         #endregion
 #endif
         //PC用クリック検出
-#if true
+#if false
         #region Mouse
 
         var click = Mouse.current;

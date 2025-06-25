@@ -15,6 +15,7 @@ public class Insect : BaseScoreObject
 
     // Update is called once per frame
     void Update() {
+        //yÀ•W‚ª0ˆÈ‰º‚È‚çÁ‚·
         if (transform.position.y <= 0) {
             Destroy(gameObject);
         }

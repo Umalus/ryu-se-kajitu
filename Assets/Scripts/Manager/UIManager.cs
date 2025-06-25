@@ -6,7 +6,8 @@ using System.Text;
 
 public class UIManager : MonoBehaviour
 {
-    private enum textType {
+    //テキスト管理用列挙定数
+    private enum TextType {
         Invalid = -1,
         Timer,
         Score,
@@ -14,7 +15,7 @@ public class UIManager : MonoBehaviour
 
         Max,
     }
-
+    //テキストのリスト
     [SerializeField]
     private List<TextMeshProUGUI> textList = null;
     private StringBuilder stringBuilder = new StringBuilder();
@@ -27,21 +28,24 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        #region タイマー
         stringBuilder.Append(GameManager.instance.minute.ToString("00"));
         stringBuilder.Append(":");
         stringBuilder.Append(((int)GameManager.instance.second).ToString("00"));
-        textList[(int)textType.Timer].text =
+        textList[(int)TextType.Timer].text =
             stringBuilder.ToString();
         stringBuilder.Clear();
-
-        textList[(int)textType.Score].text =
-            "Score : " + ScoreManager.Score;
+        #endregion
+        //スコアのテキスト
+        textList[(int)TextType.Score].text =
+            "Score : " + ScoreManager.AllScore;
+        //ゲーム中は表示しないテキスト
         if (GameManager.instance.IsPlay) {
-            textList[(int)textType.Start].enabled = false;
-            textList[(int)textType.Start].text =
+            textList[(int)TextType.Start].enabled = false;
+            textList[(int)TextType.Start].text =
                 "Game over!!\nEnd to EscapeKey";
         }
         else
-            textList[(int)textType.Start].enabled = true;
+            textList[(int)TextType.Start].enabled = true;
     }
 }

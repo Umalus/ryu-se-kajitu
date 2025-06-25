@@ -21,6 +21,7 @@ public class MiniMapCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //最初にオフセット分座標をずらす
         transform.position += offset;
     }
 

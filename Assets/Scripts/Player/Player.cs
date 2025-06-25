@@ -68,7 +68,7 @@ public class Player : MonoBehaviour {
         //is•ûŒü‚ÉŒü‚©‚¹‚é
         transform.LookAt(transform.position + moveDirection);
         //ÀÛ‚ÉˆÚ“®‚³‚¹‚é
-        transform.position += moveDirection * playerVelocity * Time.deltaTime;
+        transform.position += playerVelocity * Time.deltaTime * moveDirection;
     }
 
     /// <summary>

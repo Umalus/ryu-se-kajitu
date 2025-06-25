@@ -57,8 +57,11 @@ public class GameManager : MonoBehaviour {
         Timer();
         Phase();
     }
-
+    /// <summary>
+    /// 時間管理
+    /// </summary>
     private void Timer() {
+        //タイマーが0以下なら処理しない
         if (second <= 0) {
             second = 0;
             return;
@@ -74,7 +77,11 @@ public class GameManager : MonoBehaviour {
         prevTime = second;
     }
 
+    /// <summary>
+    /// フェーズ管理
+    /// </summary>
     private void Phase() {
+        //総時間が指定の値の範囲内ならフェーズを切り替える
         if (InRange((int)totalTime,1,30))
             phase = GamePhase.ending;
         else if (InRange((int)totalTime, 30, 60))
@@ -87,11 +94,18 @@ public class GameManager : MonoBehaviour {
         }
            
     }
-
+    /// <summary>
+    /// ゲーム開始
+    /// </summary>
+    /// <param name="_context"></param>
     private void OnStartPreformed(InputAction.CallbackContext _context) {
         IsPlay = true;
     }
 
+    /// <summary>
+    /// ゲーム終了
+    /// </summary>
+    /// <param name="_context"></param>
     private void OnEndPreformed(InputAction.CallbackContext _context) {
 #if UNITY_EDITOR
         EditorApplication.isPlaying = false;

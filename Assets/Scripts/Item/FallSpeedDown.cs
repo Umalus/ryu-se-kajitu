@@ -7,9 +7,10 @@ using UnityEngine;
 /// </summary>
 public class FallSpeedDown : BaseItem
 {
+    //スピードを取得するためのデータ
     [SerializeField]
     private BaseScoreData scoreData;
-
+    //設定するためのスピード
     private float setSpeed = 0.0f;
     
     // Start is called before the first frame update
@@ -18,13 +19,15 @@ public class FallSpeedDown : BaseItem
         setSpeed = scoreData.fallSpeed * 0.5f;
     }
     /// <summary>
-    /// 取ったら与える影響
+    /// 取ったら与える効果
     /// </summary>
     public override void AddEffect() {
         Fruit.SetFallSpeed(setSpeed);
         Fruit.IsHalf = true;
     }
-
+    /// <summary>
+    /// 効果を消す
+    /// </summary>
     public override void DeleteEffect() {
         Fruit.IsHalf = false;
     }

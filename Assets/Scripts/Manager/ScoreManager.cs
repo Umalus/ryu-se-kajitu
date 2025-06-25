@@ -6,24 +6,28 @@ using static CommonModul;
 using static GameConst;
 
 public class ScoreManager {
-    public static int Score = 0;
+    public static int AllScore = 0;
     public static void AddScore(BaseScoreObject _scoreObject,int _combo) {
-        Score += _scoreObject.score;
+        AllScore += _scoreObject.score;
         CountScore(_combo);
 
-        if (Score < 0)
-            Score = 0;
+        if (AllScore < 0)
+            AllScore = 0;
     }
-
+    /// <summary>
+    /// スコアカウント関数
+    /// </summary>
+    /// <param name="_combo"></param>
     public static void CountScore(int _combo) {
+        //各コンボの範囲ないかどうかを判定
         if (InRange(_combo, FRUIT_FIRST_MIN, FRUIT_FIRST_MAX)) {
-            Score += 100;
+            AllScore += 100;
         }
         else if (InRange(_combo, FRUIT_FIRST_MAX, FRUIT_SECOND_MAX)) {
-            Score += 200;
+            AllScore += 200;
         }
         else if (InRange(_combo, FRUIT_SECOND_MAX, FRUIT_THIRD_MAX)) {
-            Score += 300;
+            AllScore += 300;
         }
     }
 }
