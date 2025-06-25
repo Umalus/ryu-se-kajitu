@@ -69,6 +69,8 @@ public class Player : MonoBehaviour {
         transform.LookAt(transform.position + moveDirection);
         //実際に移動させる
         transform.position += playerVelocity * Time.deltaTime * moveDirection;
+        //SE再生
+        AudioManager.instance.PlaySE(0);
     }
 
     /// <summary>
@@ -83,6 +85,7 @@ public class Player : MonoBehaviour {
 
         //アニメーション変更
         anim.SetBool("IsMove", true);
+        
     }
     /// <summary>
     /// プレイヤーインプット用移動関数

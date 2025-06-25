@@ -33,6 +33,9 @@ public class CameraManager : MonoBehaviour {
     [SerializeField]
     private float rotateSpeed = 1.0f;
 
+
+    [SerializeField]
+    private bool UseMouse = true;
     private void Update() {
         //カメラを回転
         param.angles = RotateCamera();
@@ -74,74 +77,79 @@ public class CameraManager : MonoBehaviour {
 
 
         //スマホ用タッチ検出
-#if true
-        #region TouchScreen
-        var touch = Touchscreen.current;
+        if (UseMouse) {
+            #region Mouse
 
-        Vector2 touchPos = touch.position.ReadValue();
-        var press = touch.press;
-        //クリック時
-        if (press.wasPressedThisFrame) {
-            startClickPos = touchPos;
+            var click = Mouse.current;
 
-            Debug.Log(startClickPos.x);
-            Debug.Log(startClickPos.y);
+            var clickPos = click.position.ReadValue();
+            var leftClick = click.leftButton;
 
+            //クリック時
+            if (leftClick.wasPressedThisFrame) {
+                startClickPos = clickPos;
+            }
+            //押している間
+            if (leftClick.isPressed) {
+                currentClickPos = clickPos;
+                //触った地点と現在の地点の距離を計算
+                distanceX = currentClickPos.x - startClickPos.x;
+                distanceY = currentClickPos.y - startClickPos.y;
+                Debug.Log($"X{distanceX}");
+                Debug.Log($"Y{distanceY}");
+            }
+            ////離されたとき
+            //if (leftClick.wasReleasedThisFrame) {
+            //    distanceX = distanceY = 0.0f;
+            //}
+            #endregion
         }
 
-        //押している間
-        if (press.isPressed) {
-            currentClickPos = touchPos;
-            distanceX = currentClickPos.x - startClickPos.x;
-            distanceY = currentClickPos.y - startClickPos.y;
-            //Debug.Log($"X{distanceX}");
-            //Debug.Log($"Y{distanceY}");
 
-        }
-        //離した時
-        if (press.wasReleasedThisFrame) {
-            cameraPos.x = distanceX;
-            cameraPos.y = distanceY;
-        }
-
-
-        #endregion
-#endif
         //PC用クリック検出
-#if false
-        #region Mouse
+        else {
 
-        var click = Mouse.current;
+            #region TouchScreen
+            var touch = Touchscreen.current;
 
-        var clickPos = click.position.ReadValue();
-        var leftClick = click.leftButton;
+            Vector2 touchPos = touch.position.ReadValue();
+            var press = touch.press;
+            //クリック時
+            if (press.wasPressedThisFrame) {
+                startClickPos = touchPos;
 
-        //クリック時
-        if (leftClick.wasPressedThisFrame) {
-            startClickPos = clickPos;
+                Debug.Log(startClickPos.x);
+                Debug.Log(startClickPos.y);
+
+            }
+
+            //押している間
+            if (press.isPressed) {
+                currentClickPos = touchPos;
+                distanceX = currentClickPos.x - startClickPos.x;
+                distanceY = currentClickPos.y - startClickPos.y;
+                //Debug.Log($"X{distanceX}");
+                //Debug.Log($"Y{distanceY}");
+
+            }
+            //離した時
+            if (press.wasReleasedThisFrame) {
+                cameraPos.x = distanceX;
+                cameraPos.y = distanceY;
+            }
+
+
+            #endregion
         }
-        //押している間
-        if (leftClick.isPressed) {
-            currentClickPos = clickPos;
-            //触った地点と現在の地点の距離を計算
-            distanceX = currentClickPos.x - startClickPos.x;
-            distanceY = currentClickPos.y - startClickPos.y;
-            Debug.Log($"X{distanceX}");
-            Debug.Log($"Y{distanceY}");
-        }
-        ////離されたとき
-        //if (leftClick.wasReleasedThisFrame) {
-        //    distanceX = distanceY = 0.0f;
-        //}
-        #endregion
 
-#endif
+
+
         //もし指定範囲内(おおよそスティックの位置)なら現在の角度の値を返す
         if ((startClickPos.x < 900 && startClickPos.y < 450))
             return param.angles;
         cameraPos = param.angles;
 
-        cameraPos.x = -distanceY* rotateSpeed;
+        cameraPos.x = -distanceY * rotateSpeed;
         cameraPos.y = distanceX * rotateSpeed;
         //もしカメラのX軸回転が0以下なら0にする
         if (cameraPos.x <= 0)

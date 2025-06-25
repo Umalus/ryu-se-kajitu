@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c546cd852c5b1be4f99e3047cd368691, type: 3}
   m_Name: SEAssigner
   m_EditorClassIdentifier: 
-  seList: []
+  seList:
+  - {fileID: 8300000, guid: 8bb747be2e3584c4fb649aa90db6d4b2, type: 3}
