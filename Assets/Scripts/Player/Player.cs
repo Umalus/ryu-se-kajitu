@@ -97,4 +97,5 @@ public class Player : MonoBehaviour {
         //アニメーション変更
         anim.SetBool("IsMove", false);
     }
+    
 }
