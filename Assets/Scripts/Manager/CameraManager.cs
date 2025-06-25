@@ -137,12 +137,18 @@ public class CameraManager : MonoBehaviour {
 
 #endif
         //もし指定範囲内(おおよそスティックの位置)なら現在の角度の値を返す
-        if ((startClickPos.x < 460 && startClickPos.y < 200))
+        if ((startClickPos.x < 900 && startClickPos.y < 450))
             return param.angles;
         cameraPos = param.angles;
 
         cameraPos.x = -distanceY* rotateSpeed;
         cameraPos.y = distanceX * rotateSpeed;
+        //もしカメラのX軸回転が0以下なら0にする
+        if (cameraPos.x <= 0)
+            cameraPos.x = 0.0f;
+        //もしカメラのY軸回転が85以上なら85にする
+        if (cameraPos.x >= 85)
+            cameraPos.x = 85.0f;
         return cameraPos;
 
     }
