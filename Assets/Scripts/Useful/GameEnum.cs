@@ -29,4 +29,13 @@ public static class GameEnum
 
         max,
     }
+
+    public enum SEIndex{
+        Invalid = -1,
+        FootSound,
+        InsectSound,
+        FruitSound,
+
+        Max
+    }
 }

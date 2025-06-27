@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: InsectData
   m_EditorClassIdentifier: 
   score: -300
-  fallSpeed: 0.1
+  fallSpeed: 0.05

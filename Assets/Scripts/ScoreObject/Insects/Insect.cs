@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using static GameEnum;
+
 /// <summary>
 /// 得点を引いてくるクラス
 /// </summary>
@@ -15,12 +17,10 @@ public class Insect : BaseScoreObject
 
     // Update is called once per frame
     void Update() {
-        //y座標が0以下なら消す
-        if (transform.position.y <= 0) {
-            Destroy(gameObject);
-        }
-
+        //降らせる
         FallInsect();
+        //破棄する処理
+        DeleteObject((int)SEIndex.InsectSound);
     }
     /// <summary>
     /// 初期化関数

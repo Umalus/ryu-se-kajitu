@@ -37,18 +37,21 @@ public class AudioManager:MonoBehaviour{
     public void StopBGM() {
         bgmAudioSource.Stop();
     }
-    /// <summary>
-    /// SEの再生
-    /// </summary>
-    /// <param name="_seID"></param>
-    public void PlaySE(int _seID) {
+   /// <summary>
+   /// SEの再生
+   /// </summary>
+   /// <param name="_seID"></param>
+   /// <param name="_volume"></param>
+    public void PlaySE(int _seID,float _volume = 1.0f, bool _isLoop = false) {
         //使用していないオーディオソースを探す
         for(int i = 0,max = seAudioSources.Length; i < max; i++) {
             AudioSource source = seAudioSources[i];
+            source.loop = _isLoop;
             if (source == null ||
                 source.isPlaying) continue;
             //使われていないオーディオソースがあれば設定し再生
             source.clip = se.seList[_seID];
+            source.volume = _volume;
             source.PlayOneShot(source.clip);
         }
 

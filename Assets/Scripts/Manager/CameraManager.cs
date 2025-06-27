@@ -113,6 +113,8 @@ public class CameraManager : MonoBehaviour {
             var touch = Touchscreen.current;
 
             Vector2 touchPos = touch.position.ReadValue();
+            if (touchPos == null) return Vector3.zero;
+
             var press = touch.press;
             //ƒNƒŠƒbƒNŽž
             if (press.wasPressedThisFrame) {

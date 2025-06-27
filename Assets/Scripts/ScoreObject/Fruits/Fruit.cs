@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fruit : BaseScoreObject
-{
+using static GameEnum;
+
+public class Fruit : BaseScoreObject {
     [SerializeField]
-    public BaseScoreData scoreData = null;
+    private BaseScoreData scoreData = null;
     [SerializeField]
     private static float fallSpeed;
 
@@ -15,18 +16,16 @@ public class Fruit : BaseScoreObject
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if(transform.position.y <= 0) {
-            Destroy(gameObject);
-        }
-
+    void Update() {
+        //~‚ç‚¹‚é
         FallFruit();
+        //”jŠü‚·‚éˆ—
+        DeleteObject((int)SEIndex.FruitSound);
     }
     private void Initialize() {
         SetScore(scoreData.score);
-        if(!IsHalf)
-        fallSpeed = scoreData.fallSpeed;
+        if (!IsHalf)
+            fallSpeed = scoreData.fallSpeed;
     }
 
     private void FallFruit() {
@@ -38,7 +37,7 @@ public class Fruit : BaseScoreObject
     public void SetScoreData(BaseScoreData _scoreData) {
         scoreData = _scoreData;
     }
-    
+
     public static void SetFallSpeed(float _speed) {
         fallSpeed = _speed;
     }

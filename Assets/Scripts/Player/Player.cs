@@ -24,14 +24,13 @@ public class Player : MonoBehaviour {
             BaseScoreObject addScoreObj = other.gameObject.GetComponent<BaseScoreObject>();
             combo++;
             ScoreManager.AddScore(addScoreObj,combo);
-            Debug.Log(combo + "combo!");
-            Destroy(other.gameObject);
+            addScoreObj.SetIsGet(true);
         }
         else if (other.gameObject.CompareTag("Insect")) {
             BaseScoreObject addScoreObj = other.gameObject.GetComponent<BaseScoreObject>();
             combo = 0;
+            addScoreObj.SetIsGet(true);
             ScoreManager.AddScore(addScoreObj, combo);
-            Destroy(other.gameObject);
         }
     }
     void Start() {
@@ -70,7 +69,7 @@ public class Player : MonoBehaviour {
         //é¿ç€Ç…à⁄ìÆÇ≥ÇπÇÈ
         transform.position += playerVelocity * Time.deltaTime * moveDirection;
         //SEçƒê∂
-        AudioManager.instance.PlaySE(0);
+        //AudioManager.instance.PlaySE(0,0.5f,true);
     }
 
     /// <summary>

@@ -7,6 +7,25 @@ using UnityEngine;
 public abstract class BaseScoreObject : MonoBehaviour
 {
     public int score { get; private set; } = 0;
+
+    public bool isGet { get; protected set; }
     
     public void SetScore(int _value) { score = _value; }
+
+    /// <summary>
+    /// オブジェクトを破棄した時の処理
+    /// </summary>
+    /// <param name="_seIndex"></param>
+    public void DeleteObject(int _seIndex) {
+        if(transform.position.y < 0 || isGet) {
+            Destroy(gameObject);
+            //SE再生
+            if (isGet)
+                AudioManager.instance.PlaySE(_seIndex);
+        }
+    }
+
+    public void SetIsGet(bool _value) {
+        isGet = _value;
+    }
 }

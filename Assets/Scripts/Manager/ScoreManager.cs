@@ -8,9 +8,13 @@ using static GameConst;
 public class ScoreManager {
     public static int AllScore = 0;
     public static void AddScore(BaseScoreObject _scoreObject,int _combo) {
+        //管理している総スコアに加算
         AllScore += _scoreObject.score;
         CountScore(_combo);
 
+
+
+        //もし総スコアが0を下回ったら0にする
         if (AllScore < 0)
             AllScore = 0;
     }
