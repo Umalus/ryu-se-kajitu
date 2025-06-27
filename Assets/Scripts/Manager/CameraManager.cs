@@ -74,10 +74,7 @@ public class CameraManager : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     private Vector3 RotateCamera() {
-
-
-
-        //スマホ用タッチ検出
+        //PC用クリック検出
         if (UseMouse) {
             #region Mouse
 
@@ -107,7 +104,8 @@ public class CameraManager : MonoBehaviour {
         }
 
 
-        //PC用クリック検出
+        
+        //スマホ用タッチ検出
         else {
 
             #region TouchScreen

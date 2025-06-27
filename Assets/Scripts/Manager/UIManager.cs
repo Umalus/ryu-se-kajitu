@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using System.Text;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class UIManager : MonoBehaviour
     //テキストのリスト
     [SerializeField]
     private List<TextMeshProUGUI> textList = null;
+    [SerializeField]
+    private List<Image> images = null;
     private StringBuilder stringBuilder = new StringBuilder();
     // Start is called before the first frame update
     void Start()
@@ -42,10 +45,14 @@ public class UIManager : MonoBehaviour
         //ゲーム中は表示しないテキスト
         if (GameManager.instance.IsPlay) {
             textList[(int)TextType.Start].enabled = false;
+            images[0].enabled = false;
             textList[(int)TextType.Start].text =
                 "Game over!!\nEnd to EscapeKey";
         }
-        else
+        else {
             textList[(int)TextType.Start].enabled = true;
+            images[0].enabled = true;
+        }
+           
     }
 }

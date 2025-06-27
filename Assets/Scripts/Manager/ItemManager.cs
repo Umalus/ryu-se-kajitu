@@ -16,6 +16,11 @@ public class ItemManager : MonoBehaviour {
     private float timer = 0.0f;
     private const float INTERVAL = 10.0f;
     private const float INSTANCERANGE = 10.0f;
+
+    [SerializeField]
+    private Transform UseRoot = null;
+    [SerializeField]
+    private Transform UnuseRoot = null;
     private void Start() {
         instance = this;
     }
