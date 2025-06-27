@@ -13,21 +13,12 @@ public abstract class BaseItem : MonoBehaviour
 
         Debug.Log("!!!");
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     /// <summary>
     /// —^‚¦‚é‰e‹¿ŠÖ”‚Ì’ŠÛƒƒ\ƒbƒh
     /// </summary>
     public abstract void AddEffect();
-
+    /// <summary>
+    /// Œø‰Ê‚ğÁ‚·
+    /// </summary>
     public abstract void DeleteEffect();
 }

@@ -3,20 +3,19 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows;
 
 public class Player : MonoBehaviour {
-    //[SerializeField]
-    //private Joystick useJoyStick = null;
+    //InputSystem
     private Bozu inputActions = null;
-
+    //プレイヤーの速度
     [SerializeField]
     private float playerVelocity = 5.0f;
+    //得点加算用コンボ
     [SerializeField]
     private static int combo = 0;
-    public int Score = 0;
+    //プレイヤーの方向
     private Vector3 playerDir;
-    Rigidbody rb;
+    //アニメーション変更用アニメーター
     private Animator anim = null;
     // Start is called before the first frame update
     private void OnTriggerEnter(Collider other) {
@@ -34,7 +33,6 @@ public class Player : MonoBehaviour {
         }
     }
     void Start() {
-        rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         inputActions = InputSystemManager.instance.InputSystem;
 

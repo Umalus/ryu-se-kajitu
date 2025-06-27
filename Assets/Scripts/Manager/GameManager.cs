@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour {
     /// インスタンス
     /// </summary>
     public static GameManager instance = null;
-
+    //自身のInputSystem
     private Bozu inputAction = null;
 
     /// <summary>
@@ -38,13 +38,16 @@ public class GameManager : MonoBehaviour {
     public GamePhase phase { get; private set; } = 0;
     // Start is called before the first frame update
     void Start() {
+        //外部から取得しやすいように自身のインスタンスを設定
         instance = this;
+        //フレームレートを固定
         Application.targetFrameRate = 60;
+        //時間設定
         second = playTime;
         totalTime = minute * MINUTE + second;
-
+        //BGM再生
         AudioManager.instance.PlayBGM(0);
-
+        //inputSystemの初期化
         inputAction = InputSystemManager.instance.InputSystem;
 
         inputAction.GameManager.Start.performed += OnStartPreformed;
@@ -53,8 +56,11 @@ public class GameManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        //プレイできる状態でないなら処理しない
         if (!IsPlay) return;
+        //タイマー処理
         Timer();
+        //フェーズ処理
         Phase();
     }
     /// <summary>

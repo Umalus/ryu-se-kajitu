@@ -13,7 +13,9 @@ public class OnlyFruit : BaseItem
     public override void AddEffect() {
         FruitManager.instance.OnlyFruit = true;
     }
-
+    /// <summary>
+    /// Œø‰Ê‚ğÁ‚·
+    /// </summary>
     public override void DeleteEffect() {
         FruitManager.instance.OnlyFruit = false;
     }

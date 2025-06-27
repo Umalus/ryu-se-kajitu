@@ -29,7 +29,9 @@ public static class GameEnum
 
         max,
     }
-
+    /// <summary>
+    /// SEŠÇ——p—ñ‹“’è”
+    /// </summary>
     public enum SEIndex{
         Invalid = -1,
         FootSound,

@@ -24,6 +24,7 @@ public class CameraManager : MonoBehaviour {
     private Transform parent;
     [SerializeField]
     private Transform child;
+    #region カメラ回転
     //カメラ回転用メンバ変数
     private Vector3 cameraPos;
     private Vector3 startClickPos = Vector3.zero;
@@ -32,10 +33,10 @@ public class CameraManager : MonoBehaviour {
     private float distanceY = 0.0f;
     [SerializeField]
     private float rotateSpeed = 1.0f;
-
-
+    #endregion
+    //マウスかスマホかどうか(デバッグ用)
     [SerializeField]
-    private bool UseMouse = true;
+    private bool UseMouse = false;
     private void Update() {
         //カメラを回転
         param.angles = RotateCamera();
@@ -150,7 +151,7 @@ public class CameraManager : MonoBehaviour {
         if ((startClickPos.x < 900 && startClickPos.y < 450))
             return param.angles;
         cameraPos = param.angles;
-
+        //算出距離からポジションを変更
         cameraPos.x = -distanceY * rotateSpeed;
         cameraPos.y = distanceX * rotateSpeed;
         //もしカメラのX軸回転が0以下なら0にする

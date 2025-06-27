@@ -15,10 +15,13 @@ public class FruitManager : MonoBehaviour {
     private List<GameObject> originPrefabs = null;
     [SerializeField, Header("¶¬”ÍˆÍ")]
     private float InstanceRange = 0;
+    //¶¬ˆÊ’u
     [SerializeField]
     private Vector3 InstancePos = Vector3.zero;
+    //¶¬‚·‚é‚½‚ß‚Ì•Ï”
     [SerializeField]
     private int instanceValue = -1;
+    //¶¬‚·‚é‚Ü‚Å‚ÌŠÔ
     [SerializeField]
     private float instanceTimer = 0.0f;
     public bool OnlyFruit = false;
@@ -99,8 +102,6 @@ public class FruitManager : MonoBehaviour {
                     instanceTimer = 0.0f;
                 }
             }
-
-
         }
     }
 }

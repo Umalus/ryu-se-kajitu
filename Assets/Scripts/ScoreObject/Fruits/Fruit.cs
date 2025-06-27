@@ -9,7 +9,7 @@ public class Fruit : BaseScoreObject {
     private BaseScoreData scoreData = null;
     [SerializeField]
     private static float fallSpeed;
-
+    //速度半減かどうか
     public static bool IsHalf = false;
     private void Start() {
         Initialize();
@@ -23,21 +23,25 @@ public class Fruit : BaseScoreObject {
         DeleteObject((int)SEIndex.FruitSound);
     }
     private void Initialize() {
+        //スコアデータに保存されてるスコアを代入
         SetScore(scoreData.score);
+        //もしスピード半分状態じゃなければ生成時に落ちる速度を再設定
         if (!IsHalf)
             fallSpeed = scoreData.fallSpeed;
     }
-
+    /// <summary>
+    /// 落下処理
+    /// </summary>
     private void FallFruit() {
+        //ポジションをキャッシュしnewを回避
         Vector3 fallPos = transform.position;
         fallPos.y -= fallSpeed;
         transform.position = fallPos;
     }
-
-    public void SetScoreData(BaseScoreData _scoreData) {
-        scoreData = _scoreData;
-    }
-
+    /// <summary>
+    /// 落下速度設定
+    /// </summary>
+    /// <param name="_speed"></param>
     public static void SetFallSpeed(float _speed) {
         fallSpeed = _speed;
     }
