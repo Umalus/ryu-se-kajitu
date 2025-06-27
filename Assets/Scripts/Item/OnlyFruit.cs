@@ -7,6 +7,10 @@ using UnityEngine;
 /// </summary>
 public class OnlyFruit : BaseItem
 {
+    private new void Update() {
+        base.Update();
+    }
+
     /// <summary>
     /// Žæ‚Á‚½‚ç—^‚¦‚ç‚ê‚é‰e‹¿
     /// </summary>

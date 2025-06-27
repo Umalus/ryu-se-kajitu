@@ -18,6 +18,10 @@ public class FallSpeedDown : BaseItem
     {
         setSpeed = scoreData.fallSpeed * 0.5f;
     }
+    private new void Update() {
+        base.Update();
+    }
+
     /// <summary>
     /// Žæ‚Á‚½‚ç—^‚¦‚éŒø‰Ê
     /// </summary>
@@ -31,4 +35,6 @@ public class FallSpeedDown : BaseItem
     public override void DeleteEffect() {
         Fruit.IsHalf = false;
     }
+
+    
 }

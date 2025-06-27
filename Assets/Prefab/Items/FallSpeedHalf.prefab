@@ -120,4 +120,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a91ebee473a0ccc4faaa9636bd1d6f8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fallSpeed: 0.01
   scoreData: {fileID: 11400000, guid: 8745f1a84850c8e49a947534817966c6, type: 2}

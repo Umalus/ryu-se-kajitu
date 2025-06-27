@@ -7,12 +7,21 @@ using UnityEngine;
 /// </summary>
 public abstract class BaseItem : MonoBehaviour
 {
+    [SerializeField]
+    protected float fallSpeed = 0.0f;
+
     private void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.CompareTag("Player"))
             AddEffect();
 
         Debug.Log("!!!");
     }
+    protected void Update() {
+        FallItem();
+        
+
+    }
+
     /// <summary>
     /// —^‚¦‚é‰e‹¿ŠÖ”‚Ì’ŠÛƒƒ\ƒbƒh
     /// </summary>
@@ -21,4 +30,12 @@ public abstract class BaseItem : MonoBehaviour
     /// Œø‰Ê‚ğÁ‚·
     /// </summary>
     public abstract void DeleteEffect();
+    public void FallItem() {
+        Vector3 fallPosition = transform.position;
+        fallPosition.y -= fallSpeed;
+        
+        if (fallPosition.y <= 0)
+            fallPosition.y = 0;
+        transform.position = fallPosition;
+    }
 }
