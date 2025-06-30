@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +8,20 @@ using UnityEngine;
 /// </summary>
 public class OnlyFruit : BaseItem
 {
+    private static bool IsRunningTime = false;
+    [SerializeField]
+    float timer = 0.0f;
+
+    
     private new void Update() {
         base.Update();
+        if (IsRunningTime)
+            timer += Time.deltaTime;
+
+        if(timer >= 10.0f) {
+            DeleteEffect();
+            Destroy(gameObject);
+        }
     }
 
     /// <summary>

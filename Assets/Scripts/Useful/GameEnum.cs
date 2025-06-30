@@ -37,6 +37,7 @@ public static class GameEnum
         FootSound,
         InsectSound,
         FruitSound,
+        ItemSound,
 
         Max
     }

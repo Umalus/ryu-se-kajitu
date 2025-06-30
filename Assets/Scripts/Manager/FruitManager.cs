@@ -62,7 +62,7 @@ public class FruitManager : MonoBehaviour {
                 break;
             case GamePhase.ending:
                 interval = 0.1f;
-                fruitRatio = 3;
+                fruitRatio = 4;
                 break;
             case GamePhase.PhaseEnd:
                 interval = -1.0f;
