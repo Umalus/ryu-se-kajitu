@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour {
 
         Max,
     }
+    private int prevCombo = 0;
     //テキストのリスト
     [SerializeField]
     private List<TextMeshProUGUI> textList = null;
@@ -66,6 +67,5 @@ public class UIManager : MonoBehaviour {
             textList[(int)TextType.Start].enabled = true;
             images[0].enabled = true;
         }
-
     }
 }
