@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
         Timer,
         Score,
         Start,
+        Combo,
 
         Max,
     }
@@ -42,6 +43,9 @@ public class UIManager : MonoBehaviour
         //スコアのテキスト
         textList[(int)TextType.Score].text =
             "Score : " + ScoreManager.AllScore;
+        //コンボのUI
+
+
         //ゲーム中は表示しないテキスト
         if (GameManager.instance.IsPlay) {
             textList[(int)TextType.Start].enabled = false;
