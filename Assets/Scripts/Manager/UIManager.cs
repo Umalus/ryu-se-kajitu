@@ -5,8 +5,9 @@ using UnityEngine;
 using System.Text;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
-{
+using static GameConst;
+
+public class UIManager : MonoBehaviour {
     //テキスト管理用列挙定数
     private enum TextType {
         Invalid = -1,
@@ -24,14 +25,12 @@ public class UIManager : MonoBehaviour
     private List<Image> images = null;
     private StringBuilder stringBuilder = new StringBuilder();
     // Start is called before the first frame update
-    void Start()
-    {
-        
+    void Start() {
+
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         #region タイマー
         stringBuilder.Append(GameManager.instance.minute.ToString("00"));
         stringBuilder.Append(":");
@@ -44,6 +43,16 @@ public class UIManager : MonoBehaviour
         textList[(int)TextType.Score].text =
             "Score : " + ScoreManager.AllScore;
         //コンボのUI
+        if (Player.GetCombo() >= FRUIT_FIRST_MIN) {
+            stringBuilder.Append(Player.GetCombo().ToString());
+            stringBuilder.Append("combo!!!\n+");
+            stringBuilder.Append(ScoreManager.BonusScore);
+            textList[(int)TextType.Combo].text =
+                stringBuilder.ToString();
+            stringBuilder.Clear();
+        }
+        else
+            textList[(int)TextType.Combo].text = null;
 
 
         //ゲーム中は表示しないテキスト
@@ -57,6 +66,6 @@ public class UIManager : MonoBehaviour
             textList[(int)TextType.Start].enabled = true;
             images[0].enabled = true;
         }
-           
+
     }
 }

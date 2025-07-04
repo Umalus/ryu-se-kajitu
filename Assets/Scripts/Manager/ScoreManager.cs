@@ -7,6 +7,7 @@ using static GameConst;
 
 public class ScoreManager {
     public static int AllScore = 0;
+    public static int BonusScore = 0;
     public static void AddScore(BaseScoreObject _scoreObject,int _combo) {
         //管理している総スコアに加算
         AllScore += _scoreObject.score;
@@ -22,13 +23,14 @@ public class ScoreManager {
     public static void CountScore(int _combo) {
         //各コンボの範囲ないかどうかを判定
         if (InRange(_combo, FRUIT_FIRST_MIN, FRUIT_FIRST_MAX)) {
-            AllScore += 100;
+            BonusScore = 100;
         }
         else if (InRange(_combo, FRUIT_FIRST_MAX, FRUIT_SECOND_MAX)) {
-            AllScore += 200;
+            BonusScore = 200;
         }
         else if (InRange(_combo, FRUIT_SECOND_MAX, FRUIT_THIRD_MAX)) {
-            AllScore += 300;
+            BonusScore = 300;
         }
+        AllScore += BonusScore;
     }
 }
