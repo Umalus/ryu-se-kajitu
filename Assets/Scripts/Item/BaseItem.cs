@@ -32,6 +32,9 @@ public abstract class BaseItem : MonoBehaviour
     }
 
     protected void Update() {
+        if (!GameManager.instance.IsPlay)
+            UnuseObject(this, categoryID);
+        
         FallItem();
         
 

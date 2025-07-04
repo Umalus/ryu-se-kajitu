@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using static GameEnum;
+using static ItemUtility;
 
 /// <summary>
 /// フルーツのみ降らせるアイテム
@@ -24,7 +25,7 @@ public class OnlyFruit : BaseItem
 
         if(timer >= 10.0f) {
             DeleteEffect();
-            Destroy(gameObject);
+            UnuseObject(this, categoryID);
         }
     }
 

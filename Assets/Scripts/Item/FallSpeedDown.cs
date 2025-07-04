@@ -1,6 +1,7 @@
 using UnityEngine;
 
 using static GameEnum;
+using static ItemUtility;
 /// <summary>
 /// 落ちてくるスピードを半分にする
 /// </summary>
@@ -39,7 +40,7 @@ public class FallSpeedDown : BaseItem
             //付与された効果を消す
             DeleteEffect();
             //オブジェクトを消す
-            Destroy(gameObject);
+            UnuseObject(this, categoryID);
             //タイマーを止める
             IsRunningTime = false;
             //タイマーリセット
