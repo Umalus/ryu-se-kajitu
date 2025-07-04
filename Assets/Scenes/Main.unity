@@ -1381,7 +1381,7 @@ MonoBehaviour:
   parent: {fileID: 697290930}
   child: {fileID: 1095845813}
   rotateSpeed: 0.25
-  UseMouse: 0
+  UseMouse: 1
 --- !u!1 &862774459
 GameObject:
   m_ObjectHideFlags: 0
