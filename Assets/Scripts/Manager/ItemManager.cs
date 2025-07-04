@@ -28,7 +28,7 @@ public class ItemManager : MonoBehaviour {
     private Transform UnuseRoot = null;
     //プーリング用変数
     //アイテムの最大数
-    private const int MAX_OBJECT = 8;
+    private const int MAX_OBJECT = 4;
     //使用状態リスト
     private List<BaseItem> useObjectList = null;
     //未使用状態リスト

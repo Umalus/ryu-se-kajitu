@@ -23,9 +23,15 @@ public class OnlyFruit : BaseItem
         if (IsRunningTime)
             timer += Time.deltaTime;
 
-        if(timer >= 10.0f) {
+        if (timer >= 10.0f) {
+            //付与された効果を消す
             DeleteEffect();
+            //オブジェクトを消す
             UnuseObject(this, categoryID);
+            //タイマーを止める
+            IsRunningTime = false;
+            //タイマーリセット
+            timer = 0.0f;
         }
     }
 
