@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour {
 
     public GamePhase phase { get; private set; } = 0;
     // Start is called before the first frame update
-    void Start() {
+    async void Start() {
         //外部から取得しやすいように自身のインスタンスを設定
         instance = this;
         //フレームレートを固定
@@ -52,6 +52,8 @@ public class GameManager : MonoBehaviour {
 
         inputAction.GameManager.Start.performed += OnStartPreformed;
         inputAction.GameManager.End.performed += OnEndPreformed;
+
+        await FadeManager.instance.FadeIn();
     }
 
     // Update is called once per frame
@@ -88,7 +90,7 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     private void Phase() {
         //総時間が指定の値の範囲内ならフェーズを切り替える
-        if (InRange((int)totalTime,1,30))
+        if (InRange((int)totalTime, 1, 30))
             phase = GamePhase.ending;
         else if (InRange((int)totalTime, 30, 60))
             phase = GamePhase.middle;
@@ -98,7 +100,7 @@ public class GameManager : MonoBehaviour {
             phase = GamePhase.PhaseEnd;
             IsPlay = false;
         }
-           
+
     }
     /// <summary>
     /// ゲーム開始

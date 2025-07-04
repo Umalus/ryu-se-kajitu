@@ -146,7 +146,7 @@ public class CameraManager : MonoBehaviour {
 
 
         //もし指定範囲内(おおよそスティックの位置)なら現在の角度の値を返す
-        if ((startClickPos.x < 900 && startClickPos.y < 450))
+        if ((startClickPos.x < 450 && startClickPos.y < 250))
             return param.angles;
         cameraPos = param.angles;
         //算出距離からポジションを変更
