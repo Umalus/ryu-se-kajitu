@@ -30,6 +30,17 @@ public static class GameEnum
         max,
     }
     /// <summary>
+    /// アイテムカテゴリー管理列挙定数
+    /// </summary>
+    public enum eItemCategory {
+        Invalid = -1,
+        FallSpeed,
+        OnlyFruit,
+
+        Max,
+    }
+
+    /// <summary>
     /// SE管理用列挙定数
     /// </summary>
     public enum SEIndex{

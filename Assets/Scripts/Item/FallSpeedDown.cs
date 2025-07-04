@@ -1,8 +1,6 @@
-using Cysharp.Threading.Tasks;
-using Cysharp.Threading.Tasks.Triggers;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+using static GameEnum;
 /// <summary>
 /// 落ちてくるスピードを半分にする
 /// </summary>
@@ -30,6 +28,7 @@ public class FallSpeedDown : BaseItem
     void Start()
     {
         setSpeed = scoreData.fallSpeed * 0.5f;
+        categoryID = (int)eItemCategory.FallSpeed;
     }
     private new void Update() {
         base.Update();

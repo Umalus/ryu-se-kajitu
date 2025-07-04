@@ -17,4 +17,13 @@ public static class CommonModul
     public static bool InRange(int _value,int _min,int _max) {
         return _min <= _value && _value < _max;
     }
+
+    public static bool IsEmpty<T>(List<T> _list) {
+        //’Z—•]‰¿‚È‚Ì‚Å‘åä•v
+        return _list == null || _list.Count <= 0;
+    }
+    public static bool IsEmpty<T>(T[] _array) {
+        //’Z—•]‰¿‚È‚Ì‚Å‘åä•v
+        return _array == null || _array.Length <= 0;
+    }
 }
