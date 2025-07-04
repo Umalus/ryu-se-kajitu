@@ -17,7 +17,7 @@ public abstract class BaseScoreObject : MonoBehaviour
     /// </summary>
     /// <param name="_seIndex"></param>
     public void DeleteObject(int _seIndex) {
-        if(transform.position.y < 0 || isGet) {
+        if(transform.position.y < 0 || isGet || !GameManager.instance.IsPlay) {
             Destroy(gameObject);
             //SEÄ¶
             if (isGet)
