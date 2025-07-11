@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
-using System.Collections;
-using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +10,10 @@ public class FadeManager : MonoBehaviour {
     [SerializeField]
     private Image fadeImage = null;
 
+    private CancellationTokenSource cts;
+
+    private CancellationToken token;
+
     private const float DURATION_TIME = 0.3f;
     // Start is called before the first frame update
     void Start() {
@@ -19,6 +22,10 @@ public class FadeManager : MonoBehaviour {
         Color startAlpha = fadeImage.color;
         startAlpha.a = 1.0f;
         fadeImage.color = startAlpha;
+
+        cts = new CancellationTokenSource();
+
+        token = cts.Token;
     }
 
     // Update is called once per frame
@@ -50,7 +57,7 @@ public class FadeManager : MonoBehaviour {
             changeColor.a = Mathf.Lerp(startAlpha, _targetAlpha, t);
             fadeImage.color = changeColor;
 
-            await UniTask.DelayFrame(1);
+            await UniTask.DelayFrame(1,PlayerLoopTiming.Update,token);
         }
         changeColor.a = _targetAlpha;
         fadeImage.color = changeColor;

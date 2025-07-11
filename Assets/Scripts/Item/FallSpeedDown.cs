@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 using static GameEnum;
@@ -35,17 +36,6 @@ public class FallSpeedDown : BaseItem
         base.Update();
         if (IsRunningTime)
             timer += Time.deltaTime;
-
-        if (timer >= 10.0f) {
-            //付与された効果を消す
-            DeleteEffect();
-            //オブジェクトを消す
-            UnuseObject(this, categoryID);
-            //タイマーを止める
-            IsRunningTime = false;
-            //タイマーリセット
-            timer = 0.0f;
-        }
     }
 
     /// <summary>
@@ -58,7 +48,16 @@ public class FallSpeedDown : BaseItem
     /// <summary>
     /// 効果を消す
     /// </summary>
-    public override void DeleteEffect() {
+    public override async UniTask DeleteEffect() {
+        while (true) {
+            if (timer >= 10.0f)
+                break;
+
+            timer += Time.deltaTime;
+
+            await UniTask.DelayFrame(1);
+
+        }
         Fruit.IsHalf = false;
     }
 

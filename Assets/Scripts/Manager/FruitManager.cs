@@ -25,6 +25,8 @@ public class FruitManager : MonoBehaviour {
     [SerializeField]
     private float instanceTimer = 0.0f;
     public bool OnlyFruit = false;
+
+
     private enum FallObjectType {
         Invalid = -1,
         Fruit,

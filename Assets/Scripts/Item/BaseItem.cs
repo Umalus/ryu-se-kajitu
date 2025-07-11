@@ -16,13 +16,13 @@ public abstract class BaseItem : MonoBehaviour
     public int ID { get; private set; } = -1;
 
     protected int categoryID = -1;
-    protected void OnCollisionEnter(Collision collision) {
+    protected async void OnCollisionEnter(Collision collision) {
         //当たったオブジェクトのタグがプレイヤーなら
         if (collision.gameObject.CompareTag("Player")) {
             //効果適用
             AddEffect();
             //未使用状態にする
-            UnuseObject(this, categoryID);
+            await UnuseObject(this, categoryID);
             AudioManager.instance.PlaySE((int)SEIndex.ItemSound,0.5f);
         }
             
@@ -31,13 +31,13 @@ public abstract class BaseItem : MonoBehaviour
         transform.position = instancePos;
     }
 
-    protected void Update() {
+    protected async void Update() {
+        UniTask task;
         if (!GameManager.instance.IsPlay)
-            UnuseObject(this, categoryID);
-        
+            task = UnuseObject(this, categoryID);
         FallItem();
-        
 
+        await UniTask.CompletedTask;
     }
 
     /// <summary>
@@ -47,7 +47,7 @@ public abstract class BaseItem : MonoBehaviour
     /// <summary>
     /// 効果を消す
     /// </summary>
-    public abstract void DeleteEffect();
+    public abstract UniTask DeleteEffect();
     public void FallItem() {
         Vector3 fallPosition = transform.position;
         fallPosition.y -= fallSpeed;

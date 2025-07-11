@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -121,12 +122,14 @@ public class ItemManager : MonoBehaviour {
     /// </summary>
     /// <param name="_base"></param>
     /// <param name="_category"></param>
-    public void UnuseObject(BaseItem _base,int _category) {
+    public async UniTask UnuseObject(BaseItem _base,int _category) {
         if (_base == null) return;
         //使用中リストから削除
         useObjectList.Remove(_base);
         unuseObjectList[_category].Add(_base);
         //親オブジェクト設定
         _base.transform.SetParent(UnuseRoot);
+        await _base.DeleteEffect();
+        
     }
 }
