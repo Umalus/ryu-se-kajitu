@@ -16,12 +16,12 @@ public abstract class BaseScoreObject : MonoBehaviour
     /// オブジェクトを破棄した時の処理
     /// </summary>
     /// <param name="_seIndex"></param>
-    public void DeleteObject(int _seIndex) {
+    public void DeleteObject(int _category, int _seIndex) {
         if(transform.position.y < 0 || isGet || !GameManager.instance.IsPlay) {
-            Destroy(gameObject);
             //SE再生
             if (isGet)
                 AudioManager.instance.PlaySE(_seIndex);
+            FruitManager.instance.UnuseObject(this, _category);
         }
     }
 

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using static GameEnum;
+using static CommonModul;
+
 /// <summary>
 /// フルーツを降らせるマネージャー
 /// </summary>
@@ -12,7 +14,7 @@ public class FruitManager : MonoBehaviour {
 
 
     [SerializeField, Header("生成されるフルーツのリスト")]
-    private List<GameObject> originPrefabs = null;
+    private List<BaseScoreObject> originPrefabs = null;
     [SerializeField, Header("生成範囲")]
     private float InstanceRange = 0;
     //生成位置
@@ -25,17 +27,41 @@ public class FruitManager : MonoBehaviour {
     [SerializeField]
     private float instanceTimer = 0.0f;
     public bool OnlyFruit = false;
+    //使用中リスト
+    private List<BaseScoreObject> useObjectList = null;
+    //未使用リスト
+    private List<List<BaseScoreObject>> unuseObjectList = null;
+    //プーリング用親オブジェクト
+    [SerializeField]
+    private Transform useRoot = null;
+    [SerializeField]
+    private Transform unuseRoot = null;
+
+    private const int MAX_OBJECT = 128;
 
 
-    private enum FallObjectType {
-        Invalid = -1,
-        Fruit,
-        Insect,
-    }
+    
 
     // Start is called before the first frame update
     void Start() {
+        Initialize();
+    }
+
+    private void Initialize() {
+        //インスタンスに自身を設定
         instance = this;
+        //リストを初期化
+        useObjectList = new List<BaseScoreObject>(MAX_OBJECT);
+        unuseObjectList = new List<List<BaseScoreObject>>(2);
+
+        int halfOfMaxObject = MAX_OBJECT / 2;
+
+        for(int i = 0; i < 2; i++) {
+            unuseObjectList.Add(new List<BaseScoreObject>(halfOfMaxObject));
+            for(int objCount = 0;objCount < halfOfMaxObject;objCount++ ){
+                unuseObjectList[i].Add(Instantiate(originPrefabs[i], unuseRoot));
+            }
+        }
     }
 
     private void Update() {
@@ -89,21 +115,45 @@ public class FruitManager : MonoBehaviour {
         if (instanceTimer >= _interval) {
             if (OnlyFruit) {
                 //フルーツのみ生成
-                Instantiate(originPrefabs[(int)FallObjectType.Fruit], InstancePos, Quaternion.identity);
+                UseObject((int)FallObjectType.Fruit, InstancePos);
                 instanceTimer = 0.0f;
 
             }
             //フルーツと虫両方生成
             else {
                 if (instanceValue <= _fruitRatio) {
-                    Instantiate(originPrefabs[(int)FallObjectType.Fruit], InstancePos, Quaternion.identity);
+                    UseObject((int)FallObjectType.Fruit, InstancePos);
                     instanceTimer = 0.0f;
                 }
                 else if (instanceValue > _fruitRatio) {
-                    Instantiate(originPrefabs[(int)FallObjectType.Insect], InstancePos, Quaternion.identity);
+                    UseObject((int)FallObjectType.Insect, InstancePos);
                     instanceTimer = 0.0f;
                 }
             }
         }
+    }
+
+    private void UseObject(int _category,Vector3 _instancePos) {
+        //未使用リストが空なら処理しない
+        if (IsEmpty(unuseObjectList)) return;
+        //使用するオブジェクトをキャッシュ
+        BaseScoreObject useObj = unuseObjectList[_category][0];
+        //未使用リストから取り除く
+        unuseObjectList[_category].RemoveAt(0);
+        //使用中の親オブジェクトに設定
+        useObj.transform.SetParent(useRoot);
+        useObj.transform.position = _instancePos;
+
+        useObjectList.Add(useObj);
+    }
+
+    public void UnuseObject(BaseScoreObject _obj,int _category) {
+        if (_obj == null) return;
+        //使用中リストから削除
+        useObjectList.Remove(_obj);
+        unuseObjectList[_category].Add(_obj);
+        //親オブジェクト設定
+        _obj.transform.SetParent(unuseRoot);
+
     }
 }

@@ -104,50 +104,71 @@ public class CameraManager : MonoBehaviour {
         }
 
 
-        
+
         //スマホ用タッチ検出
         else {
+            var touchs = Input.touchCount;
 
-            #region TouchScreen
-            var touch = Touchscreen.current;
+            if (touchs == 2) {
+                
+                #region TouchScreen
+                var touch1 = Input.touches[0];
+                var touch2 = Input.touches[1];
 
-            Vector2 touchPos = touch.position.ReadValue();
-            if (touchPos == null) return Vector3.zero;
+                
 
-            var press = touch.press;
-            //クリック時
-            if (press.wasPressedThisFrame) {
-                startClickPos = touchPos;
+                Vector2 touchPos1 = touch1.position;
+                if (touchPos1 == null) return Vector3.zero;
+                Vector2 touchPos2 = touch2.position;
+                if (touchPos2 == null) return Vector3.zero;
 
-                Debug.Log(startClickPos.x);
-                Debug.Log(startClickPos.y);
 
+                var press1 = touch1.phase;
+
+                var press2 = touch2.phase;
+                //タップ時
+                if (press1 == UnityEngine.TouchPhase.Began) {
+                    startClickPos = touchPos1;
+
+                    Debug.Log(startClickPos.x);
+                    Debug.Log(startClickPos.y);
+
+                }
+                //最初のタップ位置が指定座標(画面左半分)なら二つ目のタップ位置を取得し、タップ開始位置へ代入
+                if (startClickPos.x < 400.0f && startClickPos.y < 500.0f) {
+                    touch1 = Input.touches[1];
+                    //startClickPos = touch1.position;
+                }
+                    
+
+
+                //押している間
+                if (press1 == UnityEngine.TouchPhase.Moved) {
+                    currentClickPos = touchPos1;
+                    distanceX = currentClickPos.x - startClickPos.x;
+                    distanceY = currentClickPos.y - startClickPos.y;
+                    //Debug.Log($"X{distanceX}");
+                    //Debug.Log($"Y{distanceY}");
+
+                }
+                //離した時
+                if (press1 == UnityEngine.TouchPhase.Canceled) {
+                    cameraPos.x = distanceX;
+                    cameraPos.y = distanceY;
+                    //startClickPos = touch1.position;
+                }
+
+
+                #endregion
             }
 
-            //押している間
-            if (press.isPressed) {
-                currentClickPos = touchPos;
-                distanceX = currentClickPos.x - startClickPos.x;
-                distanceY = currentClickPos.y - startClickPos.y;
-                //Debug.Log($"X{distanceX}");
-                //Debug.Log($"Y{distanceY}");
-
-            }
-            //離した時
-            if (press.wasReleasedThisFrame) {
-                cameraPos.x = distanceX;
-                cameraPos.y = distanceY;
-            }
-
-
-            #endregion
         }
 
-
-
         //もし指定範囲内(おおよそスティックの位置)なら現在の角度の値を返す
-        if ((startClickPos.x < 450 && startClickPos.y < 250))
+        if ((startClickPos.x < 400 && startClickPos.y < 250))
             return param.angles;
+
+
         cameraPos = param.angles;
         //算出距離からポジションを変更
         cameraPos.x = -distanceY * rotateSpeed;

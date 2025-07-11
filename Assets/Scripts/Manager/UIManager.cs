@@ -18,10 +18,11 @@ public class UIManager : MonoBehaviour {
 
         Max,
     }
-    private int prevCombo = 0;
+    //private int prevCombo = 0;
     //テキストのリスト
     [SerializeField]
     private List<TextMeshProUGUI> textList = null;
+    //画像リスト
     [SerializeField]
     private List<Image> images = null;
     private StringBuilder stringBuilder = new StringBuilder();

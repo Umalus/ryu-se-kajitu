@@ -41,6 +41,15 @@ public static class GameEnum
     }
 
     /// <summary>
+    /// 降ってくるスコアオブジェクト管理用列挙定数
+    /// </summary>
+    public enum FallObjectType {
+        Invalid = -1,
+        Fruit,
+        Insect,
+    }
+
+    /// <summary>
     /// SE管理用列挙定数
     /// </summary>
     public enum SEIndex{

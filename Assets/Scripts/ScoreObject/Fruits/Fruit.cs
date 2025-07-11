@@ -20,7 +20,7 @@ public class Fruit : BaseScoreObject {
         //降らせる
         FallFruit();
         //破棄する処理
-        DeleteObject((int)SEIndex.FruitSound);
+        DeleteObject((int)FallObjectType.Fruit ,(int)SEIndex.FruitSound);
     }
     private void Initialize() {
         //スコアデータに保存されてるスコアを代入
