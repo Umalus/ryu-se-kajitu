@@ -34,6 +34,7 @@ public class OnlyFruit : BaseItem
     /// Œø‰Ê‚ğÁ‚·
     /// </summary>
     public override async UniTask DeleteEffect() {
+        timer = 0.0f;
         while (true) {
             if (timer >= 10.0f)
                 break;

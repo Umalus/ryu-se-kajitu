@@ -16,7 +16,8 @@ public class FadeManager : MonoBehaviour {
 
     private const float DURATION_TIME = 0.3f;
     // Start is called before the first frame update
-    void Start() {
+    private void Awake() {
+
         //インスタンスに自身を設定
         instance = this;
         Color startAlpha = fadeImage.color;
@@ -26,6 +27,7 @@ public class FadeManager : MonoBehaviour {
         cts = new CancellationTokenSource();
 
         token = cts.Token;
+
     }
 
     // Update is called once per frame
@@ -57,7 +59,7 @@ public class FadeManager : MonoBehaviour {
             changeColor.a = Mathf.Lerp(startAlpha, _targetAlpha, t);
             fadeImage.color = changeColor;
 
-            await UniTask.DelayFrame(1,PlayerLoopTiming.Update,token);
+            await UniTask.DelayFrame(1, PlayerLoopTiming.Update, token);
         }
         changeColor.a = _targetAlpha;
         fadeImage.color = changeColor;
