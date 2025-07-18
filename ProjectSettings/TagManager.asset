@@ -43,3 +43,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: UIParticle
+    uniqueID: 235404923
+    locked: 0

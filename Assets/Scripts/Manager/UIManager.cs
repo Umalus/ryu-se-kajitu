@@ -24,6 +24,10 @@ public class UIManager : MonoBehaviour {
     private List<TextMeshProUGUI> textList = null;
     [SerializeField]
     private List<Image> images = null;
+    [SerializeField]
+    private List<GameObject> effects = null;
+    [SerializeField]
+    private Transform effectRoot = null;
     private StringBuilder stringBuilder = new StringBuilder();
     // Start is called before the first frame update
     void Start() {
@@ -45,6 +49,9 @@ public class UIManager : MonoBehaviour {
             "Score : " + ScoreManager.AllScore;
         //ƒRƒ“ƒ{‚ÌUI
         if (Player.GetCombo() >= FRUIT_FIRST_MIN) {
+            if(Player.GetCombo() > prevCombo) {
+                Instantiate(effects[0], effectRoot);
+            }
             stringBuilder.Append(Player.GetCombo().ToString());
             stringBuilder.Append("combo!!!\n+");
             stringBuilder.Append(ScoreManager.BonusScore);
@@ -67,5 +74,7 @@ public class UIManager : MonoBehaviour {
             textList[(int)TextType.Start].enabled = true;
             images[0].enabled = true;
         }
+
+        prevCombo = Player.GetCombo();
     }
 }
