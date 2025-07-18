@@ -31,6 +31,9 @@ public class ScoreManager {
         else if (InRange(_combo, FRUIT_SECOND_MAX, FRUIT_THIRD_MAX)) {
             BonusScore = 300;
         }
+        else {
+            BonusScore = 0;
+        }
         AllScore += BonusScore;
     }
 }

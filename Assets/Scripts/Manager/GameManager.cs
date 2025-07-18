@@ -17,6 +17,12 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance = null;
     //自身のInputSystem
     private Bozu inputAction = null;
+    //フェーズ管理用タイマーの定数
+    private const int PHASE_OPNING_TIME_START = 90;
+    private const int PHASE_OPNING_TIME_END = 70;
+    private const int PHASE_MIDDLE_TIME_END = 20;
+    private const int PHASE_ENDING_TIME_END = 1;
+
 
     /// <summary>
     /// 開始時間
@@ -90,11 +96,11 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     private void Phase() {
         //総時間が指定の値の範囲内ならフェーズを切り替える
-        if (InRange((int)totalTime, 1, 30))
+        if (InRange((int)totalTime, PHASE_ENDING_TIME_END, PHASE_MIDDLE_TIME_END))
             phase = GamePhase.ending;
-        else if (InRange((int)totalTime, 30, 60))
+        else if (InRange((int)totalTime, PHASE_MIDDLE_TIME_END, PHASE_OPNING_TIME_END))
             phase = GamePhase.middle;
-        else if (InRange((int)totalTime, 60, 90))
+        else if (InRange((int)totalTime, PHASE_OPNING_TIME_END, PHASE_OPNING_TIME_START))
             phase = GamePhase.opening;
         else {
             phase = GamePhase.PhaseEnd;

@@ -22,8 +22,8 @@ public class Player : MonoBehaviour {
         if(other.gameObject.CompareTag("Fruit")) {
             BaseScoreObject addScoreObj = other.gameObject.GetComponent<BaseScoreObject>();
             combo++;
-            ScoreManager.AddScore(addScoreObj,combo);
             addScoreObj.SetIsGet(true);
+            ScoreManager.AddScore(addScoreObj,combo);
         }
         else if (other.gameObject.CompareTag("Insect")) {
             BaseScoreObject addScoreObj = other.gameObject.GetComponent<BaseScoreObject>();

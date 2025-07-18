@@ -6,6 +6,8 @@ using System.Text;
 using UnityEngine.UI;
 
 using static GameConst;
+using static CommonModul;
+using Cysharp.Threading.Tasks;
 
 public class UIManager : MonoBehaviour {
     //テキスト管理用列挙定数
@@ -29,6 +31,11 @@ public class UIManager : MonoBehaviour {
     [SerializeField]
     private Transform effectRoot = null;
     private StringBuilder stringBuilder = new StringBuilder();
+
+    ////使用状態リスト
+    //private List<GameObject> useObjectList = null;
+    ////未使用状態リスト
+    //private List<GameObject> unuseObjectList = null;
     // Start is called before the first frame update
     void Start() {
 
@@ -36,6 +43,7 @@ public class UIManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        GameObject useEffect = null;
         #region タイマー
         stringBuilder.Append(GameManager.instance.minute.ToString("00"));
         stringBuilder.Append(":");
@@ -50,7 +58,7 @@ public class UIManager : MonoBehaviour {
         //コンボのUI
         if (Player.GetCombo() >= FRUIT_FIRST_MIN) {
             if(Player.GetCombo() > prevCombo) {
-                Instantiate(effects[0], effectRoot);
+                useEffect = Instantiate(effects[0], effectRoot);
             }
             stringBuilder.Append(Player.GetCombo().ToString());
             stringBuilder.Append("combo!!!\n+");
@@ -63,6 +71,7 @@ public class UIManager : MonoBehaviour {
             textList[(int)TextType.Combo].text = null;
 
 
+
         //ゲーム中は表示しないテキスト
         if (GameManager.instance.IsPlay) {
             textList[(int)TextType.Start].enabled = false;
@@ -70,11 +79,17 @@ public class UIManager : MonoBehaviour {
             textList[(int)TextType.Start].text =
                 "Game over!!\nEnd to EscapeKey";
         }
+
         else {
             textList[(int)TextType.Start].enabled = true;
             images[0].enabled = true;
         }
-
+        //1フレーム前のコンボ数を更新
         prevCombo = Player.GetCombo();
+        //1秒後にエフェクトを削除
+        if (useEffect != null) {
+            Destroy(useEffect, 1.0f);
+        }
+
     }
 }
