@@ -7,6 +7,7 @@ using static GameConst;
 using static CommonModul;
 using UnityEngine.InputSystem;
 using UnityEditor;
+using Cysharp.Threading.Tasks;
 /// <summary>
 /// ゲーム内諸々管理クラス
 /// </summary>
@@ -44,22 +45,10 @@ public class GameManager : MonoBehaviour {
     public GamePhase phase { get; private set; } = 0;
     // Start is called before the first frame update
     async void Start() {
-        //外部から取得しやすいように自身のインスタンスを設定
-        instance = this;
-        //フレームレートを固定
-        Application.targetFrameRate = 60;
-        //時間設定
-        second = playTime;
-        totalTime = minute * MINUTE + second;
+        await Initialize();
         //BGM再生
         AudioManager.instance.PlayBGM(0);
-        //inputSystemの初期化
-        inputAction = InputSystemManager.instance.InputSystem;
-
-        inputAction.GameManager.Start.performed += OnStartPreformed;
-        inputAction.GameManager.End.performed += OnEndPreformed;
-
-        await FadeManager.instance.FadeIn();
+        
     }
 
     // Update is called once per frame
@@ -105,8 +94,42 @@ public class GameManager : MonoBehaviour {
         else {
             phase = GamePhase.PhaseEnd;
             IsPlay = false;
+            Teardown();
         }
 
+    }
+
+    private async UniTask Initialize() {
+        //外部から取得しやすいように自身のインスタンスを設定
+        instance = this;
+        //フレームレートを固定
+        Application.targetFrameRate = 60;
+        //時間設定
+        second = playTime;
+        totalTime = minute * MINUTE + second;
+
+        //inputSystemの初期化
+        inputAction = InputSystemManager.instance.InputSystem;
+
+        inputAction.GameManager.Start.performed += OnStartPreformed;
+        inputAction.GameManager.End.performed += OnEndPreformed;
+
+        await FadeManager.instance.FadeIn();
+    }
+
+    /// <summary>
+    /// 解放処理
+    /// </summary>
+    private void Teardown() {
+        inputAction.GameManager.Start.performed -= OnStartPreformed;
+    }
+
+    public async void ReturnTitle() {
+        await FadeManager.instance.FadeOut();
+    }
+    public void ShowRanking() {
+        OffLineRanking.instance.RankingUpdate("aaa", ScoreManager.AllScore);
+        OffLineRanking.instance.RankingLoad("aaa");
     }
     /// <summary>
     /// ゲーム開始
@@ -114,6 +137,7 @@ public class GameManager : MonoBehaviour {
     /// <param name="_context"></param>
     private void OnStartPreformed(InputAction.CallbackContext _context) {
         IsPlay = true;
+        ScoreManager.AllScore = 0;
     }
 
     /// <summary>

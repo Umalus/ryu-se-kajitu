@@ -46,6 +46,7 @@ public class FadeManager : MonoBehaviour {
     /// フェードアウト処理
     /// </summary>
     public async UniTask FadeOut(float _duration = DURATION_TIME) {
+        fadeImage.enabled = true;
         await FadeTargetAlpha(1.0f, _duration);
     }
 

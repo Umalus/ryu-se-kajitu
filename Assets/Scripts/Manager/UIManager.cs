@@ -6,12 +6,11 @@ using System.Text;
 using UnityEngine.UI;
 
 using static GameConst;
-using static CommonModul;
 using Cysharp.Threading.Tasks;
 
 public class UIManager : MonoBehaviour {
     //テキスト管理用列挙定数
-    private enum TextType {
+    private enum eTextType {
         Invalid = -1,
         Timer,
         Score,
@@ -20,17 +19,31 @@ public class UIManager : MonoBehaviour {
 
         Max,
     }
+    private enum eCanvasType {
+        Invalid = -1,
+        InGameCanvas,
+        OutGameCanvas,
+
+        Max
+    }
     private int prevCombo = 0;
     //テキストのリスト
     [SerializeField]
     private List<TextMeshProUGUI> textList = null;
+    //画像のリスト
     [SerializeField]
     private List<Image> images = null;
+    //エフェクトのリスト
     [SerializeField]
     private List<GameObject> effects = null;
+    //エフェクトの出現位置
     [SerializeField]
     private Transform effectRoot = null;
     private StringBuilder stringBuilder = new StringBuilder();
+    [SerializeField]
+    private List<GameObject> useCanvas = null;
+    [SerializeField]
+    private List<GameObject> useButton = null;
 
     ////使用状態リスト
     //private List<GameObject> useObjectList = null;
@@ -48,12 +61,12 @@ public class UIManager : MonoBehaviour {
         stringBuilder.Append(GameManager.instance.minute.ToString("00"));
         stringBuilder.Append(":");
         stringBuilder.Append(((int)GameManager.instance.second).ToString("00"));
-        textList[(int)TextType.Timer].text =
+        textList[(int)eTextType.Timer].text =
             stringBuilder.ToString();
         stringBuilder.Clear();
         #endregion
         //スコアのテキスト
-        textList[(int)TextType.Score].text =
+        textList[(int)eTextType.Score].text =
             "Score : " + ScoreManager.AllScore;
         //コンボのUI
         if (Player.GetCombo() >= FRUIT_FIRST_MIN) {
@@ -63,26 +76,41 @@ public class UIManager : MonoBehaviour {
             stringBuilder.Append(Player.GetCombo().ToString());
             stringBuilder.Append("combo!!!\n+");
             stringBuilder.Append(ScoreManager.BonusScore);
-            textList[(int)TextType.Combo].text =
+            textList[(int)eTextType.Combo].text =
                 stringBuilder.ToString();
             stringBuilder.Clear();
         }
         else
-            textList[(int)TextType.Combo].text = null;
+            textList[(int)eTextType.Combo].text = null;
 
 
 
         //ゲーム中は表示しないテキスト
         if (GameManager.instance.IsPlay) {
-            textList[(int)TextType.Start].enabled = false;
+            useCanvas[(int)eCanvasType.OutGameCanvas].SetActive(false);
+            useCanvas[(int)eCanvasType.InGameCanvas].SetActive(true);
+            textList[(int)eTextType.Start].enabled = false;
             images[0].enabled = false;
-            textList[(int)TextType.Start].text =
+            textList[(int)eTextType.Start].text =
                 "Game over!!\nEnd to EscapeKey";
         }
 
         else {
-            textList[(int)TextType.Start].enabled = true;
+            useCanvas[(int)eCanvasType.InGameCanvas].SetActive(false);
+            useCanvas[(int)eCanvasType.OutGameCanvas].SetActive(true);
+            textList[(int)eTextType.Start].enabled = true;
             images[0].enabled = true;
+            //ボタンの表示、非表示
+            if(GameManager.instance.phase == GameEnum.GamePhase.PhaseEnd) {
+                for(int i = 0,max = useButton.Count; i < max; i++) {
+                    useButton[i].SetActive(true);
+                }
+            }
+            else {
+                for (int i = 0, max = useButton.Count; i < max; i++) {
+                    useButton[i].SetActive(false);
+                }
+            }
         }
         //1フレーム前のコンボ数を更新
         prevCombo = Player.GetCombo();
