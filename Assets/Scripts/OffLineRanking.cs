@@ -8,15 +8,11 @@ public class OffLineRanking : MonoBehaviour
 {
     public static OffLineRanking instance = null;
 
+    private List<RankingData> rankingDates;
     // Start is called before the first frame update
     void Start() {
         instance = this;
         //ランキング初期化
-        RankingLoad("testRanking");
-        //ランキング更新
-        RankingUpdate("testRanking", 0);
-
-        //ランキング更新後の出力
         RankingLoad("testRanking");
     }
 

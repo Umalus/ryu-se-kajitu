@@ -71,7 +71,7 @@ public class UIManager : MonoBehaviour {
         //ƒRƒ“ƒ{‚ÌUI
         if (Player.GetCombo() >= FRUIT_FIRST_MIN) {
             if(Player.GetCombo() > prevCombo) {
-                useEffect = Instantiate(effects[0], effectRoot);
+                useEffect = Instantiate(effects[1], effectRoot);
             }
             stringBuilder.Append(Player.GetCombo().ToString());
             stringBuilder.Append("combo!!!\n+");
