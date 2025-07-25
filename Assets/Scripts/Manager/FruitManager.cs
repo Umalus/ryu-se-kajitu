@@ -27,6 +27,7 @@ public class FruitManager : MonoBehaviour {
     [SerializeField]
     private float instanceTimer = 0.0f;
     public bool OnlyFruit = false;
+    public bool isDemo = false;
     //使用中リスト
     private List<BaseScoreObject> useObjectList = null;
     //未使用リスト
@@ -65,19 +66,33 @@ public class FruitManager : MonoBehaviour {
     }
 
     private void Update() {
-        //ゲームプレイ状態でなければ処理しない
-        if (!GameManager.instance.IsPlay) return;
-
         //フルーツの生成確率用変数( 10 - この値 が虫の生成確率)
         int fruitRatio = 0;
         //生成間隔
         float interval = 0.0f;
+        if (isDemo) {
+            OnlyFruit = true;
+            interval = 1.0f;
+            fruitRatio = 5;
+            //生成時間のタイマーを増加
+            instanceTimer += Time.deltaTime;
+            //生成位置の決定
+            InstancePos = DecideInstancePosition();
+            instanceValue = 5;
+            InstanceObject(interval, fruitRatio);
+            return;
+        }
+
+        //ゲームプレイ状態でなければ処理しない
+        if (!GameManager.instance.IsPlay) return;
         //生成時間のタイマーを増加
         instanceTimer += Time.deltaTime;
         //生成位置の決定
         InstancePos = DecideInstancePosition();
         //生成値をランダムで決定
         instanceValue = Random.Range(0, 11);
+        
+
         switch (GameManager.instance.phase) {
             //フェーズによって生成間隔や確率を変更
             case GamePhase.opening:

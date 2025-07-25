@@ -126,9 +126,21 @@ public class GameManager : MonoBehaviour {
 
     public async void ReturnTitle() {
         await FadeManager.instance.FadeOut();
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+
+#else
+         Application.Quit();
+#endif
     }
     public void ShowRanking() {
         UIManager.instance.ShowRanking();
+        UIManager.instance.HideCanvas((int)eCanvasType.OutGameCanvas);
+    }
+
+    public void ExitRanking() {
+        UIManager.instance.HideCanvas((int)eCanvasType.Ranking);
+        UIManager.instance.ShowCanvas((int)eCanvasType.OutGameCanvas);
     }
 
     public void AddSocreData() {
@@ -144,6 +156,7 @@ public class GameManager : MonoBehaviour {
     private void OnStartPreformed(InputAction.CallbackContext _context) {
         IsPlay = true;
         ScoreManager.AllScore = 0;
+        inputAction.GameManager.Start.performed -= OnStartPreformed;
     }
 
     /// <summary>

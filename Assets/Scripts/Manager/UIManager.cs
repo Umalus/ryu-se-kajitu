@@ -6,6 +6,7 @@ using System.Text;
 using UnityEngine.UI;
 
 using static GameConst;
+using static GameEnum;
 
 public class UIManager : MonoBehaviour {
     public static UIManager instance = null;
@@ -21,14 +22,7 @@ public class UIManager : MonoBehaviour {
 
         Max,
     }
-    private enum eCanvasType {
-        Invalid = -1,
-        InGameCanvas,
-        OutGameCanvas,
-        Ranking,
-
-        Max
-    }
+    
     private int prevCombo = 0;
     //テキストのリスト
     [SerializeField]
@@ -56,6 +50,8 @@ public class UIManager : MonoBehaviour {
     private Transform rankingRoot = null;
     [SerializeField]
     private string inpotName = null;
+
+    private bool isShowRanking = false;
 
     private const int MAX_SHOW_RANKING = 10;
     #endregion
@@ -111,6 +107,10 @@ public class UIManager : MonoBehaviour {
             textList[(int)eTextType.Start].text =
                 "Game over!!\nEnd to EscapeKey";
         }
+        else if (isShowRanking) {
+            useCanvas[(int)eCanvasType.OutGameCanvas].SetActive(false);
+            useCanvas[(int)eCanvasType.InGameCanvas].SetActive(false);
+        }
 
         else {
             useCanvas[(int)eCanvasType.InGameCanvas].SetActive(false);
@@ -139,6 +139,7 @@ public class UIManager : MonoBehaviour {
     }
 
     public void ShowRanking() {
+        isShowRanking = true;
         useCanvas[2].SetActive(true);
         //子オブジェクトを削除
         foreach(Transform child in rankingRoot) {
@@ -151,19 +152,17 @@ public class UIManager : MonoBehaviour {
 
             if(i < rankingDatas.Count) {
                 RankingData data = rankingDatas[i];
+                rankingDataObject.transform.Find("Rank").GetComponent<TextMeshProUGUI>().text =
+                    (i + 1).ToString();
                 rankingDataObject.transform.Find("Name").GetComponent<TextMeshProUGUI>().text =
                     data.name;
                 rankingDataObject.transform.Find("Score").GetComponent<TextMeshProUGUI>().text =
                     data.score.ToString();
-                rankingDataObject.transform.Find("Date").GetComponent<TextMeshProUGUI>().text =
-                    data.dateTime.ToString("yyyy/MM");
-
             }
             else {
+                rankingDataObject.transform.Find("Rank").GetComponent<TextMeshProUGUI>().text = "-" + 1.ToString();
                 rankingDataObject.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = "";
                 rankingDataObject.transform.Find("Score").GetComponent<TextMeshProUGUI>().text = "";
-                rankingDataObject.transform.Find("Date").GetComponent<TextMeshProUGUI>().text = "";
-
             }
         }
 
@@ -175,5 +174,11 @@ public class UIManager : MonoBehaviour {
 
     public void HideCanvas(int _index) {
         useCanvas[_index].SetActive(false);
+        if (_index == (int)eCanvasType.Ranking)
+            isShowRanking = false;
+    }
+
+    public void ShowCanvas(int _index) {
+        useCanvas[_index].SetActive(true);
     }
 }

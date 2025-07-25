@@ -61,4 +61,13 @@ public static class GameEnum
 
         Max
     }
+
+    public enum eCanvasType {
+        Invalid = -1,
+        InGameCanvas,
+        OutGameCanvas,
+        Ranking,
+
+        Max
+    }
 }
