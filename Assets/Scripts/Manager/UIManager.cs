@@ -6,9 +6,10 @@ using System.Text;
 using UnityEngine.UI;
 
 using static GameConst;
-using Cysharp.Threading.Tasks;
 
 public class UIManager : MonoBehaviour {
+    public static UIManager instance = null;
+    
     //テキスト管理用列挙定数
     private enum eTextType {
         Invalid = -1,
@@ -16,6 +17,7 @@ public class UIManager : MonoBehaviour {
         Score,
         Start,
         Combo,
+        Name,
 
         Max,
     }
@@ -23,6 +25,7 @@ public class UIManager : MonoBehaviour {
         Invalid = -1,
         InGameCanvas,
         OutGameCanvas,
+        Ranking,
 
         Max
     }
@@ -44,6 +47,19 @@ public class UIManager : MonoBehaviour {
     private List<GameObject> useCanvas = null;
     [SerializeField]
     private List<GameObject> useButton = null;
+    #region ランキング関連
+    [SerializeField]
+    private OffLineRanking ranking = null;
+    [SerializeField]
+    private GameObject rankingPrefab = null;
+    [SerializeField]
+    private Transform rankingRoot = null;
+    [SerializeField]
+    private string inpotName = null;
+
+    private const int MAX_SHOW_RANKING = 10;
+    #endregion
+
 
     ////使用状態リスト
     //private List<GameObject> useObjectList = null;
@@ -51,7 +67,8 @@ public class UIManager : MonoBehaviour {
     //private List<GameObject> unuseObjectList = null;
     // Start is called before the first frame update
     void Start() {
-
+        instance = this;
+        useCanvas[(int)eCanvasType.Ranking].SetActive(false);
     }
 
     // Update is called once per frame
@@ -119,5 +136,44 @@ public class UIManager : MonoBehaviour {
             Destroy(useEffect, 1.0f);
         }
 
+    }
+
+    public void ShowRanking() {
+        useCanvas[2].SetActive(true);
+        //子オブジェクトを削除
+        foreach(Transform child in rankingRoot) {
+            Destroy(child.gameObject);
+        }
+
+        List<RankingData> rankingDatas = ranking.GetRankingDatas();
+        for(int i = 0;i < MAX_SHOW_RANKING; i++) {
+            GameObject rankingDataObject = Instantiate(rankingPrefab, rankingRoot);
+
+            if(i < rankingDatas.Count) {
+                RankingData data = rankingDatas[i];
+                rankingDataObject.transform.Find("Name").GetComponent<TextMeshProUGUI>().text =
+                    data.name;
+                rankingDataObject.transform.Find("Score").GetComponent<TextMeshProUGUI>().text =
+                    data.score.ToString();
+                rankingDataObject.transform.Find("Date").GetComponent<TextMeshProUGUI>().text =
+                    data.dateTime.ToString("yyyy/MM");
+
+            }
+            else {
+                rankingDataObject.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = "";
+                rankingDataObject.transform.Find("Score").GetComponent<TextMeshProUGUI>().text = "";
+                rankingDataObject.transform.Find("Date").GetComponent<TextMeshProUGUI>().text = "";
+
+            }
+        }
+
+    }
+
+    public string GetInputName() {
+        return textList[(int)eTextType.Name].text;
+    }
+
+    public void HideCanvas(int _index) {
+        useCanvas[_index].SetActive(false);
     }
 }

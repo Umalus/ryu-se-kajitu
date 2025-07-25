@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour {
     private const int PHASE_MIDDLE_TIME_END = 20;
     private const int PHASE_ENDING_TIME_END = 1;
 
-
+    private bool isAddRanking = false;
     /// <summary>
     /// 開始時間
     /// </summary>
@@ -128,8 +128,14 @@ public class GameManager : MonoBehaviour {
         await FadeManager.instance.FadeOut();
     }
     public void ShowRanking() {
-        OffLineRanking.instance.RankingUpdate("aaa", ScoreManager.AllScore);
-        OffLineRanking.instance.RankingLoad("aaa");
+        UIManager.instance.ShowRanking();
+    }
+
+    public void AddSocreData() {
+        if (isAddRanking) return;
+        OffLineRanking.instance.AddRankingData(UIManager.instance.GetInputName(),ScoreManager.AllScore);
+        UIManager.instance.ShowRanking();
+        isAddRanking = true;
     }
     /// <summary>
     /// ゲーム開始

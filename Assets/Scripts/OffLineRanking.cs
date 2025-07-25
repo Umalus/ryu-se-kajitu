@@ -1,11 +1,14 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class OffLineRanking : MonoBehaviour
 {
+    [Serializable]
+    private class RankingList {
+        public List<RankingData> rankingList;
+    }
+
     public static OffLineRanking instance = null;
 
     private List<RankingData> rankingDates;
@@ -17,60 +20,39 @@ public class OffLineRanking : MonoBehaviour
     }
 
     //ランキング更新処理
-    public void RankingUpdate(string _rankingKey, int _newScore) {
+    public void AddRankingData(string _name, int _newScore) {
+        RankingData newData = new RankingData(_name, _newScore,DateTime.Now);
 
-        //ランキングデータ代入
-        string rankingData = PlayerPrefs.GetString(_rankingKey, "500,400,300,200,100");
+        rankingDates.Add(newData);
 
-        //split関数でデータを配列に切り分ける
-        string[] rankingDataArray = rankingData.Split(",");
-
-        //ランキングの人数をキャッシュする
-        int topNScore = rankingDataArray.Length;
-
-        //ランキングより1大きいランキング配列を新たに作成
-        int[] rankingIntArray = new int[topNScore + 1];
-
-        //作成した配列にintに変換したスコアを代入
-        for (int i = 0; i < topNScore; i++) {
-            rankingIntArray[i] = int.Parse(rankingDataArray[i]);
-        }
-
-        //rankingIntArraの一番後ろに最新のスコアを代入
-        rankingIntArray[topNScore] = _newScore;
-        //ランキングを昇順にソート
-        Array.Sort(rankingIntArray);
-        //ソートしたランキングを反転させる
-        Array.Reverse(rankingIntArray);
-
-        //保存用のランキングテキストの初期化
-        string upRoadRankingText = "";
-
-        for (int i = 0; i < topNScore; i++) {
-            if (i < topNScore - 1) {
-                upRoadRankingText += rankingIntArray[i].ToString() + ",";
-            }
-            else {
-                upRoadRankingText += rankingIntArray[i].ToString();
-            }
-        }
-        //ランキングの保存
-        PlayerPrefs.SetString(_rankingKey, upRoadRankingText);
-
-        return;
+        SaveRankingData();
+        
     }
 
-    public void RankingLoad(string _rankingKey) {
+    public List<RankingData> GetRankingDatas() {
+        rankingDates.Sort((x, y) => y.score.CompareTo(x.score));
+        return rankingDates;
+    }
+
+    private void RankingLoad(string _rankingKey) {
         //ランキングデータの初期化
-        string rankingData = PlayerPrefs.GetString(_rankingKey, "500,400,300,200,100");
+        string json = PlayerPrefs.GetString("RankingData","");
 
-        string[] rankingDataArray = rankingData.Split(",");
+        if (!string.IsNullOrEmpty(json)) {
+            RankingList rankingList = JsonUtility.FromJson<RankingList>(json);
 
-        int topNScore = rankingDataArray.Length;
-
-        for (int i = 0; i < topNScore; i++) {
-            Debug.Log($"{i + 1}位:{rankingDataArray[i]}");
+            rankingDates = rankingList.rankingList;
         }
-        return;
+        else {
+            rankingDates = new List<RankingData>();
+        }
+    }
+
+    private void SaveRankingData() {
+        rankingDates.Sort((x, y) => y.score.CompareTo(x.score));
+        RankingList rankingList = new RankingList { rankingList = rankingDates };
+        string json = JsonUtility.ToJson(rankingList);
+        PlayerPrefs.SetString("RankingData", json);
+        PlayerPrefs.Save();
     }
 }

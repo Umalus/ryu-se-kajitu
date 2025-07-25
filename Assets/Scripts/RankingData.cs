@@ -6,7 +6,7 @@ public class RankingData{
     public int score;
     public DateTime dateTime;
 
-    public void RankingEntry(string _name,int _score,DateTime _date) {
+    public RankingData(string _name,int _score,DateTime _date) {
         name = _name;
         score = _score;
         dateTime = _date;
