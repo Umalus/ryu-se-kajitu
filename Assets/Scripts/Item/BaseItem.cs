@@ -14,6 +14,8 @@ public abstract class BaseItem : MonoBehaviour
     [SerializeField]
     protected float fallSpeed = 0.0f;
     public int ID { get; private set; } = -1;
+    [SerializeField]
+    private LayerMask downStopLayer;
 
     protected int categoryID = -1;
     protected async void OnCollisionEnter(Collision collision) {
@@ -49,12 +51,20 @@ public abstract class BaseItem : MonoBehaviour
     /// </summary>
     public abstract UniTask DeleteEffect();
     public void FallItem() {
+        //現在の座標をキャッシュする
         Vector3 fallPosition = transform.position;
+        //レイが当たるまでおとし続ける
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, transform.localScale.y * 2, downStopLayer)) {
+            //fallPosition.y = hit.point.y;
+            transform.position = fallPosition;
+            return;
+        }
         fallPosition.y -= fallSpeed;
-        
-        if (fallPosition.y <= 0.5f)
-            fallPosition.y = 0.5f;
         transform.position = fallPosition;
+        //デバッグ用
+        Debug.DrawRay(transform.position, Vector3.down * transform.localScale.y * 2,Color.cyan);
+        
     }
 
     public void SetID(int _ID) {

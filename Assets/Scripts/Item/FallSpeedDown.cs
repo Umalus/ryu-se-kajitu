@@ -1,8 +1,8 @@
 using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
 using UnityEngine;
 
 using static GameEnum;
-using static ItemUtility;
 /// <summary>
 /// 落ちてくるスピードを半分にする
 /// </summary>
@@ -11,7 +11,7 @@ public class FallSpeedDown : BaseItem
     
     //スピードを取得するためのデータ
     [SerializeField]
-    private BaseScoreData scoreData;
+    private List<BaseScoreData> itemObjectList;
     //設定するためのスピード
     private float setSpeed = 0.0f;
     //タイマー
@@ -26,7 +26,9 @@ public class FallSpeedDown : BaseItem
     // Start is called before the first frame update
     void Start()
     {
-        setSpeed = scoreData.fallSpeed * 0.5f;
+        for(int i = 0,max = itemObjectList.Count; i < max; i++) {
+            setSpeed = itemObjectList[i].fallSpeed * 0.5f;
+        }
         categoryID = (int)eItemCategory.FallSpeed;
     }
     private new void Update() {
