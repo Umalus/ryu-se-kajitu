@@ -40,8 +40,8 @@ public class FallSpeedDown : BaseItem
     /// æ‚Á‚½‚ç—^‚¦‚éŒø‰Ê
     /// </summary>
     public override void AddEffect() {
-        Fruit.SetFallSpeed(setSpeed);
-        Fruit.IsHalf = true;
+        BaseScoreObject.SetFallSpeed(setSpeed);
+        BaseScoreObject.isHalfSpeed = true;
     }
     /// <summary>
     /// Œø‰Ê‚ğÁ‚·
@@ -57,7 +57,7 @@ public class FallSpeedDown : BaseItem
             await UniTask.DelayFrame(1);
 
         }
-        Fruit.IsHalf = false;
+        BaseScoreObject.isHalfSpeed = false;
     }
 
     

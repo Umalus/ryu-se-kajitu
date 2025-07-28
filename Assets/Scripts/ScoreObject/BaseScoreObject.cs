@@ -6,11 +6,34 @@ using UnityEngine;
 /// </summary>
 public abstract class BaseScoreObject : MonoBehaviour
 {
-    public int score { get; private set; } = 0;
+    [SerializeField]
+    protected BaseScoreData scoreData = null;
 
-    public bool isGet { get; protected set; }
+    public int score { get; private set; } = -1;
+
+    protected static float fallSpeed = -1.0f;
+
+    protected bool isGet;
     
-    public void SetScore(int _value) { score = _value; }
+    protected void SetScore(int _value) { score = _value; }
+
+    public static bool isHalfSpeed;
+    public virtual void Initialize() {
+        SetScore(scoreData.score);
+        if (isHalfSpeed)
+            fallSpeed = scoreData.fallSpeed * 0.5f;
+
+        else
+            fallSpeed = scoreData.fallSpeed;
+            
+    }
+
+    protected void fallObject() {
+        //ポジションをキャッシュしnewを回避
+        Vector3 fallPos = transform.position;
+        fallPos.y -= fallSpeed;
+        transform.position = fallPos;
+    }
 
     /// <summary>
     /// オブジェクトを破棄した時の処理
@@ -27,5 +50,9 @@ public abstract class BaseScoreObject : MonoBehaviour
 
     public void SetIsGet(bool _value) {
         isGet = _value;
+    }
+
+    public static void SetFallSpeed(float _speed) {
+        fallSpeed = _speed;
     }
 }

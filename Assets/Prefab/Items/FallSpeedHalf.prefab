@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7127560743817622800}
   - component: {fileID: 4602482726853528454}
   - component: {fileID: 132210314219777419}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: FallSpeedHalf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 1.652, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5255353699830495136}
@@ -226,7 +226,9 @@ MonoBehaviour:
   downStopLayer:
     serializedVersion: 2
     m_Bits: 64
-  itemObjectList: []
+  itemObjectList:
+  - {fileID: 11400000, guid: 8745f1a84850c8e49a947534817966c6, type: 2}
+  - {fileID: 11400000, guid: dbaac9b03ba787b4185fef08713ae2b3, type: 2}
   timer: 0
 --- !u!65 &1109787521669020245
 BoxCollider:
