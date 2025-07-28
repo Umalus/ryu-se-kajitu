@@ -171,4 +171,8 @@ public class GameManager : MonoBehaviour {
          Application.Quit();
 #endif
     }
+
+    public void AddSecond(float _addTime) {
+        second += _addTime;
+    }
 }
