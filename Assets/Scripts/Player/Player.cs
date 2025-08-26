@@ -4,6 +4,8 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+using static GameEnum;
+
 public class Player : MonoBehaviour {
     //InputSystem
     private Bozu inputActions = null;
@@ -26,12 +28,16 @@ public class Player : MonoBehaviour {
                 GameManager.instance.AddSecond(3.0f);
             addScoreObj.SetIsGet(true);
             ScoreManager.AddScore(addScoreObj,combo);
+
+            EffectManager.instance.ExecuteEffect((int)eEffectCategory.Good,other.transform);
         }
         else if (other.gameObject.CompareTag("Insect")) {
             BaseScoreObject addScoreObj = other.gameObject.GetComponent<BaseScoreObject>();
             combo = 0;
             addScoreObj.SetIsGet(true);
             ScoreManager.AddScore(addScoreObj, combo);
+
+            EffectManager.instance.ExecuteEffect((int)eEffectCategory.Bad, other.transform);
         }
     }
     void Start() {

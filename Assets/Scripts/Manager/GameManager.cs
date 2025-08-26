@@ -55,6 +55,8 @@ public class GameManager : MonoBehaviour {
     void Update() {
         //プレイできる状態でないなら処理しない
         if (!IsPlay) return;
+
+
         //タイマー処理
         Timer();
         //フェーズ処理
@@ -126,12 +128,17 @@ public class GameManager : MonoBehaviour {
 
     public async void ReturnTitle() {
         await FadeManager.instance.FadeOut();
-#if UNITY_EDITOR
-        EditorApplication.isPlaying = false;
+        phase = GamePhase.opening;
+        await FadeManager.instance.FadeIn(1);
 
-#else
-         Application.Quit();
-#endif
+        ResetGame();
+    }
+
+    private void ResetGame() {
+        
+        second = playTime;
+        inputAction.GameManager.Start.performed += OnStartPreformed;
+        inputAction.GameManager.End.performed += OnEndPreformed;
     }
     public void ShowRanking() {
         UIManager.instance.ShowRanking();
@@ -170,6 +177,15 @@ public class GameManager : MonoBehaviour {
 #else
          Application.Quit();
 #endif
+    }
+
+    public async void GoTutorial() {
+        IsPlay = false;
+        await FadeManager.instance.FadeOut();
+    }
+
+    public void NotTutorial() {
+
     }
 
     public void AddSecond(float _addTime) {

@@ -40,6 +40,14 @@ public static class GameEnum
         Max,
     }
 
+    public enum eEffectCategory {
+        Invalid = -1,
+        Good,
+        Bad,
+
+        effectCategoryMax
+    }
+
     /// <summary>
     /// 降ってくるスコアオブジェクト管理用列挙定数
     /// </summary>
