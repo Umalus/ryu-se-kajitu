@@ -16,6 +16,8 @@ public static class GameEnum
         middle,
         ending,
         PhaseEnd,
+
+        Tutorial,
     }
     /// <summary>
     /// ˜A½ŠÇ——p—ñ‹“’è”

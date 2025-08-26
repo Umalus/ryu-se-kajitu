@@ -48,8 +48,6 @@ public class UIManager : MonoBehaviour {
     private GameObject rankingPrefab = null;
     [SerializeField]
     private Transform rankingRoot = null;
-    [SerializeField]
-    private string inpotName = null;
 
     private bool isShowRanking = false;
 
