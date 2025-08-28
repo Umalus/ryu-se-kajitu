@@ -1429,6 +1429,7 @@ MonoBehaviour:
   ranking: {fileID: 2016901803}
   rankingPrefab: {fileID: 3181690230242166246, guid: 6db83b28f121b014fbc2d3f6ad78faf1, type: 3}
   rankingRoot: {fileID: 1882291709}
+  rankingManager: {fileID: 977871882}
 --- !u!1 &426831502
 GameObject:
   m_ObjectHideFlags: 0
@@ -3496,6 +3497,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 805642119315449098, guid: 59f493aa98646314692852d0a6cf7088, type: 3}
   m_PrefabInstance: {fileID: 8191036017916019942}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &977871881
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 977871883}
+  - component: {fileID: 977871882}
+  m_Layer: 0
+  m_Name: OnlineRanking
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &977871882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977871881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c9a1b4ea9179e244bebddd288381592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &977871883
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977871881}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.523587, y: 31.403355, z: -27.825224}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &979495015
 GameObject:
   m_ObjectHideFlags: 0
@@ -6391,3 +6436,4 @@ SceneRoots:
   - {fileID: 2016901804}
   - {fileID: 1701450705}
   - {fileID: 427369211}
+  - {fileID: 977871883}

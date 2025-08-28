@@ -153,6 +153,7 @@ public class GameManager : MonoBehaviour {
     public void AddSocreData() {
         if (isAddRanking) return;
         OffLineRanking.instance.AddRankingData(UIManager.instance.GetInputName(),ScoreManager.AllScore);
+        OnlineRankingManager.instance.AddRankingData(UIManager.instance.GetInputName(), ScoreManager.AllScore);
         UIManager.instance.ShowRanking();
         isAddRanking = true;
     }

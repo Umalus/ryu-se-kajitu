@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour {
     private List<GameObject> useCanvas = null;
     [SerializeField]
     private List<GameObject> useButton = null;
-    #region ランキング関連
+    #region オフラインランキング関連
     [SerializeField]
     private OffLineRanking ranking = null;
     [SerializeField]
@@ -53,6 +53,11 @@ public class UIManager : MonoBehaviour {
 
     private const int MAX_SHOW_RANKING = 10;
     #endregion
+    #region オンラインランキング関連
+    [SerializeField]
+    private OnlineRankingManager rankingManager = null;
+    #endregion
+
 
 
     ////使用状態リスト
