@@ -1429,7 +1429,6 @@ MonoBehaviour:
   ranking: {fileID: 2016901803}
   rankingPrefab: {fileID: 3181690230242166246, guid: 6db83b28f121b014fbc2d3f6ad78faf1, type: 3}
   rankingRoot: {fileID: 1882291709}
-  inpotName: 
 --- !u!1 &426831502
 GameObject:
   m_ObjectHideFlags: 0
@@ -3044,7 +3043,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &909746423
 RectTransform:
   m_ObjectHideFlags: 0
