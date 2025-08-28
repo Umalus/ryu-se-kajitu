@@ -6206,7 +6206,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3238202257171345755, guid: ddc26983193849e4989063fb26efaa63, type: 3}
       propertyPath: playTime
-      value: 5
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 3749586384602391008, guid: ddc26983193849e4989063fb26efaa63, type: 3}
       propertyPath: m_LocalPosition.x
