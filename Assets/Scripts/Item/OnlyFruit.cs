@@ -18,6 +18,11 @@ public class OnlyFruit : BaseItem
         categoryID = (int)eItemCategory.OnlyFruit;
     }
 
+    private new void OnCollisionEnter(Collision collision) {
+        base.OnCollisionEnter(collision);
+        EffectManager.instance.ExecuteEffect((int)eEffectCategory.OnlyFruit, transform);
+    }
+
     private new void Update() {
         base.Update();
         if (IsRunningTime)

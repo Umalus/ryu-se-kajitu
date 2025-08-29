@@ -11,12 +11,13 @@ GameObject:
   - component: {fileID: 3734396072066996631}
   - component: {fileID: 113297650047564384}
   - component: {fileID: 7127560743817622800}
+  - component: {fileID: 1989788916152584220}
   m_Layer: 3
   m_Name: FallSpeedHalf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &3734396072066996631
 Transform:
@@ -83,6 +84,33 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!54 &1989788916152584220
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635850533046135492}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &4555391209209905636
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,7 +123,7 @@ GameObject:
   - component: {fileID: 8081717496395076414}
   - component: {fileID: 4414313872633985131}
   - component: {fileID: 6437663981553559593}
-  - component: {fileID: 1109787521669020245}
+  - component: {fileID: 8714181892029391309}
   m_Layer: 0
   m_Name: FallSpeedHalf
   m_TagString: Untagged
@@ -189,7 +217,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8745f1a84850c8e49a947534817966c6, type: 2}
   - {fileID: 11400000, guid: dbaac9b03ba787b4185fef08713ae2b3, type: 2}
   timer: 0
---- !u!65 &1109787521669020245
+--- !u!65 &8714181892029391309
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -208,5 +236,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5555271, y: 3.8537529, z: 0.6978504}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.555527, y: 3.8537526, z: 0.69785035}
+  m_Center: {x: 0.0000011920928, y: 0.007861256, z: 0}

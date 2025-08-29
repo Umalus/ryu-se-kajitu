@@ -42,10 +42,15 @@ public static class GameEnum
         Max,
     }
 
+    /// <summary>
+    /// エフェクト管理用列挙定数
+    /// </summary>
     public enum eEffectCategory {
         Invalid = -1,
         Good,
         Bad,
+        OnlyFruit,
+        FallSpeeddown,
 
         effectCategoryMax
     }
@@ -68,6 +73,7 @@ public static class GameEnum
         InsectSound,
         FruitSound,
         ItemSound,
+        ClickButton,
 
         Max
     }
@@ -76,7 +82,8 @@ public static class GameEnum
         Invalid = -1,
         InGameCanvas,
         OutGameCanvas,
-        Ranking,
+        OfflineRanking,
+        OnlineRanking,
 
         Max
     }

@@ -102,5 +102,12 @@ public class Player : MonoBehaviour {
         //アニメーション変更
         anim.SetBool("IsMove", false);
     }
-    
+    public static void SetCombo(int _combo) {
+        combo = _combo;
+    }
+    public void Reset() {
+        transform.position = Vector3.zero;
+        transform.rotation = new Quaternion(0,0,0,0);
+        playerDir = Vector3.zero;
+    }
 }

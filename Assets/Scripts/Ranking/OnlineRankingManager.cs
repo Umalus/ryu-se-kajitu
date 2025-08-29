@@ -3,9 +3,15 @@ using PlayFab.ClientModels;
 using System.Text;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class OnlineRankingManager : MonoBehaviour
 {
+    [Serializable]
+    private class RankingList {
+        public List<RankingData> rankingList;
+    }
+
     public static OnlineRankingManager instance = null;
 
     private bool createAccount;
@@ -15,6 +21,8 @@ public class OnlineRankingManager : MonoBehaviour
     static readonly string CUSTOM_ID_SAVE_KEY = "TEST_RANKING_SAVE_KEY";
 
     static readonly string ID_CHARACTER = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    private List<RankingData> rankingDatas;
     private void Awake() {
         instance = this;
     }
@@ -25,6 +33,24 @@ public class OnlineRankingManager : MonoBehaviour
     public void AddRankingData(string _name,int _score) {
         SetUserName(_name);
         SubmitScore(_score);
+
+        RankingData addDate = new RankingData(_name, _score,DateTime.Now);
+
+        rankingDatas.Add(addDate);
+
+        SaveRankingData();
+    }
+
+    private void SaveRankingData() {
+        rankingDatas.Sort((x, y) => y.score.CompareTo(x.score));
+        RankingList rankingList = new RankingList { rankingList = rankingDatas };
+        string json = JsonUtility.ToJson(rankingList);
+        PlayerPrefs.SetString("TestRanking", json);
+        PlayerPrefs.Save();
+    }
+
+    public List<RankingData> GetOnlineRankingData() {
+        return rankingDatas;
     }
 
     private void SetUserName(string _name) {
@@ -33,7 +59,7 @@ public class OnlineRankingManager : MonoBehaviour
             // ユーザー名の設定
             DisplayName = _name
         };
-
+        
         // リクエストをPlayFabに送信する
         PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnSetUserNameSuccess, OnSetUserNameFailure);
 
@@ -52,6 +78,16 @@ public class OnlineRankingManager : MonoBehaviour
         customID = LoadCustomID();
         
         var request = new LoginWithCustomIDRequest { CustomId = "testID", CreateAccount = true };
+        //ランキングデータの初期化
+        string json = PlayerPrefs.GetString("TestRanking", "");
+        if (!string.IsNullOrEmpty(json)) {
+            RankingList rankingList = JsonUtility.FromJson<RankingList>(json);
+
+            rankingDatas = rankingList.rankingList;
+        }
+        else {
+            rankingDatas = new List<RankingData>();
+        }
 
         PlayFabClientAPI.LoginWithCustomID(request, OnLoginSuccess, OnLoginFailure);
     }
@@ -113,7 +149,6 @@ public class OnlineRankingManager : MonoBehaviour
 
             Value = _score,
         };
-
         var request = new UpdatePlayerStatisticsRequest {
             Statistics = new List<StatisticUpdate> {
                 statisticUpdate
@@ -129,7 +164,7 @@ public class OnlineRankingManager : MonoBehaviour
         Debug.Log("スコア送信失敗");
     }
 
-    private void GetRanking() {
+    public void GetRanking() {
         var request = new GetLeaderboardRequest {
             StatisticName = "TestRanking",
 
@@ -143,7 +178,15 @@ public class OnlineRankingManager : MonoBehaviour
 
     void OnGetRankingSuccess(GetLeaderboardResult _leaderboardResult) {
         foreach (var item in _leaderboardResult.Leaderboard) {
-            Debug.Log($"{item.Position + 1}位　プレイヤー名:{item.DisplayName}　スコア:{int.MaxValue - item.StatValue}");
+            Debug.Log($"{item.Position + 1}位　プレイヤー名:{item.DisplayName}　スコア:{item.StatValue}");
+
+            
+        }
+
+        for(int i = 0,max = 10;i < max; i++) {
+            var item = _leaderboardResult.Leaderboard;
+            rankingDatas[i].score = item[i].StatValue;
+            rankingDatas[i].name = item[i].DisplayName;
         }
     }
 

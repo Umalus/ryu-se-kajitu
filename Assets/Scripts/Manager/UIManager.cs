@@ -7,10 +7,12 @@ using UnityEngine.UI;
 
 using static GameConst;
 using static GameEnum;
+using Cysharp.Threading.Tasks;
+using Unity.VisualScripting.Antlr3.Runtime;
 
 public class UIManager : MonoBehaviour {
     public static UIManager instance = null;
-    
+
     //テキスト管理用列挙定数
     private enum eTextType {
         Invalid = -1,
@@ -19,10 +21,11 @@ public class UIManager : MonoBehaviour {
         Start,
         Combo,
         Name,
+        Time,
 
         Max,
     }
-    
+
     private int prevCombo = 0;
     //テキストのリスト
     [SerializeField]
@@ -41,6 +44,9 @@ public class UIManager : MonoBehaviour {
     private List<GameObject> useCanvas = null;
     [SerializeField]
     private List<GameObject> useButton = null;
+    [SerializeField]
+    Transform AddTimeRoot = null;
+
     #region オフラインランキング関連
     [SerializeField]
     private OffLineRanking ranking = null;
@@ -55,7 +61,7 @@ public class UIManager : MonoBehaviour {
     #endregion
     #region オンラインランキング関連
     [SerializeField]
-    private OnlineRankingManager rankingManager = null;
+    private OnlineRankingManager onlineRankingManager = null;
     #endregion
 
 
@@ -67,7 +73,7 @@ public class UIManager : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         instance = this;
-        useCanvas[(int)eCanvasType.Ranking].SetActive(false);
+        useCanvas[(int)eCanvasType.OfflineRanking].SetActive(false);
     }
 
     // Update is called once per frame
@@ -86,7 +92,7 @@ public class UIManager : MonoBehaviour {
             "Score : " + ScoreManager.AllScore;
         //コンボのUI
         if (Player.GetCombo() >= FRUIT_FIRST_MIN) {
-            if(Player.GetCombo() > prevCombo) {
+            if (Player.GetCombo() > prevCombo) {
                 useEffect = Instantiate(effects[1], effectRoot);
             }
             stringBuilder.Append(Player.GetCombo().ToString());
@@ -103,26 +109,26 @@ public class UIManager : MonoBehaviour {
 
         //ゲーム中は表示しないテキスト
         if (GameManager.instance.IsPlay) {
-            useCanvas[(int)eCanvasType.OutGameCanvas].SetActive(false);
-            useCanvas[(int)eCanvasType.InGameCanvas].SetActive(true);
+            HideCanvas((int)eCanvasType.OutGameCanvas);
+            ShowCanvas((int)eCanvasType.InGameCanvas);
             textList[(int)eTextType.Start].enabled = false;
             images[0].enabled = false;
             textList[(int)eTextType.Start].text =
                 "Game over!!\nEnd to EscapeKey";
         }
         else if (isShowRanking) {
-            useCanvas[(int)eCanvasType.OutGameCanvas].SetActive(false);
-            useCanvas[(int)eCanvasType.InGameCanvas].SetActive(false);
+            HideCanvas((int)eCanvasType.OutGameCanvas);
+            HideCanvas((int)eCanvasType.InGameCanvas);
         }
 
         else {
-            useCanvas[(int)eCanvasType.InGameCanvas].SetActive(false);
-            useCanvas[(int)eCanvasType.OutGameCanvas].SetActive(true);
+            HideCanvas((int)eCanvasType.InGameCanvas);
+            ShowCanvas((int)eCanvasType.OutGameCanvas);
             textList[(int)eTextType.Start].enabled = true;
             images[0].enabled = true;
             //ボタンの表示、非表示
-            if(GameManager.instance.phase == GameEnum.GamePhase.PhaseEnd) {
-                for(int i = 0,max = useButton.Count; i < max; i++) {
+            if (GameManager.instance.phase == GameEnum.GamePhase.PhaseEnd) {
+                for (int i = 0, max = useButton.Count; i < max; i++) {
                     useButton[i].SetActive(true);
                 }
             }
@@ -141,19 +147,19 @@ public class UIManager : MonoBehaviour {
 
     }
 
-    public void ShowRanking() {
+    public void ShowOfflineRanking() {
         isShowRanking = true;
         useCanvas[2].SetActive(true);
         //子オブジェクトを削除
-        foreach(Transform child in rankingRoot) {
+        foreach (Transform child in rankingRoot) {
             Destroy(child.gameObject);
         }
 
         List<RankingData> rankingDatas = ranking.GetRankingDatas();
-        for(int i = 0;i < MAX_SHOW_RANKING; i++) {
+        for (int i = 0; i < MAX_SHOW_RANKING; i++) {
             GameObject rankingDataObject = Instantiate(rankingPrefab, rankingRoot);
 
-            if(i < rankingDatas.Count) {
+            if (i < rankingDatas.Count) {
                 RankingData data = rankingDatas[i];
                 rankingDataObject.transform.Find("Rank").GetComponent<TextMeshProUGUI>().text =
                     (i + 1).ToString();
@@ -171,17 +177,49 @@ public class UIManager : MonoBehaviour {
 
     }
 
+
+
     public string GetInputName() {
         return textList[(int)eTextType.Name].text;
     }
 
     public void HideCanvas(int _index) {
         useCanvas[_index].SetActive(false);
-        if (_index == (int)eCanvasType.Ranking)
+        if (_index == (int)eCanvasType.OfflineRanking)
             isShowRanking = false;
     }
 
     public void ShowCanvas(int _index) {
         useCanvas[_index].SetActive(true);
+    }
+
+    public void ResetUI() {
+        textList[(int)eTextType.Start].text =
+               "Start To Touch Screen!!";
+    }
+
+    public async UniTask ShowTimeAddUI(float _targetAlpha, float _duration = 1.0f) {
+        TextMeshProUGUI time = textList[(int)eTextType.Time];
+        time.enabled = true;
+        time.transform.position = AddTimeRoot.position;
+        Vector3 timePosition = time.transform.position;
+        float elapsedTime = 0.0f;
+        float startAlpha = time.color.a;
+        Color changeColor = time.color;
+        while (elapsedTime < _duration) {
+            elapsedTime += Time.deltaTime;
+
+            float t = elapsedTime / _duration;
+            changeColor.a = Mathf.Lerp(startAlpha, _targetAlpha, t);
+            time.color = changeColor;
+
+            timePosition.y -= 0.5f;
+            await UniTask.DelayFrame(1);
+        }
+        changeColor.a = _targetAlpha;
+        time.color = changeColor;
+        transform.position = timePosition;
+
+
     }
 }

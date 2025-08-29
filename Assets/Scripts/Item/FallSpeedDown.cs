@@ -21,7 +21,7 @@ public class FallSpeedDown : BaseItem
 
     private new void OnCollisionEnter(Collision collision) {
         base.OnCollisionEnter(collision);
-
+        EffectManager.instance.ExecuteEffect((int)eEffectCategory.FallSpeeddown,transform);
     }
     // Start is called before the first frame update
     void Start()

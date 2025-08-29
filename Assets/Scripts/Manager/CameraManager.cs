@@ -2,8 +2,10 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using Unity.VisualScripting;
 
 public class CameraManager : MonoBehaviour {
+    public static CameraManager instance = null;
     [Serializable]
     public class Paramater {
         [SerializeField, Header("追いかける対象")]
@@ -33,10 +35,16 @@ public class CameraManager : MonoBehaviour {
     private float distanceY = 0.0f;
     [SerializeField]
     private float rotateSpeed = 1.0f;
+    private bool isFirstTouch = false;
+    private Vector2 currentPos = Vector2.zero;
     #endregion
     //マウスかスマホかどうか(デバッグ用)
     [SerializeField]
     private bool UseMouse = false;
+
+    private void Awake() {
+        instance = this;
+    }
     private void Update() {
         //カメラを回転
         param.angles = RotateCamera();
@@ -85,7 +93,9 @@ public class CameraManager : MonoBehaviour {
 
             //クリック時
             if (leftClick.wasPressedThisFrame) {
+
                 startClickPos = clickPos;
+
             }
             //押している間
             if (leftClick.isPressed) {
@@ -93,6 +103,7 @@ public class CameraManager : MonoBehaviour {
                 //触った地点と現在の地点の距離を計算
                 distanceX = currentClickPos.x - startClickPos.x;
                 distanceY = currentClickPos.y - startClickPos.y;
+                currentPos = new Vector2(distanceX, distanceY);
                 Debug.Log($"X{distanceX}");
                 Debug.Log($"Y{distanceY}");
             }
@@ -109,37 +120,30 @@ public class CameraManager : MonoBehaviour {
         else {
             var touchs = Input.touchCount;
 
-            if (touchs == 2) {
-                
+            if (touchs >= 1) {
+
                 #region TouchScreen
                 var touch1 = Input.touches[0];
-                var touch2 = Input.touches[1];
 
-                
+
+
 
                 Vector2 touchPos1 = touch1.position;
                 if (touchPos1 == null) return Vector3.zero;
-                Vector2 touchPos2 = touch2.position;
-                if (touchPos2 == null) return Vector3.zero;
-
-
                 var press1 = touch1.phase;
-
-                var press2 = touch2.phase;
                 //タップ時
                 if (press1 == UnityEngine.TouchPhase.Began) {
-                    startClickPos = touchPos1;
 
+                    startClickPos = touchPos1;
                     Debug.Log(startClickPos.x);
                     Debug.Log(startClickPos.y);
 
                 }
                 //最初のタップ位置が指定座標(画面左半分)なら二つ目のタップ位置を取得し、タップ開始位置へ代入
                 if (startClickPos.x < 400.0f && startClickPos.y < 500.0f) {
-                    touch1 = Input.touches[1];
-                    //startClickPos = touch1.position;
+                    return Vector3.zero;
                 }
-                    
+
 
 
                 //押している間
@@ -147,14 +151,15 @@ public class CameraManager : MonoBehaviour {
                     currentClickPos = touchPos1;
                     distanceX = currentClickPos.x - startClickPos.x;
                     distanceY = currentClickPos.y - startClickPos.y;
-                    //Debug.Log($"X{distanceX}");
-                    //Debug.Log($"Y{distanceY}");
 
+                    Debug.Log(distanceX);
+                    Debug.Log(distanceY);
                 }
                 //離した時
                 if (press1 == UnityEngine.TouchPhase.Canceled) {
                     cameraPos.x = distanceX;
                     cameraPos.y = distanceY;
+
                     //startClickPos = touch1.position;
                 }
 
@@ -183,5 +188,9 @@ public class CameraManager : MonoBehaviour {
 
     }
 
+    public void ResetCamera() {
+        param.position = Vector3.zero;
+        param.angles = Vector3.zero;
+    }
 
 }

@@ -13,19 +13,21 @@ public abstract class BaseItem : MonoBehaviour
 {
     [SerializeField]
     protected float fallSpeed = 0.0f;
+    float angle = 0.0f;
     public int ID { get; private set; } = -1;
     [SerializeField]
     private LayerMask downStopLayer;
 
     protected int categoryID = -1;
-    protected async void OnCollisionEnter(Collision collision) {
+    protected async void OnCollisionEnter(Collision collision){
         //当たったオブジェクトのタグがプレイヤーなら
         if (collision.gameObject.CompareTag("Player")) {
             //効果適用
             AddEffect();
+            AudioManager.instance.PlaySE((int)SEIndex.ItemSound, 0.5f);
             //未使用状態にする
             await UnuseObject(this, categoryID);
-            AudioManager.instance.PlaySE((int)SEIndex.ItemSound,0.5f);
+            
         }
             
     }
@@ -38,7 +40,7 @@ public abstract class BaseItem : MonoBehaviour
         if (!GameManager.instance.IsPlay)
             task = UnuseObject(this, categoryID);
         FallItem();
-
+        RotatoItem();
         await UniTask.CompletedTask;
     }
 
@@ -65,6 +67,10 @@ public abstract class BaseItem : MonoBehaviour
         //デバッグ用
         Debug.DrawRay(transform.position, Vector3.down * transform.localScale.y * 2,Color.cyan);
         
+    }
+    public void RotatoItem() {
+        angle += 0.5f;
+        transform.rotation = Quaternion.AngleAxis(angle,Vector3.up);
     }
 
     public void SetID(int _ID) {

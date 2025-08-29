@@ -43,6 +43,9 @@ public class GameManager : MonoBehaviour {
     public float prevTime { get; private set; } = 0;
 
     public GamePhase phase { get; private set; } = 0;
+
+    [SerializeField]
+    private Player player = null;
     // Start is called before the first frame update
     async void Start() {
         await Initialize();
@@ -126,8 +129,12 @@ public class GameManager : MonoBehaviour {
         inputAction.GameManager.Start.performed -= OnStartPreformed;
     }
 
-    public async void ReturnTitle() {
+    public async void OnButtonReturnTitle() {
+        AudioManager.instance.PlaySE((int)SEIndex.ClickButton);
         await FadeManager.instance.FadeOut();
+        UIManager.instance.ResetUI();
+        CameraManager.instance.ResetCamera();
+        player.Reset();
         phase = GamePhase.opening;
         await FadeManager.instance.FadeIn(1);
 
@@ -137,24 +144,36 @@ public class GameManager : MonoBehaviour {
     private void ResetGame() {
         
         second = playTime;
+        Player.SetCombo(0);
+        
         inputAction.GameManager.Start.performed += OnStartPreformed;
         inputAction.GameManager.End.performed += OnEndPreformed;
     }
-    public void ShowRanking() {
-        UIManager.instance.ShowRanking();
+    public void OnButtonShowOfflineRanking() {
+        UIManager.instance.ShowOfflineRanking();
         UIManager.instance.HideCanvas((int)eCanvasType.OutGameCanvas);
+        AudioManager.instance.PlaySE((int)SEIndex.ClickButton);
     }
 
     public void ExitRanking() {
-        UIManager.instance.HideCanvas((int)eCanvasType.Ranking);
+        UIManager.instance.HideCanvas((int)eCanvasType.OfflineRanking);
         UIManager.instance.ShowCanvas((int)eCanvasType.OutGameCanvas);
+        AudioManager.instance.PlaySE((int)SEIndex.ClickButton);
+    }
+
+    public void ChangeRanking() {
+
     }
 
     public void AddSocreData() {
         if (isAddRanking) return;
         OffLineRanking.instance.AddRankingData(UIManager.instance.GetInputName(),ScoreManager.AllScore);
+        //UIManager.instance.ShowOfflineRanking();
+        isAddRanking = true;
+    }
+    public void AddOnlineScoreData() {
+        if (isAddRanking) return;
         OnlineRankingManager.instance.AddRankingData(UIManager.instance.GetInputName(), ScoreManager.AllScore);
-        UIManager.instance.ShowRanking();
         isAddRanking = true;
     }
     /// <summary>
@@ -189,7 +208,8 @@ public class GameManager : MonoBehaviour {
 
     }
 
-    public void AddSecond(float _addTime) {
+    public async void AddSecond(float _addTime) {
         second += _addTime;
+        await UIManager.instance.ShowTimeAddUI(0.0f);
     }
 }

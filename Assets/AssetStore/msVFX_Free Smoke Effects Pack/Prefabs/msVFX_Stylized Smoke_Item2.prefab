@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 265766274217486953}
   - component: {fileID: 266638105498670179}
   m_Layer: 0
-  m_Name: msVFX_Stylized Smoke_Good
+  m_Name: msVFX_Stylized Smoke_Item2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4559,7 +4559,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c23421536545e5b43966be8e4a6b690c, type: 2}
+  - {fileID: 2100000, guid: 0836e24ed10d71a48acdbc3f7c4f2024, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
