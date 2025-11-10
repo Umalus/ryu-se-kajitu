@@ -99,6 +99,7 @@ public class GameManager : MonoBehaviour {
         else {
             phase = GamePhase.PhaseEnd;
             IsPlay = false;
+            Cursor.lockState = CursorLockMode.None;
             Teardown();
         }
 

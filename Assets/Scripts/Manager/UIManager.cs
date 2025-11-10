@@ -124,7 +124,15 @@ public class UIManager : MonoBehaviour {
         else {
             HideCanvas((int)eCanvasType.InGameCanvas);
             ShowCanvas((int)eCanvasType.OutGameCanvas);
-            textList[(int)eTextType.Start].enabled = true;
+            if(GameManager.instance.phase == GamePhase.PhaseEnd) {
+                textList[(int)eTextType.Start].enabled = false;
+                textList[(int)eTextType.Start].GetComponentInParent<Image>().color = new Color(0,0,0,0);
+            }
+            else {
+                textList[(int)eTextType.Start].enabled = true;
+                textList[(int)eTextType.Start].GetComponentInParent<Image>().color = new Color(1, 1, 1, 0.5f);
+            }
+            
             images[0].enabled = true;
             //ボタンの表示、非表示
             if (GameManager.instance.phase == GameEnum.GamePhase.PhaseEnd) {
