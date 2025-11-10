@@ -8,7 +8,6 @@ using UnityEngine.UI;
 using static GameConst;
 using static GameEnum;
 using Cysharp.Threading.Tasks;
-using Unity.VisualScripting.Antlr3.Runtime;
 
 public class UIManager : MonoBehaviour {
     public static UIManager instance = null;
@@ -155,7 +154,7 @@ public class UIManager : MonoBehaviour {
 
     }
 
-    public void ShowOfflineRanking() {
+    public void ShowOnlineRanking() {
         isShowRanking = true;
         useCanvas[2].SetActive(true);
         //子オブジェクトを削除
@@ -163,7 +162,7 @@ public class UIManager : MonoBehaviour {
             Destroy(child.gameObject);
         }
 
-        List<RankingData> rankingDatas = ranking.GetRankingDatas();
+        List<RankingData> rankingDatas = OnlineRankingManager.instance.GetOnlineRankingData();
         for (int i = 0; i < MAX_SHOW_RANKING; i++) {
             GameObject rankingDataObject = Instantiate(rankingPrefab, rankingRoot);
 

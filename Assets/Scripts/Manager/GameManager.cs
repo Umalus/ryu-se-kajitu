@@ -151,7 +151,8 @@ public class GameManager : MonoBehaviour {
         inputAction.GameManager.End.performed += OnEndPreformed;
     }
     public void OnButtonShowOfflineRanking() {
-        UIManager.instance.ShowOfflineRanking();
+        OnlineRankingManager.instance.GetRanking();
+        UIManager.instance.ShowOnlineRanking();
         UIManager.instance.HideCanvas((int)eCanvasType.OutGameCanvas);
         AudioManager.instance.PlaySE((int)SEIndex.ClickButton);
     }
@@ -162,19 +163,9 @@ public class GameManager : MonoBehaviour {
         AudioManager.instance.PlaySE((int)SEIndex.ClickButton);
     }
 
-    public void ChangeRanking() {
-
-    }
-
     public void AddSocreData() {
         if (isAddRanking) return;
-        OffLineRanking.instance.AddRankingData(UIManager.instance.GetInputName(),ScoreManager.AllScore);
-        //UIManager.instance.ShowOfflineRanking();
-        isAddRanking = true;
-    }
-    public void AddOnlineScoreData() {
-        if (isAddRanking) return;
-        OnlineRankingManager.instance.AddRankingData(UIManager.instance.GetInputName(), ScoreManager.AllScore);
+        OnlineRankingManager.instance.AddRankingData(UIManager.instance.GetInputName(),ScoreManager.AllScore);
         isAddRanking = true;
     }
     /// <summary>

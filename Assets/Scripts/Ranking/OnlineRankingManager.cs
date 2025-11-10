@@ -22,7 +22,7 @@ public class OnlineRankingManager : MonoBehaviour
 
     static readonly string ID_CHARACTER = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    private List<RankingData> rankingDatas;
+    public List<RankingData> rankingDatas { get; private set; }
     private void Awake() {
         instance = this;
     }
@@ -77,7 +77,7 @@ public class OnlineRankingManager : MonoBehaviour
     private void LoginRanking() {
         customID = LoadCustomID();
         
-        var request = new LoginWithCustomIDRequest { CustomId = "testID", CreateAccount = true };
+        var request = new LoginWithCustomIDRequest { CustomId = customID, CreateAccount = true };
         //ランキングデータの初期化
         string json = PlayerPrefs.GetString("TestRanking", "");
         if (!string.IsNullOrEmpty(json)) {
@@ -93,20 +93,17 @@ public class OnlineRankingManager : MonoBehaviour
     }
 
     private void OnLoginSuccess(LoginResult _request) {
-        //IDかぶった場合
-        if(createAccount && !_request.NewlyCreated) {
-            //再度ログイン
-            LoginRanking();
-
-            return;
-        }
-
+        //Debug.Log("ログイン成功");
         if (_request.NewlyCreated) {
             SaveCustomID();
+            Debug.Log("新規アカウント作成成功");
         }
-        
-        Debug.Log("ログイン成功");
-        
+        else {
+            Debug.Log("既存アカウントでログイン成功");
+        }
+
+        Debug.Log("ログイン成功: CustomID = " + customID);
+
 
 
     }
@@ -124,6 +121,10 @@ public class OnlineRankingManager : MonoBehaviour
         string id = PlayerPrefs.GetString(CUSTOM_ID_SAVE_KEY);
 
         createAccount = string.IsNullOrEmpty(id);
+
+        Debug.Log("Loaded CustomID: " + id);
+        Debug.Log("CreateAccount: " + createAccount);
+
 
         return createAccount ? GenerateCustomID() : id;
     }
@@ -182,12 +183,12 @@ public class OnlineRankingManager : MonoBehaviour
 
             
         }
-
-        for(int i = 0,max = 10;i < max; i++) {
-            var item = _leaderboardResult.Leaderboard;
-            rankingDatas[i].score = item[i].StatValue;
-            rankingDatas[i].name = item[i].DisplayName;
+        rankingDatas = new List<RankingData>();
+        foreach (var item in _leaderboardResult.Leaderboard) {
+            rankingDatas.Add(new RankingData(item.DisplayName, item.StatValue, DateTime.Now));
         }
+        SaveRankingData();
+
     }
 
     void OnGetRankingFailure(PlayFabError _error) {

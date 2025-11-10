@@ -76,14 +76,7 @@ public class CameraManager : MonoBehaviour {
         //自然に追跡
         if (param.targetObj != null) {
             param.position = param.targetObj.transform.position;
-        }//Vector3.Lerp(
-        //    a: param.position,
-        //    b: param.targetObj.transform.position,
-        //    t: Time.deltaTime * lerpTime);
-        //カメラを回転
-        //param.angles = RotateCamera();
-
-
+        }
         // パラメータを各種オブジェクトに反映
         parent.position = param.position;
         parent.eulerAngles = param.angles;
