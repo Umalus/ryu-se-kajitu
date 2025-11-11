@@ -1358,7 +1358,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 979495016}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1465,10 +1465,9 @@ MonoBehaviour:
   useButton:
   - {fileID: 220640516}
   AddTimeRoot: {fileID: 178226141}
-  ranking: {fileID: 2016901803}
+  onlineRankingManager: {fileID: 977871882}
   rankingPrefab: {fileID: 3181690230242166246, guid: 6db83b28f121b014fbc2d3f6ad78faf1, type: 3}
   rankingRoot: {fileID: 1882291709}
-  onlineRankingManager: {fileID: 977871882}
 --- !u!1 &426831502
 GameObject:
   m_ObjectHideFlags: 0
@@ -6252,7 +6251,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -6348,7 +6347,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -6444,7 +6443,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -6540,7 +6539,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -6636,7 +6635,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -6732,7 +6731,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -6828,7 +6827,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -6924,7 +6923,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -7326,6 +7325,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 252240635172331942, guid: 59f493aa98646314692852d0a6cf7088, type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 805642119315449098, guid: 59f493aa98646314692852d0a6cf7088, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -7365,6 +7368,34 @@ PrefabInstance:
     - target: {fileID: 805642119315449098, guid: 59f493aa98646314692852d0a6cf7088, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1965429422297946219, guid: 59f493aa98646314692852d0a6cf7088, type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2278449697212075315, guid: 59f493aa98646314692852d0a6cf7088, type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3018608514324290942, guid: 59f493aa98646314692852d0a6cf7088, type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4093327790518443627, guid: 59f493aa98646314692852d0a6cf7088, type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207082248325434679, guid: 59f493aa98646314692852d0a6cf7088, type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5278163286928046611, guid: 59f493aa98646314692852d0a6cf7088, type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6362116073603659236, guid: 59f493aa98646314692852d0a6cf7088, type: 3}
+      propertyPath: m_Volume
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6565849248662983427, guid: 59f493aa98646314692852d0a6cf7088, type: 3}
       propertyPath: bgmAudioSource

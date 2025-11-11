@@ -29,6 +29,7 @@ public class OnlineRankingManager : MonoBehaviour
 
     private void Start() {
         LoginRanking();
+        SaveRankingData();
     }
     public void AddRankingData(string _name,int _score) {
         SetUserName(_name);

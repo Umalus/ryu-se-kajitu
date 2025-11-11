@@ -46,9 +46,11 @@ public class UIManager : MonoBehaviour {
     [SerializeField]
     Transform AddTimeRoot = null;
 
-    #region オフラインランキング関連
+
+
+    #region オンラインランキング関連
     [SerializeField]
-    private OffLineRanking ranking = null;
+    private OnlineRankingManager onlineRankingManager = null;
     [SerializeField]
     private GameObject rankingPrefab = null;
     [SerializeField]
@@ -57,10 +59,6 @@ public class UIManager : MonoBehaviour {
     private bool isShowRanking = false;
 
     private const int MAX_SHOW_RANKING = 10;
-    #endregion
-    #region オンラインランキング関連
-    [SerializeField]
-    private OnlineRankingManager onlineRankingManager = null;
     #endregion
 
 
@@ -123,15 +121,15 @@ public class UIManager : MonoBehaviour {
         else {
             HideCanvas((int)eCanvasType.InGameCanvas);
             ShowCanvas((int)eCanvasType.OutGameCanvas);
-            if(GameManager.instance.phase == GamePhase.PhaseEnd) {
+            if (GameManager.instance.phase == GamePhase.PhaseEnd) {
                 textList[(int)eTextType.Start].enabled = false;
-                textList[(int)eTextType.Start].GetComponentInParent<Image>().color = new Color(0,0,0,0);
+                textList[(int)eTextType.Start].GetComponentInParent<Image>().color = new Color(0, 0, 0, 0);
             }
             else {
                 textList[(int)eTextType.Start].enabled = true;
                 textList[(int)eTextType.Start].GetComponentInParent<Image>().color = new Color(1, 1, 1, 0.5f);
             }
-            
+
             images[0].enabled = true;
             //ボタンの表示、非表示
             if (GameManager.instance.phase == GameEnum.GamePhase.PhaseEnd) {
