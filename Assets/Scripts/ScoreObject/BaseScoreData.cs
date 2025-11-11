@@ -7,8 +7,11 @@ using UnityEngine;
 [CreateAssetMenu]
 public class BaseScoreData : ScriptableObject
 {
-    [SerializeField]
+    [Header("基礎スコア")]
     public int score;
-    [SerializeField]
+    [Header("落下スピード")]
     public float fallSpeed;
+    [Header("スコア倍率")]
+    public float scoreRatio = 1.0f;
+
 }

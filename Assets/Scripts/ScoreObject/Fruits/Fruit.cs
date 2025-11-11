@@ -14,6 +14,6 @@ public class Fruit : BaseScoreObject {
         //~‚ç‚¹‚é
         fallObject();
         //”jŠü‚·‚éˆ—
-        DeleteObject((int)FallObjectType.Fruit ,(int)SEIndex.FruitSound);
+        DeleteObject((int)FallObjectType.Apple ,(int)SEIndex.FruitSound);
     } 
 }

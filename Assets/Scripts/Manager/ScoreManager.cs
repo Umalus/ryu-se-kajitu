@@ -4,6 +4,7 @@ using UnityEngine;
 
 using static CommonModul;
 using static GameConst;
+using static GameEnum;
 
 public class ScoreManager {
     public static int AllScore = 0;
@@ -15,6 +16,11 @@ public class ScoreManager {
         //もし総スコアが0を下回ったら0にする
         if (AllScore < 0)
             AllScore = 0;
+        //1000点ごとに特定の音を流す
+        if (AllScore > 0 && AllScore % 1000 == 0) {
+            //演出
+            AudioManager.instance.PlaySE((int)SEIndex.ScoreEffect);
+        }
     }
     /// <summary>
     /// スコアカウント関数

@@ -89,23 +89,23 @@ public class FruitManager : MonoBehaviour {
         instanceTimer += Time.deltaTime;
         //生成位置の決定
         InstancePos = DecideInstancePosition();
-        //生成値をランダムで決定
-        instanceValue = Random.Range(0, 11);
+        //生成値をランダムで決定(%)
+        instanceValue = Random.Range(0, 100);
         
 
         switch (GameManager.instance.phase) {
             //フェーズによって生成間隔や確率を変更
             case GamePhase.opening:
                 interval = 2.0f;
-                fruitRatio = 6;
+                fruitRatio = 60;
                 break;
             case GamePhase.middle:
                 interval = 1.0f;
-                fruitRatio = 5;
+                fruitRatio = 50;
                 break;
             case GamePhase.ending:
                 interval = 0.3f;
-                fruitRatio = 5;
+                fruitRatio = 50;
                 break;
             case GamePhase.PhaseEnd:
                 interval = -1.0f;
@@ -130,14 +130,14 @@ public class FruitManager : MonoBehaviour {
         if (instanceTimer >= _interval) {
             if (OnlyFruit) {
                 //フルーツのみ生成
-                UseObject((int)FallObjectType.Fruit, InstancePos);
+                UseObject((int)FallObjectType.Apple, InstancePos);
                 instanceTimer = 0.0f;
 
             }
             //フルーツと虫両方生成
             else {
                 if (instanceValue <= _fruitRatio) {
-                    UseObject((int)FallObjectType.Fruit, InstancePos);
+                    UseObject((int)FallObjectType.Apple, InstancePos);
                     instanceTimer = 0.0f;
                 }
                 else if (instanceValue > _fruitRatio) {

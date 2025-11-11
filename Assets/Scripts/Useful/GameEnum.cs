@@ -60,7 +60,8 @@ public static class GameEnum
     /// </summary>
     public enum FallObjectType {
         Invalid = -1,
-        Fruit,
+        Apple,
+        Banana,
         Insect,
     }
 
@@ -74,6 +75,7 @@ public static class GameEnum
         FruitSound,
         ItemSound,
         ClickButton,
+        ScoreEffect,
 
         Max
     }

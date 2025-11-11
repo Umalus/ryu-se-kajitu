@@ -126,6 +126,15 @@ public partial class @Bozu: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Brink"",
+                    ""type"": ""Button"",
+                    ""id"": ""a43fc4c8-cf1c-4aa6-adff-0645a8c8ac4b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -357,6 +366,17 @@ public partial class @Bozu: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""End"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""66a21ccf-4fd6-434f-b535-086bccd9149a"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Brink"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1018,6 +1038,7 @@ public partial class @Bozu: IInputActionCollection2, IDisposable
         m_Player_Camera = m_Player.FindAction("Camera", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_End = m_Player.FindAction("End", throwIfNotFound: true);
+        m_Player_Brink = m_Player.FindAction("Brink", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1120,6 +1141,7 @@ public partial class @Bozu: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Camera;
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_End;
+    private readonly InputAction m_Player_Brink;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1147,6 +1169,10 @@ public partial class @Bozu: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/End".
         /// </summary>
         public InputAction @End => m_Wrapper.m_Player_End;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Brink".
+        /// </summary>
+        public InputAction @Brink => m_Wrapper.m_Player_Brink;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1185,6 +1211,9 @@ public partial class @Bozu: IInputActionCollection2, IDisposable
             @End.started += instance.OnEnd;
             @End.performed += instance.OnEnd;
             @End.canceled += instance.OnEnd;
+            @Brink.started += instance.OnBrink;
+            @Brink.performed += instance.OnBrink;
+            @Brink.canceled += instance.OnBrink;
         }
 
         /// <summary>
@@ -1208,6 +1237,9 @@ public partial class @Bozu: IInputActionCollection2, IDisposable
             @End.started -= instance.OnEnd;
             @End.performed -= instance.OnEnd;
             @End.canceled -= instance.OnEnd;
+            @Brink.started -= instance.OnBrink;
+            @Brink.performed -= instance.OnBrink;
+            @Brink.canceled -= instance.OnBrink;
         }
 
         /// <summary>
@@ -1643,6 +1675,13 @@ public partial class @Bozu: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnEnd(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Brink" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnBrink(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

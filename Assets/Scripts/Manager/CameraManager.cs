@@ -42,9 +42,11 @@ public class CameraManager : MonoBehaviour {
     [SerializeField]
     private float rotateSpeed = 1.0f;
     #endregion
-    //マウスかスマホかどうか(デバッグ用)
+//マウスかスマホかどうか(デバッグ用)
+#if _DEBUG
     [SerializeField]
     private bool UseMouse = false;
+#endif
     private void Awake() {
         instance = this;
     }

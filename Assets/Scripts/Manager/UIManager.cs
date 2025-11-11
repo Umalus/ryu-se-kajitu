@@ -50,8 +50,6 @@ public class UIManager : MonoBehaviour {
 
     #region オンラインランキング関連
     [SerializeField]
-    private OnlineRankingManager onlineRankingManager = null;
-    [SerializeField]
     private GameObject rankingPrefab = null;
     [SerializeField]
     private Transform rankingRoot = null;

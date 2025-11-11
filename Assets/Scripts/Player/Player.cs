@@ -2,34 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 using static GameEnum;
 
 public class Player : MonoBehaviour {
-    //InputSystem
-    private Bozu inputActions = null;
+
     //プレイヤーの速度
     [SerializeField]
     private float playerVelocity = 5.0f;
     //得点加算用コンボ
     [SerializeField]
     private static int combo = 0;
+    [SerializeField]
+    private float brinkPower = 2.5f;
     //プレイヤーの方向
     private Vector3 playerDir;
+    //進行方向
+    private Vector3 moveDir;
+    //InputSystem
+    private Bozu inputActions = null;
     //アニメーション変更用アニメーター
     private Animator anim = null;
+    //物理挙動
+    private Rigidbody rb = null;
+    //ブリンクできるかどうか
+    private bool canBrink = true;
+
+
     // Start is called before the first frame update
     private void OnTriggerEnter(Collider other) {
-        if(other.gameObject.CompareTag("Fruit")) {
+        if (other.gameObject.CompareTag("Fruit")) {
             BaseScoreObject addScoreObj = other.gameObject.GetComponent<BaseScoreObject>();
             combo++;
             if (combo > 0 && combo % 5 == 0)
                 GameManager.instance.AddSecond(3.0f);
             addScoreObj.SetIsGet(true);
-            ScoreManager.AddScore(addScoreObj,combo);
+            ScoreManager.AddScore(addScoreObj, combo);
 
-            EffectManager.instance.ExecuteEffect((int)eEffectCategory.Good,other.transform);
+            EffectManager.instance.ExecuteEffect((int)eEffectCategory.Good, other.transform);
         }
         else if (other.gameObject.CompareTag("Insect")) {
             BaseScoreObject addScoreObj = other.gameObject.GetComponent<BaseScoreObject>();
@@ -43,16 +55,18 @@ public class Player : MonoBehaviour {
     void Start() {
         anim = GetComponent<Animator>();
         inputActions = InputSystemManager.instance.InputSystem;
+        rb = GetComponent<Rigidbody>();
 
         inputActions.Player.Move.performed += OnMovePreformed;
         inputActions.Player.Move.canceled += OnMoveCanceled;
+        inputActions.Player.Brink.started += OnBrinkStarted;
         inputActions.Enable();
     }
 
     // Update is called once per frame
     private void Update() {
         if (!GameManager.instance.IsPlay) return;
-        if(playerDir.sqrMagnitude >= Mathf.Epsilon) {
+        if (playerDir.sqrMagnitude >= Mathf.Epsilon) {
             Move();
         }
 
@@ -67,13 +81,13 @@ public class Player : MonoBehaviour {
     }
     private void Move() {
         //カメラの方向からXZ平面を取得
-        var cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1));
+        Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1));
         //カメラの方向と入力から進む方向を決定
-        var moveDirection = cameraForward * playerDir.z + Camera.main.transform.right * playerDir.x;
+        moveDir = cameraForward * playerDir.z + Camera.main.transform.right * playerDir.x;
         //進行方向に向かせる
-        transform.LookAt(transform.position + moveDirection);
+        transform.LookAt(transform.position + moveDir);
         //実際に移動させる
-        transform.position += playerVelocity * Time.deltaTime * moveDirection;
+        transform.position += playerVelocity * Time.deltaTime * moveDir;
         //SE再生
         //AudioManager.instance.PlaySE(0,0.5f,true);
     }
@@ -86,11 +100,11 @@ public class Player : MonoBehaviour {
         //コールバックの入力ベクトルを取得
         Vector2 inputDir = _context.ReadValue<Vector2>();
         //進行方向に変換
-        playerDir = new Vector3(inputDir.x,0,inputDir.y);
+        playerDir = new Vector3(inputDir.x, 0, inputDir.y);
 
         //アニメーション変更
         anim.SetBool("IsMove", true);
-        
+
     }
     /// <summary>
     /// プレイヤーインプット用移動関数
@@ -102,12 +116,29 @@ public class Player : MonoBehaviour {
         //アニメーション変更
         anim.SetBool("IsMove", false);
     }
+
+    private void OnBrinkStarted(InputAction.CallbackContext _context) {
+        if (!canBrink) return;
+
+        canBrink = false;
+        rb.AddForce(playerVelocity * moveDir * brinkPower,ForceMode.Impulse) ;
+        Invoke(nameof(ResetVelocity),0.5f);
+        Invoke(nameof(ResetCanBrink), 3.0f);
+    }
     public static void SetCombo(int _combo) {
         combo = _combo;
     }
     public void Reset() {
         transform.position = Vector3.zero;
-        transform.rotation = new Quaternion(0,0,0,0);
+        transform.rotation = new Quaternion(0, 0, 0, 0);
         playerDir = Vector3.zero;
+    }
+
+    private void ResetVelocity() {
+        rb.velocity = Vector3.zero;
+    }
+
+    private void ResetCanBrink() {
+        canBrink = true;
     }
 }
