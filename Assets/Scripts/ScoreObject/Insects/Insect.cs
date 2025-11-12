@@ -19,7 +19,7 @@ public class Insect : BaseScoreObject
         //~‚ç‚¹‚é
         fallObject();
         //”jŠü‚·‚éˆ—
-        DeleteObject((int)FallObjectType.Insect,(int)SEIndex.InsectSound);
+        DeleteObject((int)FallObjectType.Insect,SEID);
     }
     
 }

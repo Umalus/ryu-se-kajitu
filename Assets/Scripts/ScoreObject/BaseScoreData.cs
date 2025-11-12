@@ -13,5 +13,7 @@ public class BaseScoreData : ScriptableObject
     public float fallSpeed;
     [Header("ÉXÉRÉAî{ó¶")]
     public float scoreRatio = 1.0f;
+    [Header("SEÇÃID")]
+    public int SEID;
 
 }

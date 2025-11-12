@@ -18,6 +18,7 @@ public static class GameEnum
         PhaseEnd,
 
         Tutorial,
+        Meteor,
     }
     /// <summary>
     /// ˜A½ŠÇ——p—ñ‹“’è”
@@ -62,7 +63,10 @@ public static class GameEnum
         Invalid = -1,
         Apple,
         Banana,
+        PineApple,
         Insect,
+        
+        FallObjMax,
     }
 
     /// <summary>

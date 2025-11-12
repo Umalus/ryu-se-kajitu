@@ -29,7 +29,7 @@ public class Player : MonoBehaviour {
     private Rigidbody rb = null;
     //ƒuƒŠƒ“ƒN‚Å‚«‚é‚©‚Ç‚¤‚©
     private bool canBrink = true;
-
+    private List<GameObject> abirrities = null;
 
     // Start is called before the first frame update
     private void OnTriggerEnter(Collider other) {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using static GameEnum;
+using static GameConst;
 using static CommonModul;
 
 /// <summary>
@@ -41,7 +42,7 @@ public class FruitManager : MonoBehaviour {
     private const int MAX_OBJECT = 128;
 
 
-    
+
 
     // Start is called before the first frame update
     void Start() {
@@ -57,9 +58,9 @@ public class FruitManager : MonoBehaviour {
 
         int halfOfMaxObject = MAX_OBJECT / 2;
 
-        for(int i = 0; i < 2; i++) {
+        for (int i = 0, max = (int)FallObjectType.FallObjMax; i < max; i++) {
             unuseObjectList.Add(new List<BaseScoreObject>(halfOfMaxObject));
-            for(int objCount = 0;objCount < halfOfMaxObject;objCount++ ){
+            for (int objCount = 0; objCount < halfOfMaxObject; objCount++) {
                 unuseObjectList[i].Add(Instantiate(originPrefabs[i], unuseRoot));
             }
         }
@@ -91,9 +92,9 @@ public class FruitManager : MonoBehaviour {
         InstancePos = DecideInstancePosition();
         //生成値をランダムで決定(%)
         instanceValue = Random.Range(0, 100);
-        
 
-        switch (GameManager.instance.phase) {
+        //フェーズで生成頻度等切り替え
+        switch (PhaseManager.instance.phase) {
             //フェーズによって生成間隔や確率を変更
             case GamePhase.opening:
                 interval = 2.0f;
@@ -110,6 +111,12 @@ public class FruitManager : MonoBehaviour {
             case GamePhase.PhaseEnd:
                 interval = -1.0f;
                 fruitRatio = -1;
+                break;
+            case GamePhase.Meteor:
+                OnlyFruit = true;
+                interval = 0.1f;
+                //本来フルーツのみの生成になっているが万が一生成レートが変になっていると生成出来ないので明示的に変更
+                fruitRatio = 100;
                 break;
         }
         InstanceObject(interval, fruitRatio);
@@ -128,19 +135,21 @@ public class FruitManager : MonoBehaviour {
         if (_interval < 0 || _fruitRatio < 0) return;
 
         if (instanceTimer >= _interval) {
+            //どのフルーツを生成するかの変数
+            int FruitRatio = Random.Range(0, APPLE_RATIO + BANANA_RATIO + PINE_RATIO);
             if (OnlyFruit) {
                 //フルーツのみ生成
-                UseObject((int)FallObjectType.Apple, InstancePos);
+                InstanceFruit(FruitRatio);
                 instanceTimer = 0.0f;
 
             }
             //フルーツと虫両方生成
             else {
                 if (instanceValue <= _fruitRatio) {
-                    UseObject((int)FallObjectType.Apple, InstancePos);
+                    InstanceFruit(FruitRatio);
                     instanceTimer = 0.0f;
                 }
-                else if (instanceValue > _fruitRatio) {
+                else {
                     UseObject((int)FallObjectType.Insect, InstancePos);
                     instanceTimer = 0.0f;
                 }
@@ -148,7 +157,19 @@ public class FruitManager : MonoBehaviour {
         }
     }
 
-    private void UseObject(int _category,Vector3 _instancePos) {
+    private void InstanceFruit(int _ratio) {
+        //パイン
+        if (_ratio >= APPLE_RATIO + BANANA_RATIO && _ratio < APPLE_RATIO + BANANA_RATIO + PINE_RATIO)
+            UseObject((int)FallObjectType.PineApple, InstancePos);
+        //バナナ
+        else if (_ratio >= APPLE_RATIO && _ratio < APPLE_RATIO + BANANA_RATIO)
+            UseObject((int)FallObjectType.Banana, InstancePos);
+        //アップル
+        else if (_ratio < APPLE_RATIO)
+            UseObject((int)FallObjectType.Apple, InstancePos);
+    }
+
+    private void UseObject(int _category, Vector3 _instancePos) {
         //未使用リストが空なら処理しない
         if (IsEmpty(unuseObjectList)) return;
         //使用するオブジェクトをキャッシュ
@@ -162,7 +183,7 @@ public class FruitManager : MonoBehaviour {
         useObjectList.Add(useObj);
     }
 
-    public void UnuseObject(BaseScoreObject _obj,int _category) {
+    public void UnuseObject(BaseScoreObject _obj, int _category) {
         if (_obj == null) return;
         //使用中リストから削除
         useObjectList.Remove(_obj);

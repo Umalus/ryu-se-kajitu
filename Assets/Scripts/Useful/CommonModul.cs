@@ -15,7 +15,7 @@ public static class CommonModul
     /// <param name="_max"></param>
     /// <returns></returns>
     public static bool InRange(int _value,int _min,int _max) {
-        return _min <= _value && _value < _max;
+        return _min < _value && _value <= _max;
     }
 
     public static bool IsEmpty<T>(List<T> _list) {

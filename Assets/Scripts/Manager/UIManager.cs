@@ -119,7 +119,7 @@ public class UIManager : MonoBehaviour {
         else {
             HideCanvas((int)eCanvasType.InGameCanvas);
             ShowCanvas((int)eCanvasType.OutGameCanvas);
-            if (GameManager.instance.phase == GamePhase.PhaseEnd) {
+            if (PhaseManager.instance.phase == GamePhase.PhaseEnd) {
                 textList[(int)eTextType.Start].enabled = false;
                 textList[(int)eTextType.Start].GetComponentInParent<Image>().color = new Color(0, 0, 0, 0);
             }
@@ -130,7 +130,7 @@ public class UIManager : MonoBehaviour {
 
             images[0].enabled = true;
             //ボタンの表示、非表示
-            if (GameManager.instance.phase == GameEnum.GamePhase.PhaseEnd) {
+            if (PhaseManager.instance.phase == GamePhase.PhaseEnd) {
                 for (int i = 0, max = useButton.Count; i < max; i++) {
                     useButton[i].SetActive(true);
                 }
@@ -172,7 +172,7 @@ public class UIManager : MonoBehaviour {
                     data.score.ToString();
             }
             else {
-                rankingDataObject.transform.Find("Rank").GetComponent<TextMeshProUGUI>().text = "-" + 1.ToString();
+                rankingDataObject.transform.Find("Rank").GetComponent<TextMeshProUGUI>().text = "";
                 rankingDataObject.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = "";
                 rankingDataObject.transform.Find("Score").GetComponent<TextMeshProUGUI>().text = "";
             }

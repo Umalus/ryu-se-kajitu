@@ -15,3 +15,4 @@ MonoBehaviour:
   score: 500
   fallSpeed: 0.01
   scoreRatio: 1
+  SEID: 6

@@ -72,7 +72,7 @@ public class CameraManager : MonoBehaviour {
     private void LateUpdate() {
         //‚¢‚¸‚ê‚©‚Ì—v‘f‚ª“ü‚Á‚Ä‚¢‚È‚©‚Á‚½‚ç
         if (parent == null || child == null || mainCamera == null ||
-            (GameManager.instance.phase == GameEnum.GamePhase.PhaseEnd)) {
+            (PhaseManager.instance.phase == GameEnum.GamePhase.PhaseEnd)) {
             return;
         }
         //©‘R‚É’ÇÕ

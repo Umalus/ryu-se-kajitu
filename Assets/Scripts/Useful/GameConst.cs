@@ -13,5 +13,11 @@ public static class GameConst {
     public const int FRUIT_THIRD_MAX = 4096;
     #endregion
     public const int MINUTE = 60;
-    
+    //アップル生成確率(%)
+    public const int APPLE_RATIO = 50;
+    //バナナ生成確率(%)
+    public const int BANANA_RATIO = 30;
+    //アップル生成確率(%)
+    public const int PINE_RATIO = 20;
+
 }

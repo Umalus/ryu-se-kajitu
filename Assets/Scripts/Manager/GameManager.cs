@@ -18,11 +18,6 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance = null;
     //自身のInputSystem
     private Bozu inputAction = null;
-    //フェーズ管理用タイマーの定数
-    private const int PHASE_OPNING_TIME_START = 90;
-    private const int PHASE_OPNING_TIME_END = 70;
-    private const int PHASE_MIDDLE_TIME_END = 20;
-    private const int PHASE_ENDING_TIME_END = 1;
 
     private bool isAddRanking = false;
     /// <summary>
@@ -42,7 +37,7 @@ public class GameManager : MonoBehaviour {
     public int minute { get; private set; } = 0;
     public float prevTime { get; private set; } = 0;
 
-    public GamePhase phase { get; private set; } = 0;
+    
 
     [SerializeField]
     private Player player = null;
@@ -62,8 +57,6 @@ public class GameManager : MonoBehaviour {
 
         //タイマー処理
         Timer();
-        //フェーズ処理
-        Phase();
     }
     /// <summary>
     /// 時間管理
@@ -85,26 +78,6 @@ public class GameManager : MonoBehaviour {
         prevTime = second;
     }
 
-    /// <summary>
-    /// フェーズ管理
-    /// </summary>
-    private void Phase() {
-        //総時間が指定の値の範囲内ならフェーズを切り替える
-        if (InRange((int)totalTime, PHASE_ENDING_TIME_END, PHASE_MIDDLE_TIME_END))
-            phase = GamePhase.ending;
-        else if (InRange((int)totalTime, PHASE_MIDDLE_TIME_END, PHASE_OPNING_TIME_END))
-            phase = GamePhase.middle;
-        else if (InRange((int)totalTime, PHASE_OPNING_TIME_END, PHASE_OPNING_TIME_START))
-            phase = GamePhase.opening;
-        else {
-            phase = GamePhase.PhaseEnd;
-            IsPlay = false;
-            Cursor.lockState = CursorLockMode.None;
-            Teardown();
-        }
-
-    }
-
     private async UniTask Initialize() {
         //外部から取得しやすいように自身のインスタンスを設定
         instance = this;
@@ -123,20 +96,13 @@ public class GameManager : MonoBehaviour {
         await FadeManager.instance.FadeIn();
     }
 
-    /// <summary>
-    /// 解放処理
-    /// </summary>
-    private void Teardown() {
-        inputAction.GameManager.Start.performed -= OnStartPreformed;
-    }
-
     public async void OnButtonReturnTitle() {
         AudioManager.instance.PlaySE((int)SEIndex.ClickButton);
         await FadeManager.instance.FadeOut();
         UIManager.instance.ResetUI();
         CameraManager.instance.ResetCamera();
         player.Reset();
-        phase = GamePhase.opening;
+
         await FadeManager.instance.FadeIn(1);
 
         ResetGame();
@@ -204,4 +170,6 @@ public class GameManager : MonoBehaviour {
         second += _addTime;
         await UIManager.instance.ShowTimeAddUI(0.0f);
     }
+
+    public float GetTotalTime() {  return totalTime; } 
 }
