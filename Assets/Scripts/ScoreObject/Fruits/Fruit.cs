@@ -5,12 +5,12 @@ using UnityEngine;
 using static GameEnum;
 
 public class Fruit : BaseScoreObject {
-    private void Start() {
+    private void Awake() {
         Initialize();
     }
 
     // Update is called once per frame
-    void Update() {
+    void LateUpdate() {
         //~‚ç‚¹‚é
         fallObject();
         //”jŠü‚·‚éˆ—

@@ -11,7 +11,7 @@ public abstract class BaseScoreObject : MonoBehaviour
 
     public int score { get; private set; } = -1;
 
-    protected static float fallSpeed = -1.0f;
+    protected float fallSpeed = -1.0f;
 
     protected int SEID = -1;
 
@@ -24,10 +24,10 @@ public abstract class BaseScoreObject : MonoBehaviour
         SetScore(scoreData.score);
         SEID = scoreData.SEID;
         if (isHalfSpeed)
-            fallSpeed = scoreData.fallSpeed * 0.5f;
+            this.fallSpeed = scoreData.fallSpeed * 0.5f;
 
         else
-            fallSpeed = scoreData.fallSpeed;
+            this.fallSpeed = scoreData.fallSpeed;
             
     }
 
@@ -55,7 +55,7 @@ public abstract class BaseScoreObject : MonoBehaviour
         isGet = _value;
     }
 
-    public static void SetFallSpeed(float _speed) {
+    public void SetFallSpeed(float _speed) {
         fallSpeed = _speed;
     }
 }

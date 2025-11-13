@@ -40,7 +40,12 @@ public class FallSpeedDown : BaseItem
     /// 取ったら与える効果
     /// </summary>
     public override void AddEffect() {
-        BaseScoreObject.SetFallSpeed(setSpeed);
+        //シーン上にあるスコアオブジェクトを探す
+        BaseScoreObject[] fallObjs = FindObjectsOfType<BaseScoreObject>();
+        
+        foreach(var objs in fallObjs) {
+            objs.SetFallSpeed(setSpeed);
+        }
         BaseScoreObject.isHalfSpeed = true;
     }
     /// <summary>

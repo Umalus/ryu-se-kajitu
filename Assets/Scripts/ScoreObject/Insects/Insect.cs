@@ -10,12 +10,12 @@ using static GameEnum;
 /// </summary>
 public class Insect : BaseScoreObject
 {
-    private void Start() {
+    private void Awake() {
         base.Initialize();
     }
 
     // Update is called once per frame
-    void Update() {
+    void LateUpdate() {
         //~‚ç‚¹‚é
         fallObject();
         //”jŠü‚·‚éˆ—

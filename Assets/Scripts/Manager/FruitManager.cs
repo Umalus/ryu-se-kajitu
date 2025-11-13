@@ -190,6 +190,5 @@ public class FruitManager : MonoBehaviour {
         unuseObjectList[_category].Add(_obj);
         //親オブジェクト設定
         _obj.transform.SetParent(unuseRoot);
-
     }
 }
