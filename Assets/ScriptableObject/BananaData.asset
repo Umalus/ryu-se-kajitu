@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: BananaData
   m_EditorClassIdentifier: 
   score: 200
-  fallSpeed: 0.1
+  fallSpeed: 0.065
   scoreRatio: 1
-  SEID: 5
+  seID: 0
+  effectID: 0

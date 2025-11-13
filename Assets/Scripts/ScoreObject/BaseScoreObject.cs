@@ -13,7 +13,9 @@ public abstract class BaseScoreObject : MonoBehaviour
 
     protected float fallSpeed = -1.0f;
 
-    protected int SEID = -1;
+    protected int seID = -1;
+
+    protected int effectID = -1;
 
     protected bool isGet;
     
@@ -22,7 +24,8 @@ public abstract class BaseScoreObject : MonoBehaviour
     public static bool isHalfSpeed;
     public virtual void Initialize() {
         SetScore(scoreData.score);
-        SEID = scoreData.SEID;
+        seID = scoreData.seID;
+        effectID = scoreData.effectID;
         if (isHalfSpeed)
             this.fallSpeed = scoreData.fallSpeed * 0.5f;
 

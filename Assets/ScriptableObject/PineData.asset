@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PineData
   m_EditorClassIdentifier: 
   score: 500
-  fallSpeed: 0.01
+  fallSpeed: 0.075
   scoreRatio: 1
-  SEID: 6
+  seID: 0
+  effectID: 0

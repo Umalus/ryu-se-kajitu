@@ -14,6 +14,8 @@ public class BaseScoreData : ScriptableObject
     [Header("スコア倍率")]
     public float scoreRatio = 1.0f;
     [Header("SEのID")]
-    public int SEID;
+    public int seID;
+    [Header("エフェクトのID")]
+    public int effectID;
 
 }
