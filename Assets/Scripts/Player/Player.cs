@@ -41,7 +41,7 @@ public class Player : MonoBehaviour {
             addScoreObj.SetIsGet(true);
             ScoreManager.AddScore(addScoreObj, combo);
 
-            EffectManager.instance.ExecuteEffect((int)eEffectCategory.Good, other.transform);
+            EffectManager.instance.ExecuteEffect(addScoreObj.effectID, other.transform);
         }
         else if (other.gameObject.CompareTag("Insect")) {
             BaseScoreObject addScoreObj = other.gameObject.GetComponent<BaseScoreObject>();
@@ -49,7 +49,7 @@ public class Player : MonoBehaviour {
             addScoreObj.SetIsGet(true);
             ScoreManager.AddScore(addScoreObj, combo);
 
-            EffectManager.instance.ExecuteEffect((int)eEffectCategory.Bad, other.transform);
+            EffectManager.instance.ExecuteEffect(addScoreObj.effectID, other.transform);
         }
     }
     void Start() {

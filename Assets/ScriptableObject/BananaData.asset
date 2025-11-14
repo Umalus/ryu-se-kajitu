@@ -16,4 +16,4 @@ MonoBehaviour:
   fallSpeed: 0.065
   scoreRatio: 1
   seID: 0
-  effectID: 0
+  effectID: 5

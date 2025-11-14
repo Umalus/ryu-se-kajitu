@@ -4,8 +4,7 @@ using UnityEngine;
 /// <summary>
 ///　スコアオブジェクトの実物の基底クラス
 /// </summary>
-public abstract class BaseScoreObject : MonoBehaviour
-{
+public abstract class BaseScoreObject : MonoBehaviour {
     [SerializeField]
     protected BaseScoreData scoreData = null;
 
@@ -15,10 +14,10 @@ public abstract class BaseScoreObject : MonoBehaviour
 
     protected int seID = -1;
 
-    protected int effectID = -1;
+    public int effectID { get; protected set; } = -1;
 
     protected bool isGet;
-    
+
     protected void SetScore(int _value) { score = _value; }
 
     public static bool isHalfSpeed;
@@ -31,7 +30,7 @@ public abstract class BaseScoreObject : MonoBehaviour
 
         else
             this.fallSpeed = scoreData.fallSpeed;
-            
+
     }
 
     protected void fallObject() {
@@ -46,7 +45,7 @@ public abstract class BaseScoreObject : MonoBehaviour
     /// </summary>
     /// <param name="_seIndex"></param>
     public void DeleteObject(int _category, int _seIndex) {
-        if(transform.position.y < 0 || isGet || !GameManager.instance.IsPlay) {
+        if (transform.position.y < 0 || isGet || !GameManager.instance.IsPlay) {
             //SE再生
             if (isGet)
                 AudioManager.instance.PlaySE(_seIndex);

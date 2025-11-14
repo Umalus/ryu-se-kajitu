@@ -35,7 +35,7 @@ public class EffectManager : MonoBehaviour
         int objectCountPerCategory = MAX_OBJECT / (int)eEffectCategory.effectCategoryMax;
 
         //未使用状態で複製
-        for (int i = 0, max = (int)eEffectCategory.effectCategoryMax ; i < max; i++) {
+        for (int i = 0, max = effectOrigin.Count ; i < max; i++) {
             unuseObjectList.Add(new List<GameObject>(objectCountPerCategory));
             for (int itemCount = 0; itemCount < objectCountPerCategory; itemCount++) {
                 //未使用状態にしてリストに追加
