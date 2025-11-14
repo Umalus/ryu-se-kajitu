@@ -1584,6 +1584,7 @@ MonoBehaviour:
   effects:
   - {fileID: 7403103098228120956, guid: 513099c3c135b01439895582ca4ec420, type: 3}
   - {fileID: 5094046088325549080, guid: 5193592141f1fad4eba8dbe541335509, type: 3}
+  - {fileID: 5700784828077083704, guid: ed962e35f7fa6f34f8d27aa6d19ea293, type: 3}
   effectRoot: {fileID: 1031377138}
   useCanvas:
   - {fileID: 109305146}
@@ -3935,7 +3936,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 25, y: 25}
+  m_AnchoredPosition: {x: 25, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1047262034

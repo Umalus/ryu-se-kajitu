@@ -88,7 +88,7 @@ public class UIManager : MonoBehaviour {
         //コンボのUI
         if (Player.GetCombo() >= FRUIT_FIRST_MIN) {
             if (Player.GetCombo() > prevCombo) {
-                useEffect = Instantiate(effects[1], effectRoot);
+                useEffect = Instantiate(effects[2], effectRoot);
             }
             stringBuilder.Append(Player.GetCombo().ToString());
             stringBuilder.Append("combo!!!\n+");
@@ -143,10 +143,6 @@ public class UIManager : MonoBehaviour {
         }
         //1フレーム前のコンボ数を更新
         prevCombo = Player.GetCombo();
-        //1秒後にエフェクトを削除
-        if (useEffect != null) {
-            Destroy(useEffect, 1.0f);
-        }
 
     }
 
