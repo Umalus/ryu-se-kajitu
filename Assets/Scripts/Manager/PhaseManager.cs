@@ -52,6 +52,10 @@ public class PhaseManager : MonoBehaviour {
         }
     }
 
+    public void ResetPhase() {
+        phase = GamePhase.opening;
+    }
+
     /// <summary>
     /// メテオモードの切り替え
     /// </summary>

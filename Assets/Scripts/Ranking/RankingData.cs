@@ -8,6 +8,7 @@ public class RankingData{
 
     public RankingData(string _name,int _score,DateTime _date) {
         name = _name;
+        if(_score > score)
         score = _score;
         dateTime = _date;
     }

@@ -42,7 +42,7 @@ public class OnlineRankingManager : MonoBehaviour
         SaveRankingData();
     }
 
-    private void SaveRankingData() {
+    public void SaveRankingData() {
         rankingDatas.Sort((x, y) => y.score.CompareTo(x.score));
         RankingList rankingList = new RankingList { rankingList = rankingDatas };
         string json = JsonUtility.ToJson(rankingList);

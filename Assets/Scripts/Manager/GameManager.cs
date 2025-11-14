@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour {
         UIManager.instance.ResetUI();
         CameraManager.instance.ResetCamera();
         player.Reset();
-
+        PhaseManager.instance.ResetPhase();
         await FadeManager.instance.FadeIn(1);
 
         ResetGame();
@@ -127,12 +127,17 @@ public class GameManager : MonoBehaviour {
         UIManager.instance.HideCanvas((int)eCanvasType.OfflineRanking);
         UIManager.instance.ShowCanvas((int)eCanvasType.OutGameCanvas);
         AudioManager.instance.PlaySE((int)SEIndex.ClickButton);
+        //出るタイミングでもう一度セーブ
+        OnlineRankingManager.instance.SaveRankingData();
     }
 
     public void AddSocreData() {
         if (isAddRanking) return;
         OnlineRankingManager.instance.AddRankingData(UIManager.instance.GetInputName(),ScoreManager.AllScore);
         isAddRanking = true;
+        //再度取得
+        OnlineRankingManager.instance.GetRanking();
+        UIManager.instance.ShowOnlineRanking();
     }
     /// <summary>
     /// ゲーム開始
