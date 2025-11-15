@@ -80,7 +80,7 @@ public class ItemManager : MonoBehaviour {
         if (timer >= INTERVAL) {
 
             //—”‚É‚æ‚Á‚Ä¶¬‚·‚é•¨‚ğ•ÏX‚µ¶¬
-            if (InRange(instanceValue, 0, 5))
+            if (InRange(instanceValue, 0, 9))
                 UseObject((int)eItemCategory.FallSpeed);
             else
                 UseObject((int)eItemCategory.OnlyFruit);

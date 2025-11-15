@@ -17,6 +17,10 @@ public class Player : MonoBehaviour {
     private static int combo = 0;
     [SerializeField]
     private float brinkPower = 2.5f;
+    [SerializeField]
+    private float speed = 5.0f;
+
+    private const int BLINK_SE_ID = 7;
     //プレイヤーの方向
     private Vector3 playerDir;
     //進行方向
@@ -64,7 +68,7 @@ public class Player : MonoBehaviour {
     }
 
     // Update is called once per frame
-    private void Update() {
+    private void FixedUpdate() {
         if (!GameManager.instance.IsPlay) return;
         if (playerDir.sqrMagnitude >= Mathf.Epsilon) {
             Move();
@@ -87,9 +91,7 @@ public class Player : MonoBehaviour {
         //進行方向に向かせる
         transform.LookAt(transform.position + moveDir);
         //実際に移動させる
-        transform.position += playerVelocity * Time.deltaTime * moveDir;
-        //SE再生
-        //AudioManager.instance.PlaySE(0,0.5f,true);
+        rb.MovePosition(rb.position + moveDir * speed * Time.fixedDeltaTime);
     }
 
     /// <summary>
@@ -122,6 +124,7 @@ public class Player : MonoBehaviour {
 
         canBrink = false;
         rb.AddForce(playerVelocity * moveDir * brinkPower,ForceMode.Impulse) ;
+        AudioManager.instance.PlaySE(BLINK_SE_ID);
         Invoke(nameof(ResetVelocity),0.5f);
         Invoke(nameof(ResetCanBrink), 3.0f);
     }

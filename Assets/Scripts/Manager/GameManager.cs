@@ -4,7 +4,6 @@ using UnityEngine;
 
 using static GameEnum;
 using static GameConst;
-using static CommonModul;
 using UnityEngine.InputSystem;
 using UnityEditor;
 using Cysharp.Threading.Tasks;
@@ -147,6 +146,7 @@ public class GameManager : MonoBehaviour {
     private void OnStartPreformed(InputAction.CallbackContext _context) {
         IsPlay = true;
         ScoreManager.AllScore = 0;
+        totalTime = second;
         inputAction.GameManager.Start.performed -= OnStartPreformed;
     }
 

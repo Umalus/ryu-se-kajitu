@@ -89,7 +89,7 @@ public class UIManager : MonoBehaviour {
         textList[(int)eTextType.Score].text =
             "Score : " + ScoreManager.AllScore;
         //ƒRƒ“ƒ{‚ÌUI
-        if (Player.GetCombo() >= FRUIT_FIRST_MIN) {
+        if (Player.GetCombo() > FRUIT_FIRST_MIN && Player.GetCombo() >= FRUIT_FIRST_MIN) {
             if (Player.GetCombo() > prevCombo) {
                 useEffect = Instantiate(effects[2], effectRoot);
             }

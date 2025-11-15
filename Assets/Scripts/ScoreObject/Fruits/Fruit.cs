@@ -10,7 +10,7 @@ public class Fruit : BaseScoreObject {
     }
 
     // Update is called once per frame
-    void LateUpdate() {
+    void FixedUpdate() {
         //~‚ç‚¹‚é
         fallObject();
         //”jŠü‚·‚éˆ—
