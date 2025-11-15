@@ -1,13 +1,11 @@
-using System.Collections;
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
-using System.Text;
 using UnityEngine.UI;
-
 using static GameConst;
 using static GameEnum;
-using Cysharp.Threading.Tasks;
 
 public class UIManager : MonoBehaviour {
     public static UIManager instance = null;
@@ -26,6 +24,7 @@ public class UIManager : MonoBehaviour {
     }
 
     private int prevCombo = 0;
+    
     //テキストのリスト
     [SerializeField]
     private List<TextMeshProUGUI> textList = null;
@@ -53,6 +52,9 @@ public class UIManager : MonoBehaviour {
     private GameObject rankingPrefab = null;
     [SerializeField]
     private Transform rankingRoot = null;
+    [SerializeField]
+    private TMP_InputField inputField = null;
+
 
     private bool isShowRanking = false;
 
@@ -68,6 +70,7 @@ public class UIManager : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         instance = this;
+        inputField.onSubmit.AddListener(OnNameSubmitted);
         useCanvas[(int)eCanvasType.OfflineRanking].SetActive(false);
     }
 
@@ -154,18 +157,38 @@ public class UIManager : MonoBehaviour {
             Destroy(child.gameObject);
         }
 
+
         List<RankingData> rankingDatas = OnlineRankingManager.instance.GetOnlineRankingData();
+
+        OnlineRankingManager.instance.LoadRankingData((rankingDatas)=>GenerateRankingUI(rankingDatas));
+        
+    }
+
+    /// <summary>
+    /// ランキングUI生成
+    /// </summary>
+    /// <param name="_rankingDatas"></param>
+    private void GenerateRankingUI(List<RankingData> _rankingDatas) {
         for (int i = 0; i < MAX_SHOW_RANKING; i++) {
             GameObject rankingDataObject = Instantiate(rankingPrefab, rankingRoot);
 
-            if (i < rankingDatas.Count) {
-                RankingData data = rankingDatas[i];
+            if (i < _rankingDatas.Count) {
+                RankingData data = _rankingDatas[i];
                 rankingDataObject.transform.Find("Rank").GetComponent<TextMeshProUGUI>().text =
                     (i + 1).ToString();
                 rankingDataObject.transform.Find("Name").GetComponent<TextMeshProUGUI>().text =
                     data.name;
                 rankingDataObject.transform.Find("Score").GetComponent<TextMeshProUGUI>().text =
                     data.score.ToString();
+                //自分のデータなら演出発火
+                if (data.id == OnlineRankingManager.instance.GetCustomID()) {
+                    var animator = rankingDataObject.GetComponent<Animator>();
+                    if (animator != null)
+                        animator.SetTrigger("ShowRecord");
+
+                    EffectManager.instance.ExecuteEffect((int)eEffectCategory.RankingFlash,rankingDataObject.transform);
+                }
+
             }
             else {
                 rankingDataObject.transform.Find("Rank").GetComponent<TextMeshProUGUI>().text = "";
@@ -176,7 +199,10 @@ public class UIManager : MonoBehaviour {
 
     }
 
-
+    private void OnNameSubmitted(string _text) {
+        Debug.Log("名前確定: " + _text);
+        OnlineRankingManager.instance.SetUserName(_text);
+    }
 
     public string GetInputName() {
         return textList[(int)eTextType.Name].text;

@@ -48,10 +48,14 @@ public static class GameEnum
     /// </summary>
     public enum eEffectCategory {
         Invalid = -1,
-        Good,
-        Bad,
+        Apple,
+        Insect,
         OnlyFruit,
         FallSpeeddown,
+        Banana,
+        PineApple,
+        RankingFlash,
+        
 
         effectCategoryMax
     }

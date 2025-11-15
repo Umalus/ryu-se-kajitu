@@ -132,6 +132,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void AddSocreData() {
+        OnlineRankingManager.instance.GetRanking();
         if (isAddRanking) return;
         OnlineRankingManager.instance.AddRankingData(UIManager.instance.GetInputName(),ScoreManager.AllScore);
         isAddRanking = true;

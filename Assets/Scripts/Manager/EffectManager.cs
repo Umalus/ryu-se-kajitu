@@ -54,7 +54,7 @@ public class EffectManager : MonoBehaviour
     /// オブジェクト使用
     /// </summary>
     /// <param name="_category"></param>
-    public void UseObject(int _category, Transform _instatncePos) {
+    private void UseObject(int _category, Transform _instatncePos) {
         GameObject useEffect = null;
         //リストが空かどうか確認
         if (IsEmpty(unuseObjectList[_category])) {

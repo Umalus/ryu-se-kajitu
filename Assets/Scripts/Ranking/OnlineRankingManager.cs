@@ -5,8 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class OnlineRankingManager : MonoBehaviour
-{
+public class OnlineRankingManager : MonoBehaviour {
     [Serializable]
     private class RankingList {
         public List<RankingData> rankingList;
@@ -31,14 +30,24 @@ public class OnlineRankingManager : MonoBehaviour
         LoginRanking();
         SaveRankingData();
     }
-    public void AddRankingData(string _name,int _score) {
-        SetUserName(_name);
+    public void AddRankingData(string _name, int _score) {
         SubmitScore(_score);
+        //既存データを探す
+        var prevData = rankingDatas.Find(x => x.id == this.customID);
 
-        RankingData addDate = new RankingData(_name, _score,DateTime.Now);
-
-        rankingDatas.Add(addDate);
-
+        if (prevData != null) {
+            //ハイスコアかどうか判定
+            if (_score > prevData.score) {
+                prevData.score = _score;
+                prevData.name = _name;
+            }
+            //スコア更新できなければ反映しない
+        }
+        else {
+            RankingData addDate = new RankingData(_name, _score, customID,DateTime.Now);
+            rankingDatas.Add(addDate);
+        }
+        //ソートして保存
         SaveRankingData();
     }
 
@@ -50,17 +59,30 @@ public class OnlineRankingManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    public void LoadRankingData(System.Action<List<RankingData>> _onComplete) {
+        string json = PlayerPrefs.GetString("TestRanking", "");
+        if (!string.IsNullOrEmpty(json)) {
+            RankingList rankingList = JsonUtility.FromJson<RankingList>(json);
+            rankingDatas = rankingList.rankingList;
+        }
+        else {
+            rankingDatas = new List<RankingData>();
+        }
+        _onComplete?.Invoke(rankingDatas);
+    }
+
+
     public List<RankingData> GetOnlineRankingData() {
         return rankingDatas;
     }
 
-    private void SetUserName(string _name) {
+    public void SetUserName(string _name) {
         // ユーザー名を設定するリクエストを作る
         var request = new UpdateUserTitleDisplayNameRequest {
             // ユーザー名の設定
             DisplayName = _name
         };
-        
+
         // リクエストをPlayFabに送信する
         PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnSetUserNameSuccess, OnSetUserNameFailure);
 
@@ -77,7 +99,7 @@ public class OnlineRankingManager : MonoBehaviour
 
     private void LoginRanking() {
         customID = LoadCustomID();
-        
+
         var request = new LoginWithCustomIDRequest { CustomId = customID, CreateAccount = true };
         //ランキングデータの初期化
         string json = PlayerPrefs.GetString("TestRanking", "");
@@ -137,7 +159,7 @@ public class OnlineRankingManager : MonoBehaviour
 
         var random = new System.Random();
 
-        for(int i = 0; i < idLength; i++) {
+        for (int i = 0; i < idLength; i++) {
             stringBuilder.Append(ID_CHARACTER[random.Next(ID_CHARACTER.Length)]);
         }
 
@@ -145,7 +167,7 @@ public class OnlineRankingManager : MonoBehaviour
     }
 
     private void SubmitScore(int _score) {
-        
+
         var statisticUpdate = new StatisticUpdate {
             StatisticName = "TestRanking",
 
@@ -182,11 +204,11 @@ public class OnlineRankingManager : MonoBehaviour
         foreach (var item in _leaderboardResult.Leaderboard) {
             Debug.Log($"{item.Position + 1}位　プレイヤー名:{item.DisplayName}　スコア:{item.StatValue}");
 
-            
+
         }
         rankingDatas = new List<RankingData>();
         foreach (var item in _leaderboardResult.Leaderboard) {
-            rankingDatas.Add(new RankingData(item.DisplayName, item.StatValue, DateTime.Now));
+            rankingDatas.Add(new RankingData(item.DisplayName, item.StatValue, customID,DateTime.Now));
         }
         SaveRankingData();
 
@@ -194,5 +216,9 @@ public class OnlineRankingManager : MonoBehaviour
 
     void OnGetRankingFailure(PlayFabError _error) {
         Debug.Log("ランキング取得失敗");
+    }
+
+    public string GetCustomID() {
+        return customID;
     }
 }
