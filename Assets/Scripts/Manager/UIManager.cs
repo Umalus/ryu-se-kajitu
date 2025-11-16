@@ -220,7 +220,7 @@ public class UIManager : MonoBehaviour {
 
     public void ResetUI() {
         textList[(int)eTextType.Start].text =
-               "Start To Touch Screen!!";
+               "Start To Left Click!!";
     }
 
     public async UniTask ShowTimeAddUI(float _targetAlpha, float _duration = 1.0f) {
